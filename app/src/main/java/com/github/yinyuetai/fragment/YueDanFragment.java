@@ -105,9 +105,10 @@ public class YueDanFragment extends Fragment {
     private void showProgress(){
         swipeRefreshLayout.setRefreshing(true);
     }
+    private Runnable action;
     private void dismissProgress(final String response){
         //为了swipeRefreshLayout能显示出来，好看一些，故意延迟500ms
-        swipeRefreshLayout.postDelayed(new Runnable() {
+        action = new Runnable() {
             @Override
             public void run() {
                 swipeRefreshLayout.setRefreshing(false);
@@ -123,12 +124,16 @@ public class YueDanFragment extends Fragment {
                         mOffset += yueDanBean.getPlayLists().size();
                     }
                 }
-            }
-        },500);
+            }};
+        swipeRefreshLayout.postDelayed(action,500);
     }
+
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
+        if (action!=null){
+            swipeRefreshLayout.removeCallbacks(action);
+        }
         ButterKnife.unbind(this);
+        super.onDestroyView();
     }
 }

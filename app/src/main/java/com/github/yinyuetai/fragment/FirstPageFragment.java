@@ -47,9 +47,9 @@ public class FirstPageFragment extends Fragment {
     private FirstRecycleViewAdapter recycleViewAdapter;
     private View rootView;
     private ArrayList<FirstPageBean> firstPageBeanList;
-    int mWidth;
-    int mHeight;
-
+    private int mWidth;
+    private int mHeight;
+    private Runnable action;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -87,16 +87,17 @@ public class FirstPageFragment extends Fragment {
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));
+        action = new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        };
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefreshLayout.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                       swipeRefreshLayout.setRefreshing(false);
-                    }
-                },200);
+                swipeRefreshLayout.postDelayed(action,200);
             }
         });
     }
@@ -135,7 +136,10 @@ public class FirstPageFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
+        if (action!=null){
+            swipeRefreshLayout.removeCallbacks(action);
+        }
         ButterKnife.unbind(this);
+        super.onDestroyView();
     }
 }

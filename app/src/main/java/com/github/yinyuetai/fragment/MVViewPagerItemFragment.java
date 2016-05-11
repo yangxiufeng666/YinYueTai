@@ -139,12 +139,13 @@ public class MVViewPagerItemFragment extends Fragment {
     private void showProgress(){
         swipeRefreshLayout.setRefreshing(true);
     }
+    private Runnable action;
     private void dismissProgress(final String response){
         //为了swipeRefreshLayout能显示出来，好看一些，故意延迟500ms
-        swipeRefreshLayout.postDelayed(new Runnable() {
+        action = new Runnable() {
             @Override
             public void run() {
-               swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setRefreshing(false);
                 if (response != null){
                     MVListBean mvListBean = new Gson().fromJson(response, MVListBean.class);
                     if (mvListBean.getVideos() == null || mvListBean.getVideos().size() == 0) {
@@ -158,7 +159,8 @@ public class MVViewPagerItemFragment extends Fragment {
                     }
                 }
             }
-        },500);
+        };
+        swipeRefreshLayout.postDelayed(action,500);
     }
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -179,7 +181,10 @@ public class MVViewPagerItemFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
+        if (action!=null){
+            swipeRefreshLayout.removeCallbacks(action);
+        }
         ButterKnife.unbind(this);
+        super.onDestroyView();
     }
 }

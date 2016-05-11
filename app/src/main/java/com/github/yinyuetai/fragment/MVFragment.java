@@ -103,7 +103,7 @@ public class MVFragment extends Fragment {
     }
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         ButterKnife.unbind(this);
+        super.onDestroyView();
     }
 }
