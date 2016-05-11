@@ -110,6 +110,10 @@ public class MVViewPagerItemFragment extends Fragment {
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
+        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
+        swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

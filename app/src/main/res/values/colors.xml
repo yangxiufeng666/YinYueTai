@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="tab_color_1">#FF4081</color>
+    <color name="tab_color_2">#FF9800</color>
+    <color name="tab_color_3">#FF7F24</color>
+    <color name="tab_color_4">#FF5252</color>
+
     <color name="transparent_black">#99000000</color>
     <color name="green_light">#1ec399</color>
     <color name="transparent">#00000000</color>
