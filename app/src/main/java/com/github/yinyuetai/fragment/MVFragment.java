@@ -48,7 +48,6 @@ public class MVFragment extends Fragment {
             rootView = inflater.inflate(R.layout.mv_page_fragment, container, false);
             initArea();
         }
-
         ButterKnife.bind(this, rootView);
         return rootView;
     }

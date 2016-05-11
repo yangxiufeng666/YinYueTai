@@ -9,8 +9,8 @@
 		android:id="@+id/tabLayout"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		app:tabSelectedTextColor="@color/green_text"
-	    app:tabTextColor="@color/white"
+		app:tabSelectedTextColor="@color/white"
+	    app:tabTextColor="@color/green_text"
 		app:tabIndicatorColor="@color/colorAccent"
 		android:background="@color/tab_color_2"
 	/>

@@ -55,7 +55,7 @@ public class MVViewPagerItemFragment extends Fragment {
     private int lastVisibleItem;
     boolean hasMore = true;
     private boolean hasLoadedOnce = false; // your boolean field
-
+    private Runnable action;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,7 +65,6 @@ public class MVViewPagerItemFragment extends Fragment {
         } else {
             ButterKnife.bind(this, rootView);
         }
-        ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -79,12 +78,24 @@ public class MVViewPagerItemFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Bundle bundle = getArguments();
         areaCode = bundle.getString("areaCode");
+        Log.e("TTT","onActivityCreated areaCode="+areaCode);
         boolean isFirst = bundle.getBoolean("isFirst");
         if (isFirst) {
             setUserVisibleHint(true);
         }
     }
-
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Log.e("TTT","onActivityCreated areaCode="+areaCode+",this.isVisible()="+this.isVisible()+",isVisibleToUser="+isVisibleToUser);
+        if (this.isVisible()) {
+            // we check that the fragment is becoming visible
+            if (isVisibleToUser && !hasLoadedOnce) {
+                hasLoadedOnce = true;
+                lazyLoad();
+            }
+        }
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,7 +132,6 @@ public class MVViewPagerItemFragment extends Fragment {
             }
         });
     }
-
     private void getData(int offset, int size) {
         showProgress();
         OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMVListUrl(areaCode, offset, size), MVViewPagerItemFragment.this, new StringCallBack() {
@@ -139,7 +149,6 @@ public class MVViewPagerItemFragment extends Fragment {
     private void showProgress(){
         swipeRefreshLayout.setRefreshing(true);
     }
-    private Runnable action;
     private void dismissProgress(final String response){
         //为了swipeRefreshLayout能显示出来，好看一些，故意延迟500ms
         action = new Runnable() {
@@ -162,18 +171,6 @@ public class MVViewPagerItemFragment extends Fragment {
         };
         swipeRefreshLayout.postDelayed(action,500);
     }
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (this.isVisible()) {
-            // we check that the fragment is becoming visible
-            if (isVisibleToUser && !hasLoadedOnce) {
-                hasLoadedOnce = true;
-                lazyLoad();
-            }
-        }
-    }
-
     protected void lazyLoad() {
         initView();
         getData(mOffset, SIZE);
