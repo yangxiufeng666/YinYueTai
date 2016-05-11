@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,47 +53,20 @@ public class MVViewPagerItemFragment extends Fragment {
     private View rootView;
     private int lastVisibleItem;
     boolean hasMore = true;
-    private boolean hasLoadedOnce = false; // your boolean field
     private Runnable action;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.mv_viewpager_item_fragment, container, false);
+            Bundle bundle = getArguments();
+            areaCode = bundle.getString("areaCode");
             ButterKnife.bind(this, rootView);
+            load();
         } else {
             ButterKnife.bind(this, rootView);
         }
         return rootView;
-    }
-
-    /**
-     * 由于setUserVisibleHint优于onCreate调用，所以当onCreate调用完毕setUserVisibleHint就不会触发，这时需要在首个显示的fragment调用setUserVisibleHint方法
-     *
-     * @param savedInstanceState
-     */
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Bundle bundle = getArguments();
-        areaCode = bundle.getString("areaCode");
-        Log.e("TTT","onActivityCreated areaCode="+areaCode);
-        boolean isFirst = bundle.getBoolean("isFirst");
-        if (isFirst) {
-            setUserVisibleHint(true);
-        }
-    }
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        Log.e("TTT","onActivityCreated areaCode="+areaCode+",this.isVisible()="+this.isVisible()+",isVisibleToUser="+isVisibleToUser);
-        if (this.isVisible()) {
-            // we check that the fragment is becoming visible
-            if (isVisibleToUser && !hasLoadedOnce) {
-                hasLoadedOnce = true;
-                lazyLoad();
-            }
-        }
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -171,7 +143,7 @@ public class MVViewPagerItemFragment extends Fragment {
         };
         swipeRefreshLayout.postDelayed(action,500);
     }
-    protected void lazyLoad() {
+    protected void load() {
         initView();
         getData(mOffset, SIZE);
     }
