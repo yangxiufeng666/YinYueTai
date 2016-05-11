@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bottomBarItem1"
+        android:icon="@drawable/bottom_first_unselect"
+        android:title="首页" />
+    <item
+        android:id="@+id/bottomBarItem2"
+        android:icon="@drawable/bottom_mv_unselect"
+        android:title="mv" />
+    <item
+        android:id="@+id/bottomBarItem3"
+        android:icon="@drawable/bottom_vlist_unselect"
+        android:title="v榜" />
+    <item
+        android:id="@+id/bottomBarItem4"
+        android:icon="@drawable/bottom_mvlist_unselect"
+        android:title="悦单" />
+</menu>

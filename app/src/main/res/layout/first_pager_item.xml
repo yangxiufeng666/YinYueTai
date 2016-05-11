@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black_bg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/empty_logo" />
+
+    <LinearLayout
+        android:id="@+id/home_recommend_item_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/home_recommend_item_jpg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/home_recommend_item_transbg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/item_transtop" />
+
+    <ImageView
+        android:id="@+id/home_recommend_item_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/home_recommend_item_transbg"
+        android:layout_marginBottom="22.0dip"
+        android:layout_marginLeft="10.0dip"
+        android:src="@drawable/home_page_video" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/home_recommend_item_type"
+        android:layout_alignTop="@id/home_recommend_item_type"
+        android:layout_toRightOf="@id/home_recommend_item_type"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/home_recommend_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5.0dip"
+            android:ellipsize="end"
+            android:padding="0.0dip"
+            android:singleLine="true"
+            android:textColor="@color/white_text" />
+
+        <TextView
+            android:id="@+id/home_recommend_item_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5.0dip"
+            android:ellipsize="end"
+            android:padding="0.0dip"
+            android:singleLine="true"
+            android:textColor="@color/green_text" />
+    </LinearLayout>
+</RelativeLayout>
