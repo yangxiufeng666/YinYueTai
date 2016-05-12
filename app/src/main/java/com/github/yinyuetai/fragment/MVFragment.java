@@ -78,18 +78,9 @@ public class MVFragment extends Fragment {
                     areaBeanArrayList.add(field);
                 }
                 ArrayList<Fragment> fragments = new ArrayList<>();
-                int i=0;
-                boolean isFirst=false;
                 for (AreaBean area :
                         areaBeanArrayList) {
-                    tabLayout.addTab(tabLayout.newTab().setText(area.getName()));
-                    if (i==0){
-                        isFirst = true;
-                    }else{
-                        isFirst=false;
-                    }
-                    i++;
-                    fragments.add(MVViewPagerItemFragment.getInstance(area.getCode(),isFirst));
+                    fragments.add(MVViewPagerItemFragment.getInstance(area.getCode()));
                 }
                 initViewPager(fragments);
             }

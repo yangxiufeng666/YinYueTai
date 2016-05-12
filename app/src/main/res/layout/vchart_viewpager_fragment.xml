@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_bg">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/tab_color_2"/>
+    <RelativeLayout
+        android:id="@+id/period_layout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/tab_color_3">
+        <ImageView
+            android:id="@+id/vchart_left_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/period_left_selector"
+            android:layout_alignParentLeft="true"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:id="@+id/vchart_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+        <ImageView
+            android:id="@+id/vchart_right_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/period_right_selector"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

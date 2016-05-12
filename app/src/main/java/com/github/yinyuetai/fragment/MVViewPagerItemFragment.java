@@ -32,11 +32,10 @@ import okhttp3.Call;
  */
 public class MVViewPagerItemFragment extends Fragment {
 
-    public static Fragment getInstance(String areaCode, boolean isFirst) {
+    public static Fragment getInstance(String areaCode) {
         MVViewPagerItemFragment mvViewPagerItemFragment = new MVViewPagerItemFragment();
         Bundle bundle = new Bundle();
         bundle.putString("areaCode", areaCode);
-        bundle.putBoolean("isFirst", isFirst);
         mvViewPagerItemFragment.setArguments(bundle);
         return mvViewPagerItemFragment;
     }
@@ -92,7 +91,7 @@ public class MVViewPagerItemFragment extends Fragment {
                 lastVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
+        swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_2);
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));

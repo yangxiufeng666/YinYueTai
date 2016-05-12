@@ -83,7 +83,7 @@ public class FirstPageFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         firstPageRecyclerView.setLayoutManager(linearLayoutManager);
         firstPageRecyclerView.setAdapter(recycleViewAdapter);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
+        swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_1);
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
                         .getDisplayMetrics()));

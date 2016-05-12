@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">YinYueTai</string>
+    <string name="period_format">%1$d年%2$d期（%3$s-%4$s）</string>
 </resources>

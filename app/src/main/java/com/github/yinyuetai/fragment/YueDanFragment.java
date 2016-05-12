@@ -58,7 +58,7 @@ public class YueDanFragment extends Fragment {
         return rootView;
     }
     private void initView(){
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary,R.color.colorAccent);
+        swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_4);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
