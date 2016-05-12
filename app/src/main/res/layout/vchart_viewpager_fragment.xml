@@ -11,6 +11,7 @@
         android:id="@+id/period_layout"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:clickable="true"
         android:background="@color/tab_color_3">
         <ImageView
             android:id="@+id/vchart_left_period"

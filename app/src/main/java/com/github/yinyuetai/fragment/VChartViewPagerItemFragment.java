@@ -51,7 +51,7 @@ public class VChartViewPagerItemFragment extends Fragment {
     private VChartPeriod vChartPeriod;
     private List<VChartPeriod.PeriodsBean> periodsBeanArrayList;
     private VChartBean vChartBean;
-    private List<VChartBean.VideosBean> videosBeen=new ArrayList<>();
+    private List<VChartBean.VideosBean> videosBeen = new ArrayList<>();
 
     private VCharRecycleViewAdapter viewAdapter;
 
@@ -66,11 +66,11 @@ public class VChartViewPagerItemFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (rootView == null){
+        if (rootView == null) {
             rootView = inflater.inflate(R.layout.vchart_viewpager_fragment, container, false);
         }
         ButterKnife.bind(this, rootView);
-        if (!hasCreatedOnce){
+        if (!hasCreatedOnce) {
             hasCreatedOnce = true;
             initView();
             getPeriod();
@@ -83,13 +83,16 @@ public class VChartViewPagerItemFragment extends Fragment {
         super.onCreate(savedInstanceState);
         areaCode = getArguments().getString("areaCode");
     }
-    private void initView(){
+
+    private void initView() {
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        viewAdapter = new VCharRecycleViewAdapter(getActivity(),videosBeen);
+        viewAdapter = new VCharRecycleViewAdapter(getActivity(), videosBeen);
         recyclerView.setAdapter(viewAdapter);
 
     }
-    private void getPeriod(){
+
+    private void getPeriod() {
         OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getVChartPeriodUrl(areaCode), VChartViewPagerItemFragment.this, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
@@ -98,15 +101,16 @@ public class VChartViewPagerItemFragment extends Fragment {
 
             @Override
             public void onResponse(String response) {
-                vChartPeriod = new Gson().fromJson(response,VChartPeriod.class);
+                vChartPeriod = new Gson().fromJson(response, VChartPeriod.class);
                 periodsBeanArrayList = vChartPeriod.getPeriods();
                 VChartPeriod.PeriodsBean periodsBean = periodsBeanArrayList.get(0);
-                vchartPeriod.setText(String.format(getString(R.string.period_format),periodsBean.getYear(),periodsBean.getNo(),periodsBean.getBeginDateText(),periodsBean.getEndDateText()));
-                getDataByPeriod(areaCode,periodsBean.getDateCode());
+                vchartPeriod.setText(String.format(getString(R.string.period_format), periodsBean.getYear(), periodsBean.getNo(), periodsBean.getBeginDateText(), periodsBean.getEndDateText()));
+                getDataByPeriod(areaCode, periodsBean.getDateCode());
             }
         });
     }
-    private void getDataByPeriod(String area,int dateCode){
+
+    private void getDataByPeriod(String area, int dateCode) {
         OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getVChartListUrl(area, dateCode), this, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
@@ -115,12 +119,13 @@ public class VChartViewPagerItemFragment extends Fragment {
 
             @Override
             public void onResponse(String response) {
-                vChartBean = new Gson().fromJson(response,VChartBean.class);
+                vChartBean = new Gson().fromJson(response, VChartBean.class);
                 videosBeen.addAll(vChartBean.getVideos());
                 viewAdapter.notifyDataSetChanged();
             }
         });
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

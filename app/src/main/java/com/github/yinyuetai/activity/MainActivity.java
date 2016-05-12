@@ -1,5 +1,6 @@
 package com.github.yinyuetai.activity;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -14,6 +15,8 @@ import android.util.SparseArray;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.fragment.FirstPageFragment;
 import com.github.yinyuetai.fragment.MVFragment;
@@ -38,17 +41,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolBar);
-        toolBar.setTitleTextColor(ContextCompat.getColor(this,R.color.white));
+        toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
         fragments = new SparseArray<>();
         colors = new SparseArray<>();
         fragments.put(R.id.bottomBarItem1, new FirstPageFragment());
         fragments.put(R.id.bottomBarItem2, new MVFragment());
         fragments.put(R.id.bottomBarItem3, new VChartFragment());
         fragments.put(R.id.bottomBarItem4, new YueDanFragment());
-        colors.put(R.id.bottomBarItem1,ContextCompat.getColor(this, R.color.tab_color_1));
-        colors.put(R.id.bottomBarItem2,ContextCompat.getColor(this, R.color.tab_color_2));
-        colors.put(R.id.bottomBarItem3,ContextCompat.getColor(this, R.color.tab_color_3));
-        colors.put(R.id.bottomBarItem4,ContextCompat.getColor(this, R.color.tab_color_4));
+        colors.put(R.id.bottomBarItem1, ContextCompat.getColor(this, R.color.tab_color_1));
+        colors.put(R.id.bottomBarItem2, ContextCompat.getColor(this, R.color.tab_color_2));
+        colors.put(R.id.bottomBarItem3, ContextCompat.getColor(this, R.color.tab_color_3));
+        colors.put(R.id.bottomBarItem4, ContextCompat.getColor(this, R.color.tab_color_4));
         BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
         mBottomBar.setItemsFromMenu(R.menu.bottom_menu, new OnMenuTabClickListener() {
             @Override
@@ -71,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setFragment(Fragment fragment) {
+        if (fragment == null) {
+            return;
+        }
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (fragment.isAdded() && fragment.isVisible()) {
@@ -83,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
         transaction.commit();
     }
+
     private void setTranslucenttatus(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
@@ -97,5 +104,23 @@ public class MainActivity extends AppCompatActivity {
             tintManager.setTintColor(color);
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialogWrapper.Builder(this)
+                .setTitle("Hi~")
+                .setMessage("客官，真的要走吗？")
+                .setNegativeButton("点错了", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).setPositiveButton("嗯", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        }).show();
     }
 }

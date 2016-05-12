@@ -6,6 +6,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
-
+    <style name="Theme.full" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    <!-- App Theme Launch -->
+    <style name="AppThemeLaunch" parent="AppTheme">
+        <item name="android:windowBackground">@color/color_primary</item>
+    </style>
 </resources>
