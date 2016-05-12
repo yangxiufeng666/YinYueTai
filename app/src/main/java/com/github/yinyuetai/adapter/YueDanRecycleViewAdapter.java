@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.domain.YueDanBean;
 
@@ -62,7 +63,7 @@ public class YueDanRecycleViewAdapter extends RecyclerView.Adapter<YueDanRecycle
         holder.author.setText(playListsBean.getCreator().getNickName());
         holder.playCount.setText("收录高清MV"+playListsBean.getVideoCount()+"首");
         Glide.with(activity).load(playListsBean.getPlayListBigPic()).into(holder.posterImg);
-        Glide.with(activity).load(playListsBean.getCreator().getLargeAvatar()).into(holder.profileImage);
+        Glide.with(activity).load(playListsBean.getCreator().getLargeAvatar()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.profileImage);
     }
 
     @Override

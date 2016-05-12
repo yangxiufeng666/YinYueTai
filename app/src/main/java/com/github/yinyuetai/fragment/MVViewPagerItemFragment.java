@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.MVRecycleViewAdapter;
 import com.github.yinyuetai.domain.MVListBean;
@@ -80,6 +81,9 @@ public class MVViewPagerItemFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    Glide.with(getActivity()).resumeRequests();
+                }
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItem + 1 == recycleViewAdapter.getItemCount()) && hasMore) {
                     getData(mOffset + 1, SIZE);
                 }
@@ -89,6 +93,7 @@ public class MVViewPagerItemFragment extends Fragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 lastVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                Glide.with(getActivity()).pauseRequests();
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_2);

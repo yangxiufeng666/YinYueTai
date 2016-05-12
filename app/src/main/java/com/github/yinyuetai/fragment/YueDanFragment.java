@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.YueDanRecycleViewAdapter;
 import com.github.yinyuetai.domain.MVListBean;
@@ -76,6 +77,9 @@ public class YueDanFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    Glide.with(getActivity()).resumeRequests();
+                }
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && hasMore && (lastVisibleItem == recycleViewAdapter.getItemCount()-1)){
                     getData(mOffset+1,SIZE);
                 }
@@ -84,6 +88,7 @@ public class YueDanFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                Glide.with(getActivity()).pauseRequests();
                 lastVisibleItem = ((LinearLayoutManager)recyclerView.getLayoutManager()).findLastVisibleItemPosition();
             }
         });
