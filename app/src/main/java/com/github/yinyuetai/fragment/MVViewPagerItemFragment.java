@@ -41,7 +41,7 @@ public class MVViewPagerItemFragment extends Fragment {
         return mvViewPagerItemFragment;
     }
 
-    private static final int SIZE = 10;
+    private static final int SIZE = 20;
     private int mOffset = 0;
     private String areaCode;
     @Bind(R.id.mv_RecyclerView)

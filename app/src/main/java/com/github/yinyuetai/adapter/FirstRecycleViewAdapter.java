@@ -1,7 +1,6 @@
 package com.github.yinyuetai.adapter;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +50,8 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
     @Override
     public void onBindViewHolder(FirstHolder holder, int position) {
         FirstPageBean pageBean = firstPageBeanList.get(position);
-        holder.itemRoot.setLayoutParams(new RelativeLayout.LayoutParams(mWidth, mHeight));
+//        holder.itemRoot.setLayoutParams(new RelativeLayout.LayoutParams(mWidth, mHeight));
+        holder.homeRecommendItemTransbg.setLayoutParams(new RelativeLayout.LayoutParams(mWidth, mHeight));
         holder.homeRecommendItemTitle.setText(pageBean.getTitle());
         holder.homeRecommendItemDescription.setText(pageBean.getDescription());
         if ("ACTIVITY".equalsIgnoreCase(pageBean.getType())) {//活动相关
@@ -100,6 +100,7 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
         ImageView homeRecommendItemTransbg;
         @Bind(R.id.item_root)
         RelativeLayout itemRoot;
+
         public FirstHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

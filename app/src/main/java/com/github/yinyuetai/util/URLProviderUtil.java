@@ -1,7 +1,7 @@
 package com.github.yinyuetai.util;
 
 public class URLProviderUtil {
-	public static String getMainPageUrl(){
+	public static String getMainPageUrl(int offset,int size){
 		String url = "http://mapi.yinyuetai.com/suggestions/front_page.json?deviceinfo="
 				+ "{\"aid\":\"10201022\",\"os\":\"Android\","
 				+ "\"ov\":"+"\""+ Util.getSystemversion() +"\""+","
@@ -12,7 +12,10 @@ public class URLProviderUtil {
 				+ "\"WIFI\","
 				+ "\"uid\":"
 				+ "\"bc8255b6efc478ce334ae187bdd20fd9\","
-				+ "\"clid\":110003000}";
+				+ "\"clid\":110003000}"
+				+ "&offset="+offset
+				+"&size="+size
+				+"&v=4&rn=640*540";
 		return url;
 	}
 	public static String getMVareaUrl(){

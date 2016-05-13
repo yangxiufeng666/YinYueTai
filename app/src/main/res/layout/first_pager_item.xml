@@ -3,8 +3,7 @@
     android:id="@+id/item_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black_bg"
-    android:orientation="vertical">
+    android:background="@color/black_bg">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -21,14 +20,14 @@
         <ImageView
             android:id="@+id/home_recommend_item_jpg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/home_recommend_item_transbg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="@drawable/item_transtop" />
 
     <ImageView
@@ -41,7 +40,7 @@
         android:src="@drawable/home_page_video" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/home_recommend_item_type"
         android:layout_alignTop="@id/home_recommend_item_type"

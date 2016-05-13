@@ -41,7 +41,7 @@ public class YueDanFragment extends Fragment {
     private View rootView;
     private int lastVisibleItem;
     boolean hasMore = true;
-    private static final int SIZE = 10;
+    private static final int SIZE = 20;
     private int mOffset = 0;
     private YueDanRecycleViewAdapter recycleViewAdapter;
     List<YueDanBean.PlayListsBean> playLists = new ArrayList<>();

@@ -69,7 +69,7 @@ public class FirstPageFragment extends Fragment {
         DisplayMetrics metric = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
         mWidth = metric.widthPixels;
-        mHeight = ((mWidth * 0x21c) / 0x280);
+        mHeight = (mWidth * 540) / 640;
         Log.i("HomeActivity", "mHeight =" + mHeight);
     }
 
@@ -103,7 +103,7 @@ public class FirstPageFragment extends Fragment {
     }
 
     private void getData() {
-        OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMainPageUrl(), FirstPageFragment.this, new StringCallBack() {
+        OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMainPageUrl(0,20), FirstPageFragment.this, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
                 swipeRefreshLayout.setRefreshing(false);
