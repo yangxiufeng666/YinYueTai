@@ -2,13 +2,13 @@ package com.github.yinyuetai.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +31,6 @@ import java.util.Iterator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 import okhttp3.Call;
 
 /**
@@ -46,6 +45,8 @@ public class FirstPageFragment extends Fragment {
     RecyclerView firstPageRecyclerView;
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
     private LinearLayoutManager linearLayoutManager;
     private FirstRecycleViewAdapter recycleViewAdapter;
     private View rootView;
@@ -59,6 +60,7 @@ public class FirstPageFragment extends Fragment {
     boolean hasMore = true;
     private static final int SIZE = 20;
     private int mOffset = 0;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class FirstPageFragment extends Fragment {
             firstPageBeanList = new ArrayList<>();
             boserverView();
             initList();
-            getData(mOffset,SIZE);
+            getData(mOffset, SIZE);
         }
         ButterKnife.bind(this, rootView);
         return rootView;
@@ -102,7 +104,7 @@ public class FirstPageFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefreshLayout.postDelayed(action,200);
+                swipeRefreshLayout.postDelayed(action, 200);
             }
         });
         showLoading();
@@ -110,7 +112,7 @@ public class FirstPageFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     Glide.with(getActivity()).resumeRequests();
                 }
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItem + 1 == recycleViewAdapter.getItemCount()) && hasMore) {
@@ -126,9 +128,16 @@ public class FirstPageFragment extends Fragment {
                 Glide.with(getActivity()).pauseRequests();
             }
         });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firstPageRecyclerView.smoothScrollToPosition(0);
+            }
+        });
     }
-    private void showLoading(){
-        if (builder == null){
+
+    private void showLoading() {
+        if (builder == null) {
 
             builder = new MaterialDialog.Builder(getActivity());
             builder.cancelable(false);
@@ -138,12 +147,13 @@ public class FirstPageFragment extends Fragment {
         }
         materialDialog = builder.show();
     }
-    private void dismissLoading(){
+
+    private void dismissLoading() {
         materialDialog.dismiss();
     }
 
-    private void getData(int offset,int size) {
-        OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMainPageUrl(offset,size), FirstPageFragment.this, new StringCallBack() {
+    private void getData(int offset, int size) {
+        OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMainPageUrl(offset, size), FirstPageFragment.this, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
                 swipeRefreshLayout.setRefreshing(false);
@@ -162,7 +172,7 @@ public class FirstPageFragment extends Fragment {
                     jsonArray = el.getAsJsonArray();
                 }
                 Iterator it = jsonArray.iterator();
-                if (it.hasNext()){
+                if (it.hasNext()) {
                     hasMore = true;
                     int size = 0;
                     while (it.hasNext()) {
@@ -176,7 +186,7 @@ public class FirstPageFragment extends Fragment {
                     mOffset += size;
                     recycleViewAdapter.notifyDataSetChanged();
 
-                }else{
+                } else {
                     hasMore = false;
                 }
                 dismissLoading();
@@ -187,7 +197,7 @@ public class FirstPageFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        if (action!=null){
+        if (action != null) {
             swipeRefreshLayout.removeCallbacks(action);
         }
         ButterKnife.unbind(this);

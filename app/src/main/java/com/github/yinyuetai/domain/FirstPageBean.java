@@ -26,9 +26,9 @@ public class FirstPageBean {
     private String title;
     private String posterPic;
     private String thumbnailPic;
-    private int videoSize;
-    private int hdVideoSize;
-    private int uhdVideoSize;
+    private long videoSize;
+    private long hdVideoSize;
+    private long uhdVideoSize;
     private int status;
     private String traceUrl;
     private String clickUrl;
@@ -74,7 +74,7 @@ public class FirstPageBean {
         this.thumbnailPic = thumbnailPic;
     }
 
-    public int getVideoSize() {
+    public long getVideoSize() {
         return videoSize;
     }
 
@@ -82,7 +82,7 @@ public class FirstPageBean {
         this.videoSize = videoSize;
     }
 
-    public int getHdVideoSize() {
+    public long getHdVideoSize() {
         return hdVideoSize;
     }
 
@@ -90,7 +90,7 @@ public class FirstPageBean {
         this.hdVideoSize = hdVideoSize;
     }
 
-    public int getUhdVideoSize() {
+    public long getUhdVideoSize() {
         return uhdVideoSize;
     }
 

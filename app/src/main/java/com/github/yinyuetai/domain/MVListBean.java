@@ -85,10 +85,43 @@ public class MVListBean {
         private String hdUrl;
         private String uhdUrl;
         private String shdUrl;
-        private int videoSize;
-        private int hdVideoSize;
-        private int uhdVideoSize;
-        private int shdVideoSize;
+        private long videoSize;
+        private long hdVideoSize;
+        private long uhdVideoSize;
+        private long shdVideoSize;
+
+        public long getVideoSize() {
+            return videoSize;
+        }
+
+        public void setVideoSize(long videoSize) {
+            this.videoSize = videoSize;
+        }
+
+        public long getHdVideoSize() {
+            return hdVideoSize;
+        }
+
+        public void setHdVideoSize(long hdVideoSize) {
+            this.hdVideoSize = hdVideoSize;
+        }
+
+        public long getUhdVideoSize() {
+            return uhdVideoSize;
+        }
+
+        public void setUhdVideoSize(long uhdVideoSize) {
+            this.uhdVideoSize = uhdVideoSize;
+        }
+
+        public long getShdVideoSize() {
+            return shdVideoSize;
+        }
+
+        public void setShdVideoSize(long shdVideoSize) {
+            this.shdVideoSize = shdVideoSize;
+        }
+
         private int duration;
         private int status;
         private String traceUrl;
@@ -241,37 +274,7 @@ public class MVListBean {
             this.shdUrl = shdUrl;
         }
 
-        public int getVideoSize() {
-            return videoSize;
-        }
 
-        public void setVideoSize(int videoSize) {
-            this.videoSize = videoSize;
-        }
-
-        public int getHdVideoSize() {
-            return hdVideoSize;
-        }
-
-        public void setHdVideoSize(int hdVideoSize) {
-            this.hdVideoSize = hdVideoSize;
-        }
-
-        public int getUhdVideoSize() {
-            return uhdVideoSize;
-        }
-
-        public void setUhdVideoSize(int uhdVideoSize) {
-            this.uhdVideoSize = uhdVideoSize;
-        }
-
-        public int getShdVideoSize() {
-            return shdVideoSize;
-        }
-
-        public void setShdVideoSize(int shdVideoSize) {
-            this.shdVideoSize = shdVideoSize;
-        }
 
         public int getDuration() {
             return duration;

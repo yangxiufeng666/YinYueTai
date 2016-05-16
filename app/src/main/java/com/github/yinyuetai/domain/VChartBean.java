@@ -189,10 +189,10 @@ public class VChartBean {
         private String hdUrl;
         private String uhdUrl;
         private String shdUrl;
-        private int videoSize;
-        private int hdVideoSize;
-        private int uhdVideoSize;
-        private int shdVideoSize;
+        private long videoSize;
+        private long hdVideoSize;
+        private long uhdVideoSize;
+        private long shdVideoSize;
         private int duration;
         private int status;
         private int linkId;
@@ -340,7 +340,7 @@ public class VChartBean {
             this.shdUrl = shdUrl;
         }
 
-        public int getVideoSize() {
+        public long getVideoSize() {
             return videoSize;
         }
 
@@ -348,7 +348,7 @@ public class VChartBean {
             this.videoSize = videoSize;
         }
 
-        public int getHdVideoSize() {
+        public long getHdVideoSize() {
             return hdVideoSize;
         }
 
@@ -356,7 +356,7 @@ public class VChartBean {
             this.hdVideoSize = hdVideoSize;
         }
 
-        public int getUhdVideoSize() {
+        public long getUhdVideoSize() {
             return uhdVideoSize;
         }
 
@@ -364,7 +364,7 @@ public class VChartBean {
             this.uhdVideoSize = uhdVideoSize;
         }
 
-        public int getShdVideoSize() {
+        public long getShdVideoSize() {
             return shdVideoSize;
         }
 

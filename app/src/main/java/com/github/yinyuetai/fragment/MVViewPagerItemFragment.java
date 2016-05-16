@@ -2,6 +2,7 @@ package com.github.yinyuetai.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +34,9 @@ import okhttp3.Call;
  */
 public class MVViewPagerItemFragment extends Fragment {
 
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
+
     public static Fragment getInstance(String areaCode) {
         MVViewPagerItemFragment mvViewPagerItemFragment = new MVViewPagerItemFragment();
         Bundle bundle = new Bundle();
@@ -54,6 +58,7 @@ public class MVViewPagerItemFragment extends Fragment {
     private int lastVisibleItem;
     boolean hasMore = true;
     private Runnable action;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,8 +71,10 @@ public class MVViewPagerItemFragment extends Fragment {
         } else {
             ButterKnife.bind(this, rootView);
         }
+        ButterKnife.bind(this, rootView);
         return rootView;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +88,7 @@ public class MVViewPagerItemFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     Glide.with(getActivity()).resumeRequests();
                 }
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItem + 1 == recycleViewAdapter.getItemCount()) && hasMore) {
@@ -107,7 +114,14 @@ public class MVViewPagerItemFragment extends Fragment {
                 dismissProgress(null);
             }
         });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mvRecyclerView.scrollToPosition(0);
+            }
+        });
     }
+
     private void getData(int offset, int size) {
         showProgress();
         OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMVListUrl(areaCode, offset, size), MVViewPagerItemFragment.this, new StringCallBack() {
@@ -122,31 +136,34 @@ public class MVViewPagerItemFragment extends Fragment {
             }
         });
     }
-    private void showProgress(){
+
+    private void showProgress() {
         swipeRefreshLayout.setRefreshing(true);
     }
-    private void dismissProgress(final String response){
+
+    private void dismissProgress(final String response) {
         //为了swipeRefreshLayout能显示出来，好看一些，故意延迟500ms
         action = new Runnable() {
             @Override
             public void run() {
                 swipeRefreshLayout.setRefreshing(false);
-                if (response != null){
+                if (response != null) {
                     MVListBean mvListBean = new Gson().fromJson(response, MVListBean.class);
                     if (mvListBean.getVideos() == null || mvListBean.getVideos().size() == 0) {
                         hasMore = false;
                     } else {
                         hasMore = true;
-                        int pos = videosList.size()-1;
+                        int pos = videosList.size() - 1;
                         videosList.addAll(mvListBean.getVideos());
-                        recycleViewAdapter.notifyItemRangeChanged(pos,mvListBean.getVideos().size());
+                        recycleViewAdapter.notifyItemRangeChanged(pos, mvListBean.getVideos().size());
                         mOffset += mvListBean.getVideos().size();
                     }
                 }
             }
         };
-        swipeRefreshLayout.postDelayed(action,250);
+        swipeRefreshLayout.postDelayed(action, 250);
     }
+
     protected void load() {
         initView();
         getData(mOffset, SIZE);
@@ -154,7 +171,7 @@ public class MVViewPagerItemFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        if (action!=null){
+        if (action != null) {
             swipeRefreshLayout.removeCallbacks(action);
         }
         ButterKnife.unbind(this);
