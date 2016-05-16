@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.FirstRecycleViewAdapter;
 import com.github.yinyuetai.domain.FirstPageBean;
@@ -29,6 +31,7 @@ import java.util.Iterator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 import okhttp3.Call;
 
 /**
@@ -50,6 +53,12 @@ public class FirstPageFragment extends Fragment {
     private int mWidth;
     private int mHeight;
     private Runnable action;
+    private MaterialDialog.Builder builder;
+    private MaterialDialog materialDialog;
+    private int lastVisibleItem;
+    boolean hasMore = true;
+    private static final int SIZE = 20;
+    private int mOffset = 0;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,7 +68,7 @@ public class FirstPageFragment extends Fragment {
             firstPageBeanList = new ArrayList<>();
             boserverView();
             initList();
-            getData();
+            getData(mOffset,SIZE);
         }
         ButterKnife.bind(this, rootView);
         return rootView;
@@ -84,26 +93,57 @@ public class FirstPageFragment extends Fragment {
         firstPageRecyclerView.setLayoutManager(linearLayoutManager);
         firstPageRecyclerView.setAdapter(recycleViewAdapter);
         swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_1);
-        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
-                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
-                        .getDisplayMetrics()));
         action = new Runnable() {
             @Override
             public void run() {
                 swipeRefreshLayout.setRefreshing(false);
             }
         };
-        swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipeRefreshLayout.postDelayed(action,200);
             }
         });
+        showLoading();
+        firstPageRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    Glide.with(getActivity()).resumeRequests();
+                }
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItem + 1 == recycleViewAdapter.getItemCount()) && hasMore) {
+                    swipeRefreshLayout.setRefreshing(true);
+                    getData(mOffset, SIZE);
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                Glide.with(getActivity()).pauseRequests();
+            }
+        });
+    }
+    private void showLoading(){
+        if (builder == null){
+
+            builder = new MaterialDialog.Builder(getActivity());
+            builder.cancelable(false);
+            builder.title("等一下");
+            builder.content("正在努力加载...")
+                    .progress(true, 0);
+        }
+        materialDialog = builder.show();
+    }
+    private void dismissLoading(){
+        materialDialog.dismiss();
     }
 
-    private void getData() {
-        OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMainPageUrl(0,20), FirstPageFragment.this, new StringCallBack() {
+    private void getData(int offset,int size) {
+        OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMainPageUrl(offset,size), FirstPageFragment.this, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
                 swipeRefreshLayout.setRefreshing(false);
@@ -122,14 +162,25 @@ public class FirstPageFragment extends Fragment {
                     jsonArray = el.getAsJsonArray();
                 }
                 Iterator it = jsonArray.iterator();
-                while (it.hasNext()) {
-                    JsonElement e = (JsonElement) it.next();
-                    //JsonElement转换为JavaBean对象
-                    FirstPageBean field = new Gson().fromJson(e, FirstPageBean.class);
-                    firstPageBeanList.add(field);
+                if (it.hasNext()){
+                    hasMore = true;
+                    int size = 0;
+                    while (it.hasNext()) {
+                        JsonElement e = (JsonElement) it.next();
+                        //JsonElement转换为JavaBean对象
+                        FirstPageBean field = new Gson().fromJson(e, FirstPageBean.class);
+                        firstPageBeanList.add(field);
+                        size++;
+                    }
+                    System.out.println(firstPageBeanList.size());
+                    mOffset += size;
+                    recycleViewAdapter.notifyDataSetChanged();
+
+                }else{
+                    hasMore = false;
                 }
-                System.out.println(firstPageBeanList.size());
-                recycleViewAdapter.notifyDataSetChanged();
+                dismissLoading();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

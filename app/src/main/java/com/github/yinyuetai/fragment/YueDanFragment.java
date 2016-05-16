@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.YueDanRecycleViewAdapter;
@@ -45,7 +46,22 @@ public class YueDanFragment extends Fragment {
     private int mOffset = 0;
     private YueDanRecycleViewAdapter recycleViewAdapter;
     List<YueDanBean.PlayListsBean> playLists = new ArrayList<>();
+    private MaterialDialog.Builder builder;
+    private MaterialDialog materialDialog;
+    private void showLoading(){
+        if (builder == null){
 
+            builder = new MaterialDialog.Builder(getActivity());
+            builder.cancelable(false);
+            builder.title("等一下");
+            builder.content("正在努力加载...")
+                    .progress(true, 0);
+        }
+        materialDialog = builder.show();
+    }
+    private void dismissLoading(){
+        materialDialog.dismiss();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,6 +69,7 @@ public class YueDanFragment extends Fragment {
             rootView = inflater.inflate(R.layout.common_recycleview_layout, container, false);
             ButterKnife.bind(this, rootView);
             initView();
+            showLoading();
             getData(mOffset,SIZE);
         }
         ButterKnife.bind(this, rootView);
@@ -66,10 +83,6 @@ public class YueDanFragment extends Fragment {
                 dismissProgress(null);
             }
         });
-        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
-                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
-                        .getDisplayMetrics()));
-        showProgress();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         recycleViewAdapter = new YueDanRecycleViewAdapter(playLists,getActivity());
         recyclerView.setAdapter(recycleViewAdapter);
@@ -99,10 +112,12 @@ public class YueDanFragment extends Fragment {
             @Override
             public void onError(Call call, Exception e) {
                 dismissProgress(null);
+                dismissLoading();
             }
 
             @Override
             public void onResponse(String response) {
+                dismissLoading();
                 dismissProgress(response);
             }
         });
@@ -130,7 +145,7 @@ public class YueDanFragment extends Fragment {
                     }
                 }
             }};
-        swipeRefreshLayout.postDelayed(action,500);
+        swipeRefreshLayout.postDelayed(action,250);
     }
 
     @Override

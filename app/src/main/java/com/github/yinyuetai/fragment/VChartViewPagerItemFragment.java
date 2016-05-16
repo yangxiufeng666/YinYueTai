@@ -3,8 +3,10 @@ package com.github.yinyuetai.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +46,8 @@ public class VChartViewPagerItemFragment extends Fragment {
     RelativeLayout periodLayout;
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
+    @Bind(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
     private View rootView;
     private boolean hasCreatedOnce;
     private String areaCode;
@@ -89,6 +93,17 @@ public class VChartViewPagerItemFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         viewAdapter = new VCharRecycleViewAdapter(getActivity(), videosBeen);
         recyclerView.setAdapter(viewAdapter);
+        swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_3);
+        swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                        .getDisplayMetrics()));
+        swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
     }
 
@@ -96,11 +111,12 @@ public class VChartViewPagerItemFragment extends Fragment {
         OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getVChartPeriodUrl(areaCode), VChartViewPagerItemFragment.this, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
-
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onResponse(String response) {
+                swipeRefreshLayout.setRefreshing(false);
                 vChartPeriod = new Gson().fromJson(response, VChartPeriod.class);
                 periodsBeanArrayList = vChartPeriod.getPeriods();
                 VChartPeriod.PeriodsBean periodsBean = periodsBeanArrayList.get(0);

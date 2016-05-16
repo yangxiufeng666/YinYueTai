@@ -145,7 +145,7 @@ public class MVViewPagerItemFragment extends Fragment {
                 }
             }
         };
-        swipeRefreshLayout.postDelayed(action,500);
+        swipeRefreshLayout.postDelayed(action,250);
     }
     protected void load() {
         initView();

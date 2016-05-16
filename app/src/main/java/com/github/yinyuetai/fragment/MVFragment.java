@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.MVViewPagerAdapter;
 import com.github.yinyuetai.domain.AreaBean;
@@ -40,7 +41,22 @@ public class MVFragment extends Fragment {
     private View rootView;
     private ArrayList<AreaBean> areaBeanArrayList;
     private MVViewPagerAdapter pagerAdapter;
+    private MaterialDialog.Builder builder;
+    private MaterialDialog materialDialog;
+    private void showLoading(){
+        if (builder == null){
 
+            builder = new MaterialDialog.Builder(getActivity());
+            builder.cancelable(false);
+            builder.title("等一下");
+            builder.content("正在努力加载...")
+                    .progress(true, 0);
+        }
+        materialDialog = builder.show();
+    }
+    private void dismissLoading(){
+        materialDialog.dismiss();
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,6 +69,7 @@ public class MVFragment extends Fragment {
         return rootView;
     }
     private void initArea(){
+        showLoading();
         OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMVareaUrl(), MVFragment.this, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
@@ -84,6 +101,7 @@ public class MVFragment extends Fragment {
                     fragments.add(MVViewPagerItemFragment.getInstance(area.getCode()));
                 }
                 initViewPager(fragments);
+                dismissLoading();
             }
         });
     }
