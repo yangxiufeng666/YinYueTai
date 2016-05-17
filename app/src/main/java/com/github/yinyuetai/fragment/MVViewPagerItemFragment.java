@@ -117,7 +117,7 @@ public class MVViewPagerItemFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mvRecyclerView.scrollToPosition(0);
+                mvRecyclerView.smoothScrollToPosition(0);
             }
         });
     }

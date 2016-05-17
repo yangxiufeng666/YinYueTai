@@ -29,7 +29,7 @@ import com.roughike.bottombar.OnMenuTabClickListener;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private SparseArray<Fragment> fragments;
     private SparseArray<Integer> colors;
     @Bind(R.id.toolBar)
@@ -88,22 +88,6 @@ public class MainActivity extends AppCompatActivity {
             transaction.replace(R.id.content, fragment);
         }
         transaction.commit();
-    }
-
-    private void setTranslucenttatus(int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            // Translucent status bar
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            // create our manager instance after the content view is set
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setNavigationBarTintEnabled(true);
-            tintManager.setTintColor(color);
-        }
-
     }
 
     @Override

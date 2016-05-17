@@ -1,6 +1,7 @@
 package com.github.yinyuetai.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.yinyuetai.R;
+import com.github.yinyuetai.activity.WebActivity;
 import com.github.yinyuetai.domain.FirstPageBean;
 
 import java.util.ArrayList;
@@ -54,32 +56,59 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
         holder.homeRecommendItemTransbg.setLayoutParams(new RelativeLayout.LayoutParams(mWidth, mHeight));
         holder.homeRecommendItemTitle.setText(pageBean.getTitle());
         holder.homeRecommendItemDescription.setText(pageBean.getDescription());
-        if ("ACTIVITY".equalsIgnoreCase(pageBean.getType())) {//活动相关
+        final int tag;
+        String type = pageBean.getType();
+        if ("ACTIVITY".equalsIgnoreCase(type)) {//活动相关
+            tag = 0;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_activity);
-        } else if ("VIDEO".equalsIgnoreCase(pageBean.getType())) {//首播，点击进去显示MV描述，相关MV
+        } else if ("VIDEO".equalsIgnoreCase(type)) {//首播，点击进去显示MV描述，相关MV
+            tag = 1;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_video);
-        } else if ("WEEK_MAIN_STAR".equalsIgnoreCase(pageBean.getType())) {//(悦单)点击进去跟显示悦单详情一样
+        } else if ("WEEK_MAIN_STAR".equalsIgnoreCase(type)) {//(悦单)点击进去跟显示悦单详情一样
+            tag = 2;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_star);
-        } else if ("PLAYLIST".equalsIgnoreCase(pageBean.getType())) {//(悦单)点击进去跟显示悦单详情一样
+        } else if ("PLAYLIST".equalsIgnoreCase(type)) {//(悦单)点击进去跟显示悦单详情一样
+            tag = 3;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_playlist);
-        } else if ("AD".equalsIgnoreCase(pageBean.getType())) {
+        } else if ("AD".equalsIgnoreCase(type)) {
+            tag = 4;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_ad);
-        } else if ("PROGRAM".equalsIgnoreCase(pageBean.getType())) {
+        } else if ("PROGRAM".equalsIgnoreCase(type)) {
+            tag = 5;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_program);
-        } else if ("bulletin".equalsIgnoreCase(pageBean.getType())) {
+        } else if ("bulletin".equalsIgnoreCase(type)) {
+            tag = 6;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_bulletin);
-        } else if ("fanart".equalsIgnoreCase(pageBean.getType())) {
+        } else if ("fanart".equalsIgnoreCase(type)) {
+            tag = 7;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_fanart);
-        } else if ("live".equalsIgnoreCase(pageBean.getType())) {
+        } else if ("live".equalsIgnoreCase(type)) {
+            tag = 8;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_live);
-        } else if ("live_new".equalsIgnoreCase(pageBean.getType())) {
+        } else if ("live_new".equalsIgnoreCase(type)|| ("LIVENEWLIST".equals(type))) {
+            tag = 9;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_live_new);
-        } else if ("project".equalsIgnoreCase(pageBean.getType())) {
+        } else if ("INVENTORY".equalsIgnoreCase(pageBean.getType())){
+            tag = 10;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_project);
+        }else {
+            tag = -100;
+            holder.homeRecommendItemType.setImageResource(0);
         }
+
         holder.homeRecommendItemJpg.setLayoutParams(localLayoutParams);
         holder.homeRecommendItemJpg.setScaleType(ImageView.ScaleType.FIT_XY);
         Glide.with(activity).load(pageBean.getPosterPic()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.homeRecommendItemJpg);
+        holder.itemRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                if (tag ==0 || tag==10){
+                    intent.setClass(activity, WebActivity.class);
+                    activity.startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override

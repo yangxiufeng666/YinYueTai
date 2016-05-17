@@ -87,7 +87,7 @@ public class YueDanFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.scrollToPosition(0);
+                recyclerView.smoothScrollToPosition(0);
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_4);
