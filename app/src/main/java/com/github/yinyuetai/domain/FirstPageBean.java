@@ -26,6 +26,7 @@ public class FirstPageBean {
     private String title;
     private String posterPic;
     private String thumbnailPic;
+    private String url;
     private long videoSize;
     private long hdVideoSize;
     private long uhdVideoSize;
@@ -78,26 +79,6 @@ public class FirstPageBean {
         return videoSize;
     }
 
-    public void setVideoSize(int videoSize) {
-        this.videoSize = videoSize;
-    }
-
-    public long getHdVideoSize() {
-        return hdVideoSize;
-    }
-
-    public void setHdVideoSize(int hdVideoSize) {
-        this.hdVideoSize = hdVideoSize;
-    }
-
-    public long getUhdVideoSize() {
-        return uhdVideoSize;
-    }
-
-    public void setUhdVideoSize(int uhdVideoSize) {
-        this.uhdVideoSize = uhdVideoSize;
-    }
-
     public int getStatus() {
         return status;
     }
@@ -128,6 +109,34 @@ public class FirstPageBean {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setVideoSize(long videoSize) {
+        this.videoSize = videoSize;
+    }
+
+    public long getHdVideoSize() {
+        return hdVideoSize;
+    }
+
+    public void setHdVideoSize(long hdVideoSize) {
+        this.hdVideoSize = hdVideoSize;
+    }
+
+    public long getUhdVideoSize() {
+        return uhdVideoSize;
+    }
+
+    public void setUhdVideoSize(long uhdVideoSize) {
+        this.uhdVideoSize = uhdVideoSize;
     }
 
     @Override

@@ -2,7 +2,10 @@ package com.github.yinyuetai.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +54,7 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
 
     @Override
     public void onBindViewHolder(FirstHolder holder, int position) {
-        FirstPageBean pageBean = firstPageBeanList.get(position);
+        final FirstPageBean pageBean = firstPageBeanList.get(position);
 //        holder.itemRoot.setLayoutParams(new RelativeLayout.LayoutParams(mWidth, mHeight));
         holder.homeRecommendItemTransbg.setLayoutParams(new RelativeLayout.LayoutParams(mWidth, mHeight));
         holder.homeRecommendItemTitle.setText(pageBean.getTitle());
@@ -85,7 +88,7 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
         } else if ("live".equalsIgnoreCase(type)) {
             tag = 8;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_live);
-        } else if ("live_new".equalsIgnoreCase(type)|| ("LIVENEWLIST".equals(type))) {
+        } else if ("LIVENEW".equalsIgnoreCase(type)|| ("LIVENEWLIST".equals(type))) {
             tag = 9;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_live_new);
         } else if ("INVENTORY".equalsIgnoreCase(pageBean.getType())){
@@ -105,7 +108,11 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
                 Intent intent = new Intent();
                 if (tag ==0 || tag==10){
                     intent.setClass(activity, WebActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("url",pageBean.getUrl());
+                    intent.putExtras(bundle);
                     activity.startActivity(intent);
+                    activity.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 }
             }
         });

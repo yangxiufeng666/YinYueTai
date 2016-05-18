@@ -116,7 +116,6 @@ public class VChartViewPagerItemFragment extends Fragment {
 
             @Override
             public void onResponse(String response) {
-                swipeRefreshLayout.setRefreshing(false);
                 vChartPeriod = new Gson().fromJson(response, VChartPeriod.class);
                 periodsBeanArrayList = vChartPeriod.getPeriods();
                 VChartPeriod.PeriodsBean periodsBean = periodsBeanArrayList.get(0);
@@ -135,6 +134,7 @@ public class VChartViewPagerItemFragment extends Fragment {
 
             @Override
             public void onResponse(String response) {
+                swipeRefreshLayout.setRefreshing(false);
                 vChartBean = new Gson().fromJson(response, VChartBean.class);
                 videosBeen.addAll(vChartBean.getVideos());
                 viewAdapter.notifyDataSetChanged();
