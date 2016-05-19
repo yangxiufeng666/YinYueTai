@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -37,17 +38,23 @@ public class YueDanRecycleViewAdapter extends RecyclerView.Adapter<YueDanRecycle
         TextView author;
         @Bind(R.id.play_count)
         TextView playCount;
+        @Bind(R.id.item_transbg)
+        ImageView itemTransbg;
+
         public YueDanHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
-    List<YueDanBean.PlayListsBean> playLists;
-    Activity activity;
 
-    public YueDanRecycleViewAdapter(List<YueDanBean.PlayListsBean> playLists,Activity activity) {
+    private List<YueDanBean.PlayListsBean> playLists;
+    private Activity activity;
+    private RelativeLayout.LayoutParams layoutParams;
+
+    public YueDanRecycleViewAdapter(List<YueDanBean.PlayListsBean> playLists, Activity activity,int mWidth,int mHeight) {
         this.playLists = playLists;
         this.activity = activity;
+        layoutParams = new RelativeLayout.LayoutParams(mWidth,mHeight);
     }
 
     @Override
@@ -59,9 +66,11 @@ public class YueDanRecycleViewAdapter extends RecyclerView.Adapter<YueDanRecycle
     @Override
     public void onBindViewHolder(YueDanHolder holder, int position) {
         YueDanBean.PlayListsBean playListsBean = playLists.get(position);
+        holder.posterImg.setLayoutParams(layoutParams);
+        holder.itemTransbg.setLayoutParams(layoutParams);
         holder.title.setText(playListsBean.getTitle());
         holder.author.setText(playListsBean.getCreator().getNickName());
-        holder.playCount.setText("收录高清MV"+playListsBean.getVideoCount()+"首");
+        holder.playCount.setText("收录高清MV" + playListsBean.getVideoCount() + "首");
         Glide.with(activity).load(playListsBean.getPlayListBigPic()).into(holder.posterImg);
         Glide.with(activity).load(playListsBean.getCreator().getLargeAvatar()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.profileImage);
     }

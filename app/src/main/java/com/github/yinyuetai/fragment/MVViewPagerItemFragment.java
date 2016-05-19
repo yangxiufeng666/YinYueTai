@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +60,8 @@ public class MVViewPagerItemFragment extends Fragment {
     private int lastVisibleItem;
     boolean hasMore = true;
     private Runnable action;
+    private int mWidth;
+    private int mHeight;
 
     @Nullable
     @Override
@@ -66,6 +70,7 @@ public class MVViewPagerItemFragment extends Fragment {
             rootView = inflater.inflate(R.layout.mv_viewpager_item_fragment, container, false);
             Bundle bundle = getArguments();
             areaCode = bundle.getString("areaCode");
+            boserverView();
             ButterKnife.bind(this, rootView);
             load();
         } else {
@@ -74,14 +79,20 @@ public class MVViewPagerItemFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         return rootView;
     }
-
+    private void boserverView() {
+        DisplayMetrics metric = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
+        mWidth = metric.widthPixels;
+        mHeight = (mWidth * 360) / 640;
+        Log.i("MVViewPagerItemFragment", "mHeight =" + mHeight);
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     private void initView() {
-        recycleViewAdapter = new MVRecycleViewAdapter(videosList, getActivity());
+        recycleViewAdapter = new MVRecycleViewAdapter(videosList, getActivity(),mWidth,mHeight);
         mvRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mvRecyclerView.setAdapter(recycleViewAdapter);
         mvRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

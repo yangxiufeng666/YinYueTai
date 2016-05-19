@@ -65,6 +65,31 @@ public class URLProviderUtil {
 				+ "&size="+size;
 		return url;
 	}
+
+	/**
+	 * <p>获取音乐节目列表</p>
+	 * @param artistIds
+	 * @param offset
+	 * @param size
+     * @return
+     */
+	public static String getYinYueProgramList(String artistIds,int offset,int size){
+		String url = "http://mapi.yinyuetai.com/playlist/show.json?deviceinfo="
+				+ "{\"aid\":\"10201022\",\"os\":\"Android\","
+				+ "\"ov\":"+"\""+ Util.getSystemversion() +"\""+","
+				+ "\"rn\":\"480*800\","
+				+ "\"dn\":"+"\""+Util.getPhoneModel()+"\""+","
+				+ "\"cr\":\"00000\","
+				+ "\"as\":"
+				+ "\"WIFI\","
+				+ "\"uid\":"
+				+ "\"bc8255b6efc478ce334ae187bdd20fd9\","
+				+ "\"clid\":110003000}"
+				+ "&offset="+offset
+				+ "&size="+size
+				+ "&artistIds="+artistIds;
+		return url;
+	}
 	/**
 	 * 获取V榜地址
 	 * @return

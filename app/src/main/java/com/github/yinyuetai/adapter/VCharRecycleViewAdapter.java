@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -26,12 +27,14 @@ import butterknife.ButterKnife;
  */
 public class VCharRecycleViewAdapter extends RecyclerView.Adapter<VCharRecycleViewAdapter.ViewHolder> {
 
-    private List<VChartBean.VideosBean> videosBeen=new ArrayList<>();
+    private List<VChartBean.VideosBean> videosBeen = new ArrayList<>();
     private Activity activity;
+    private RelativeLayout.LayoutParams layoutParams;
 
-    public VCharRecycleViewAdapter(Activity activity, List<VChartBean.VideosBean> videosBeen) {
+    public VCharRecycleViewAdapter(Activity activity, List<VChartBean.VideosBean> videosBeen, int mWidth, int mHeight) {
         this.activity = activity;
         this.videosBeen = videosBeen;
+        layoutParams = new RelativeLayout.LayoutParams(mWidth, mHeight);
     }
 
     @Override
@@ -43,7 +46,9 @@ public class VCharRecycleViewAdapter extends RecyclerView.Adapter<VCharRecycleVi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         VChartBean.VideosBean videoBean = videosBeen.get(position);
-        holder.serialNumber.setText(""+(position+1));
+        holder.posterImg.setLayoutParams(layoutParams);
+        holder.itemTransbg.setLayoutParams(layoutParams);
+        holder.serialNumber.setText("" + (position + 1));
         holder.score.setText(videoBean.getScore());
         holder.author.setText(videoBean.getArtistName());
         holder.title.setText(videoBean.getTitle());
@@ -67,9 +72,12 @@ public class VCharRecycleViewAdapter extends RecyclerView.Adapter<VCharRecycleVi
         TextView title;
         @Bind(R.id.author)
         TextView author;
+        @Bind(R.id.item_transbg)
+        ImageView itemTransbg;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

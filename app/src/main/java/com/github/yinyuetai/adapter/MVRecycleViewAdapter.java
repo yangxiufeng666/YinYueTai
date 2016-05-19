@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,25 +28,28 @@ public class MVRecycleViewAdapter extends RecyclerView.Adapter<MVRecycleViewAdap
 
     private ArrayList<MVListBean.VideosBean> videoList = new ArrayList<>();
     private Activity activity;
+    private RelativeLayout.LayoutParams layoutParams;
 
-    public MVRecycleViewAdapter(ArrayList<MVListBean.VideosBean> videoList,Activity activity) {
+    public MVRecycleViewAdapter(ArrayList<MVListBean.VideosBean> videoList, Activity activity,int mWidth, int mHeight) {
         this.videoList = videoList;
         this.activity = activity;
+        layoutParams = new RelativeLayout.LayoutParams(mWidth,mHeight);
     }
 
     @Override
-    public MVRecycleViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mv_recycleview_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MVRecycleViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         MVListBean.VideosBean videosBean = videoList.get(position);
-        holder.emptyLogo.setVisibility(View.INVISIBLE);
+        holder.posterImg.setLayoutParams(layoutParams);
+        holder.itemTransbg.setLayoutParams(layoutParams);
         holder.name.setText(videosBean.getTitle());
         holder.author.setText(videosBean.getDescription());
-        holder.playCount.setText("播放次数："+videosBean.getTotalViews());
+        holder.playCount.setText("播放次数：" + videosBean.getTotalViews());
         Glide.with(activity).load(videosBean.getAlbumImg()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.posterImg);
     }
 
@@ -65,9 +69,12 @@ public class MVRecycleViewAdapter extends RecyclerView.Adapter<MVRecycleViewAdap
         TextView author;
         @Bind(R.id.play_count)
         TextView playCount;
+        @Bind(R.id.item_transbg)
+        ImageView itemTransbg;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

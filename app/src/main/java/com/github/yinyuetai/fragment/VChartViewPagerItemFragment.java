@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +61,9 @@ public class VChartViewPagerItemFragment extends Fragment {
 
     private VCharRecycleViewAdapter viewAdapter;
 
+    private int mWidth;
+    private int mHeight;
+
     public static Fragment newInstance(String areaCode) {
         VChartViewPagerItemFragment vChartViewPagerItemFragment = new VChartViewPagerItemFragment();
         Bundle bundle = new Bundle();
@@ -72,6 +77,7 @@ public class VChartViewPagerItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.vchart_viewpager_fragment, container, false);
+            boserverView();
         }
         ButterKnife.bind(this, rootView);
         if (!hasCreatedOnce) {
@@ -87,11 +93,16 @@ public class VChartViewPagerItemFragment extends Fragment {
         super.onCreate(savedInstanceState);
         areaCode = getArguments().getString("areaCode");
     }
-
+    private void boserverView() {
+        DisplayMetrics metric = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
+        mWidth = metric.widthPixels;
+        mHeight = (mWidth * 360) / 640;
+    }
     private void initView() {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        viewAdapter = new VCharRecycleViewAdapter(getActivity(), videosBeen);
+        viewAdapter = new VCharRecycleViewAdapter(getActivity(), videosBeen,mWidth,mHeight);
         recyclerView.setAdapter(viewAdapter);
         swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_3);
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue

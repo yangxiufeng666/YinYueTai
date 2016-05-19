@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,9 @@ public class YueDanFragment extends Fragment {
     private MaterialDialog.Builder builder;
     private MaterialDialog materialDialog;
 
+    private int mWidth;
+    private int mHeight;
+
     private void showLoading() {
         if (builder == null) {
 
@@ -67,12 +71,19 @@ public class YueDanFragment extends Fragment {
     private void dismissLoading() {
         materialDialog.dismiss();
     }
+    private void boserverView() {
+        DisplayMetrics metric = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
+        mWidth = metric.widthPixels;
+        mHeight = (mWidth * 360) / 640;
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.common_recycleview_layout, container, false);
+            boserverView();
             ButterKnife.bind(this, rootView);
             initView();
             showLoading();
@@ -98,7 +109,7 @@ public class YueDanFragment extends Fragment {
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        recycleViewAdapter = new YueDanRecycleViewAdapter(playLists, getActivity());
+        recycleViewAdapter = new YueDanRecycleViewAdapter(playLists, getActivity(),mWidth,mHeight);
         recyclerView.setAdapter(recycleViewAdapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
