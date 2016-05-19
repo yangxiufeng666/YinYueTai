@@ -6,11 +6,11 @@
 ![image](https://github.com/babylikebird/YinYueTai/blob/master/yinyuetai.gif)
 
 #thanks
-    [butterknife](https://github.com/JakeWharton/butterknife)
-    [gson](https://github.com/google/gson)
-    [okhttp](https://github.com/square/okhttp)
-    [bottom-bar](https://github.com/roughike/BottomBar)
-    [glide](https://github.com/bumptech/glide)
-    [circleimageview](https://github.com/hdodenhof/CircleImageView)
-    [systembartint](https://github.com/jgilfelt/SystemBarTint)
-    [material-dialogs](https://github.com/afollestad/material-dialogs)
+[butterknife](https://github.com/JakeWharton/butterknife)<br/>
+[gson](https://github.com/google/gson)<br/>
+[okhttp](https://github.com/square/okhttp)<br/>
+[bottom-bar](https://github.com/roughike/BottomBar)<br/>
+[glide](https://github.com/bumptech/glide)<br/>
+[circleimageview](https://github.com/hdodenhof/CircleImageView)<br/>
+[systembartint](https://github.com/jgilfelt/SystemBarTint)<br/>
+[material-dialogs](https://github.com/afollestad/material-dialogs)<br/>
