@@ -15,7 +15,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.yinyuetai.R;
+import com.github.yinyuetai.activity.DetailActivity;
 import com.github.yinyuetai.activity.WebActivity;
+import com.github.yinyuetai.activity.YueDanDetailActivity;
 import com.github.yinyuetai.domain.VideoBean;
 
 import java.util.ArrayList;
@@ -59,7 +61,7 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
         holder.homeRecommendItemDescription.setText(pageBean.getDescription());
         final int tag;
         String type = pageBean.getType();
-        if ("ACTIVITY".equalsIgnoreCase(type)) {//活动相关
+        if ("ACTIVITY".equalsIgnoreCase(type)) {//打开页面
             tag = 0;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_activity);
         } else if ("VIDEO".equalsIgnoreCase(type)) {//首播，点击进去显示MV描述，相关MV
@@ -74,7 +76,7 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
         } else if ("AD".equalsIgnoreCase(type)) {
             tag = 4;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_ad);
-        } else if ("PROGRAM".equalsIgnoreCase(type)) {
+        } else if ("PROGRAM".equalsIgnoreCase(type)) {//跳到MV详情
             tag = 5;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_program);
         } else if ("bulletin".equalsIgnoreCase(type)) {
@@ -89,7 +91,7 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
         } else if ("LIVENEW".equalsIgnoreCase(type)|| ("LIVENEWLIST".equals(type))) {
             tag = 9;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_live_new);
-        } else if ("INVENTORY".equalsIgnoreCase(pageBean.getType())){
+        } else if ("INVENTORY".equalsIgnoreCase(pageBean.getType())){//打开页面
             tag = 10;
             holder.homeRecommendItemType.setImageResource(R.drawable.home_page_project);
         }else {
@@ -104,14 +106,28 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                if (tag ==0 || tag==10){
-                    intent.setClass(activity, WebActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("url",pageBean.getUrl());
-                    intent.putExtras(bundle);
-                    activity.startActivity(intent);
-                    activity.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                switch (tag){
+                    case 0:
+                    case 10:
+                        intent.setClass(activity, WebActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("url",pageBean.getUrl());
+                        intent.putExtras(bundle);
+                        break;
+                    case 1:
+                    case 5:
+                    case 7:
+                        intent.setClass(activity, DetailActivity.class);
+                        break;
+                    case 2:
+                    case 3:
+                        intent.setClass(activity, YueDanDetailActivity.class);
+                        break;
+                    default:
+                        return;
                 }
+                activity.startActivity(intent);
+                activity.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
         });
     }
