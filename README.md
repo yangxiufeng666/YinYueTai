@@ -5,6 +5,10 @@
 #show
 ![image](https://github.com/babylikebird/YinYueTai/blob/master/yinyuetai.gif)
 
+#TO DO LIST
+- 详情页<br>
+- 视频播放<br>
+
 #thanks
 [butterknife](https://github.com/JakeWharton/butterknife)<br/>
 [gson](https://github.com/google/gson)<br/>
