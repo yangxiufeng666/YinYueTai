@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.domain.VChartBean;
+import com.github.yinyuetai.domain.VideoBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +28,11 @@ import butterknife.ButterKnife;
  */
 public class VCharRecycleViewAdapter extends RecyclerView.Adapter<VCharRecycleViewAdapter.ViewHolder> {
 
-    private List<VChartBean.VideosBean> videosBeen = new ArrayList<>();
+    private List<VideoBean> videosBeen = new ArrayList<>();
     private Activity activity;
     private RelativeLayout.LayoutParams layoutParams;
 
-    public VCharRecycleViewAdapter(Activity activity, List<VChartBean.VideosBean> videosBeen, int mWidth, int mHeight) {
+    public VCharRecycleViewAdapter(Activity activity, List<VideoBean> videosBeen, int mWidth, int mHeight) {
         this.activity = activity;
         this.videosBeen = videosBeen;
         layoutParams = new RelativeLayout.LayoutParams(mWidth, mHeight);
@@ -45,7 +46,7 @@ public class VCharRecycleViewAdapter extends RecyclerView.Adapter<VCharRecycleVi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        VChartBean.VideosBean videoBean = videosBeen.get(position);
+        VideoBean videoBean = videosBeen.get(position);
         holder.posterImg.setLayoutParams(layoutParams);
         holder.itemTransbg.setLayoutParams(layoutParams);
         holder.serialNumber.setText("" + (position + 1));

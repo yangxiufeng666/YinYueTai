@@ -20,6 +20,7 @@ import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.VCharRecycleViewAdapter;
 import com.github.yinyuetai.domain.VChartBean;
 import com.github.yinyuetai.domain.VChartPeriod;
+import com.github.yinyuetai.domain.VideoBean;
 import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
 import com.github.yinyuetai.util.URLProviderUtil;
@@ -57,7 +58,7 @@ public class VChartViewPagerItemFragment extends Fragment {
     private VChartPeriod vChartPeriod;
     private List<VChartPeriod.PeriodsBean> periodsBeanArrayList;
     private VChartBean vChartBean;
-    private List<VChartBean.VideosBean> videosBeen = new ArrayList<>();
+    private List<VideoBean> videosBeen = new ArrayList<>();
 
     private VCharRecycleViewAdapter viewAdapter;
 

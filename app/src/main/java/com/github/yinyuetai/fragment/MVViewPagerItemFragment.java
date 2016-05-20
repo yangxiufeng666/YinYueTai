@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.MVRecycleViewAdapter;
 import com.github.yinyuetai.domain.MVListBean;
+import com.github.yinyuetai.domain.VideoBean;
 import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
 import com.github.yinyuetai.util.URLProviderUtil;
@@ -55,7 +56,7 @@ public class MVViewPagerItemFragment extends Fragment {
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     MVRecycleViewAdapter recycleViewAdapter;
-    private ArrayList<MVListBean.VideosBean> videosList = new ArrayList<MVListBean.VideosBean>();
+    private ArrayList<VideoBean> videosList = new ArrayList<VideoBean>();
     private View rootView;
     private int lastVisibleItem;
     boolean hasMore = true;

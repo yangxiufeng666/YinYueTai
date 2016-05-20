@@ -17,7 +17,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.FirstRecycleViewAdapter;
-import com.github.yinyuetai.domain.FirstPageBean;
+import com.github.yinyuetai.domain.VideoBean;
 import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
 import com.github.yinyuetai.util.URLProviderUtil;
@@ -50,7 +50,7 @@ public class FirstPageFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private FirstRecycleViewAdapter recycleViewAdapter;
     private View rootView;
-    private ArrayList<FirstPageBean> firstPageBeanList;
+    private ArrayList<VideoBean> firstPageBeanList;
     private int mWidth;
     private int mHeight;
     private Runnable action;
@@ -178,7 +178,7 @@ public class FirstPageFragment extends Fragment {
                     while (it.hasNext()) {
                         JsonElement e = (JsonElement) it.next();
                         //JsonElement转换为JavaBean对象
-                        FirstPageBean field = new Gson().fromJson(e, FirstPageBean.class);
+                        VideoBean field = new Gson().fromJson(e, VideoBean.class);
                         firstPageBeanList.add(field);
                         size++;
                     }

@@ -2,10 +2,8 @@ package com.github.yinyuetai.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.activity.WebActivity;
-import com.github.yinyuetai.domain.FirstPageBean;
+import com.github.yinyuetai.domain.VideoBean;
 
 import java.util.ArrayList;
 
@@ -33,12 +31,12 @@ import butterknife.ButterKnife;
 public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleViewAdapter.FirstHolder> {
 
 
-    private ArrayList<FirstPageBean> firstPageBeanList;
+    private ArrayList<VideoBean> firstPageBeanList;
     private Activity activity;
     private LinearLayout.LayoutParams localLayoutParams;
     int mWidth, mHeight;
 
-    public FirstRecycleViewAdapter(ArrayList<FirstPageBean> firstPageBeanList, Activity activity, int mWidth, int mHeight) {
+    public FirstRecycleViewAdapter(ArrayList<VideoBean> firstPageBeanList, Activity activity, int mWidth, int mHeight) {
         this.firstPageBeanList = firstPageBeanList;
         this.activity = activity;
         localLayoutParams = new LinearLayout.LayoutParams(mWidth, mHeight);
@@ -54,7 +52,7 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
 
     @Override
     public void onBindViewHolder(FirstHolder holder, int position) {
-        final FirstPageBean pageBean = firstPageBeanList.get(position);
+        final VideoBean pageBean = firstPageBeanList.get(position);
 //        holder.itemRoot.setLayoutParams(new RelativeLayout.LayoutParams(mWidth, mHeight));
         holder.homeRecommendItemTransbg.setLayoutParams(new RelativeLayout.LayoutParams(mWidth, mHeight));
         holder.homeRecommendItemTitle.setText(pageBean.getTitle());

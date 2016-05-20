@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.domain.MVListBean;
+import com.github.yinyuetai.domain.VideoBean;
 
 import java.util.ArrayList;
 
@@ -26,11 +27,11 @@ import butterknife.ButterKnife;
  */
 public class MVRecycleViewAdapter extends RecyclerView.Adapter<MVRecycleViewAdapter.ViewHolder> {
 
-    private ArrayList<MVListBean.VideosBean> videoList = new ArrayList<>();
+    private ArrayList<VideoBean> videoList = new ArrayList<>();
     private Activity activity;
     private RelativeLayout.LayoutParams layoutParams;
 
-    public MVRecycleViewAdapter(ArrayList<MVListBean.VideosBean> videoList, Activity activity,int mWidth, int mHeight) {
+    public MVRecycleViewAdapter(ArrayList<VideoBean> videoList, Activity activity,int mWidth, int mHeight) {
         this.videoList = videoList;
         this.activity = activity;
         layoutParams = new RelativeLayout.LayoutParams(mWidth,mHeight);
@@ -44,13 +45,13 @@ public class MVRecycleViewAdapter extends RecyclerView.Adapter<MVRecycleViewAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        MVListBean.VideosBean videosBean = videoList.get(position);
+        VideoBean videoBean = videoList.get(position);
         holder.posterImg.setLayoutParams(layoutParams);
         holder.itemTransbg.setLayoutParams(layoutParams);
-        holder.name.setText(videosBean.getTitle());
-        holder.author.setText(videosBean.getDescription());
-        holder.playCount.setText("播放次数：" + videosBean.getTotalViews());
-        Glide.with(activity).load(videosBean.getAlbumImg()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.posterImg);
+        holder.name.setText(videoBean.getTitle());
+        holder.author.setText(videoBean.getDescription());
+        holder.playCount.setText("播放次数：" + videoBean.getTotalViews());
+        Glide.with(activity).load(videoBean.getAlbumImg()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.posterImg);
     }
 
     @Override
