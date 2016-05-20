@@ -2,12 +2,18 @@ package com.github.yinyuetai.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.domain.MVDetailBean;
+import com.github.yinyuetai.fragment.MVDescribeFragment;
+import com.github.yinyuetai.fragment.RelativeMvFragment;
 import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
 import com.github.yinyuetai.util.URLProviderUtil;
@@ -25,28 +31,23 @@ import okhttp3.Call;
  * YinYueTai
  */
 public class DetailActivity extends BaseActivity {
-    @Bind(R.id.navi_mvdetail_collection)
-    ImageView naviMvdetailCollection;
-    @Bind(R.id.navi_mvdetail_down)
-    ImageView naviMvdetailDown;
-    @Bind(R.id.navi_mvdetail_shared)
-    ImageView naviMvdetailShared;
-    @Bind(R.id.navi_mvdetail_game)
-    ImageView naviMvdetailGame;
-    @Bind(R.id.navi_mvdetail_reply)
-    ImageView naviMvdetailReply;
-    @Bind(R.id.navi_mvdetail_gift)
-    ImageView naviMvdetailGift;
-    @Bind(R.id.navi_mvdetail_addylist)
-    ImageView naviMvdetailAddylist;
-    @Bind(R.id.bottom_navi_LinearLayout)
-    LinearLayout bottomNaviLinearLayout;
     int id;
     @Bind(R.id.videoplayer)
     JCVideoPlayerStandard videoplayer;
+    @Bind(R.id.nav)
+    LinearLayout nav;
+    @Bind(R.id.mv_describe)
+    ImageView mvDescribe;
+    @Bind(R.id.mv_comment)
+    ImageView mvComment;
+    @Bind(R.id.relative_mv)
+    ImageView relativeMv;
     private MaterialDialog.Builder builder;
     private MaterialDialog materialDialog;
     private MVDetailBean detailBean;
+
+    private MVDescribeFragment describeFragment;
+    private RelativeMvFragment relativeMvFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,9 +55,38 @@ public class DetailActivity extends BaseActivity {
         setContentView(R.layout.mv_detail_layout);
         ButterKnife.bind(this);
         id = getIntent().getIntExtra("id", -10);
+        mvDescribe.setOnClickListener(imageClickListener);
+        mvComment.setOnClickListener(imageClickListener);
+        relativeMv.setOnClickListener(imageClickListener);
         getData();
     }
-
+    private View.OnClickListener imageClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.mv_describe:
+                    setImageBackground(mvDescribe,R.drawable.player_mv_p);
+                    setImageBackground(mvComment,R.drawable.player_comment);
+                    setImageBackground(relativeMv,R.drawable.player_relative_mv);
+                    setFragment(describeFragment);
+                    break;
+                case R.id.mv_comment:
+                    setImageBackground(mvDescribe,R.drawable.player_mv);
+                    setImageBackground(mvComment,R.drawable.player_comment_p);
+                    setImageBackground(relativeMv,R.drawable.player_relative_mv);
+                    break;
+                case R.id.relative_mv:
+                    setImageBackground(mvDescribe,R.drawable.player_mv);
+                    setImageBackground(mvComment,R.drawable.player_comment);
+                    setImageBackground(relativeMv,R.drawable.player_relative_mv_p);
+                    setFragment(relativeMvFragment);
+                    break;
+            }
+        }
+    };
+    private void setImageBackground(ImageView imageView,int resId){
+        imageView.setBackgroundResource(resId);
+    }
     private void getData() {
         showLoading();
         OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getRelativeVideoListUrl(id), this, new StringCallBack() {
@@ -68,11 +98,30 @@ public class DetailActivity extends BaseActivity {
             @Override
             public void onResponse(String response) {
                 dismissLoading();
-                System.out.println(response);
                 detailBean = new Gson().fromJson(response, MVDetailBean.class);
-                videoplayer.setUp(detailBean.getUrl(),detailBean.getTitle());
+                videoplayer.setUp(detailBean.getUrl(), detailBean.getTitle());
+                describeFragment = MVDescribeFragment.newInstance(detailBean);
+                relativeMvFragment = RelativeMvFragment.newInstance(detailBean);
+                setFragment(describeFragment);
             }
         });
+    }
+
+    private void setFragment(Fragment fragment) {
+        if (fragment == null) {
+            return;
+        }
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        if (fragment.isAdded() && fragment.isVisible()) {
+            return;
+        }
+        if (fragment.isAdded()) {
+            transaction.show(fragment);
+        } else {
+            transaction.replace(R.id.fragment_content, fragment);
+        }
+        transaction.commit();
     }
 
     private void showLoading() {

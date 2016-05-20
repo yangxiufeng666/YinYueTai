@@ -1,6 +1,7 @@
 package com.github.yinyuetai.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.yinyuetai.R;
-import com.github.yinyuetai.domain.MVListBean;
+import com.github.yinyuetai.activity.DetailActivity;
 import com.github.yinyuetai.domain.VideoBean;
 
 import java.util.ArrayList;
@@ -31,10 +32,10 @@ public class MVRecycleViewAdapter extends RecyclerView.Adapter<MVRecycleViewAdap
     private Activity activity;
     private RelativeLayout.LayoutParams layoutParams;
 
-    public MVRecycleViewAdapter(ArrayList<VideoBean> videoList, Activity activity,int mWidth, int mHeight) {
+    public MVRecycleViewAdapter(ArrayList<VideoBean> videoList, Activity activity, int mWidth, int mHeight) {
         this.videoList = videoList;
         this.activity = activity;
-        layoutParams = new RelativeLayout.LayoutParams(mWidth,mHeight);
+        layoutParams = new RelativeLayout.LayoutParams(mWidth, mHeight);
     }
 
     @Override
@@ -45,13 +46,23 @@ public class MVRecycleViewAdapter extends RecyclerView.Adapter<MVRecycleViewAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        VideoBean videoBean = videoList.get(position);
+        final VideoBean videoBean = videoList.get(position);
         holder.posterImg.setLayoutParams(layoutParams);
         holder.itemTransbg.setLayoutParams(layoutParams);
         holder.name.setText(videoBean.getTitle());
         holder.author.setText(videoBean.getDescription());
         holder.playCount.setText("播放次数：" + videoBean.getTotalViews());
         Glide.with(activity).load(videoBean.getAlbumImg()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.posterImg);
+        holder.itemRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(activity, DetailActivity.class);
+                intent.putExtra("id", videoBean.getId());
+                activity.startActivity(intent);
+                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
     }
 
     @Override
@@ -72,7 +83,8 @@ public class MVRecycleViewAdapter extends RecyclerView.Adapter<MVRecycleViewAdap
         TextView playCount;
         @Bind(R.id.item_transbg)
         ImageView itemTransbg;
-
+        @Bind(R.id.item_root)
+        RelativeLayout itemRoot;
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

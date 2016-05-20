@@ -9,7 +9,8 @@
         android:layout_height="200dp"
         android:orientation="vertical" />
     <LinearLayout
-        android:layout_below="@id/videoplayer"
+        android:id="@+id/nav"
+        android:layout_below="@+id/videoplayer"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,24 +18,33 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
         <ImageView
+            android:id="@+id/mv_describe"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="true"
-            android:background="@drawable/player_mv"/>
+            android:background="@drawable/player_mv_p"/>
         <ImageView
+            android:id="@+id/mv_comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="true"
             android:background="@drawable/player_comment"/>
         <ImageView
+            android:id="@+id/relative_mv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:clickable="true"
             android:background="@drawable/player_relative_mv"/>
     </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fragment_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/nav"
+        android:layout_above="@id/bottom_navi_LinearLayout"/>
     <include layout="@layout/bottom_mvdetail_navi"/>
 
 </RelativeLayout>
