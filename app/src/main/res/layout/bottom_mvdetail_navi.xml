@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_navi_LinearLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@color/black_bg"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/navi_mvdetail_collection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:clickable="true"
+        android:src="@drawable/mvdetail_navi_collection_btn_selector" />
+
+    <ImageView
+        android:id="@+id/navi_mvdetail_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:clickable="true"
+        android:src="@drawable/mvdetail_navi_down_btn_selector" />
+
+    <ImageView
+        android:id="@+id/navi_mvdetail_shared"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:clickable="true"
+        android:src="@drawable/mvdetail_navi_shared_btn_selector" />
+
+    <ImageView
+        android:id="@+id/navi_mvdetail_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:clickable="true"
+        android:src="@drawable/mvdetail_navi_game_btn_selector"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/navi_mvdetail_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:clickable="true"
+        android:src="@drawable/mvdetail_navi_reply_btn_selector" />
+
+    <ImageView
+        android:id="@+id/navi_mvdetail_gift"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:clickable="true"
+        android:src="@drawable/mvdetail_navi_money_btn_selector"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/navi_mvdetail_addylist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:clickable="true"
+        android:src="@drawable/mvdetail_navi_addylist_btn_selector" />
+</LinearLayout>

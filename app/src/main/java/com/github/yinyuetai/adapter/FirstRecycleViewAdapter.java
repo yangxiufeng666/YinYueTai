@@ -118,6 +118,7 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
                     case 5:
                     case 7:
                         intent.setClass(activity, DetailActivity.class);
+                        intent.putExtra("id",pageBean.getId());
                         break;
                     case 2:
                     case 3:
