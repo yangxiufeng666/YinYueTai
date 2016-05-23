@@ -38,5 +38,5 @@ dependencies {
     compile('com.github.afollestad.material-dialogs:core:0.8.5.7@aar') {
         transitive = true
     }
-    compile 'fm.jiecao:jiecaovideoplayer:3.1'
+    compile 'fm.jiecao:jiecaovideoplayer:3.2'
 }

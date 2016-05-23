@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.domain.MVDetailBean;
 import com.github.yinyuetai.fragment.MVDescribeFragment;
@@ -100,6 +101,7 @@ public class DetailActivity extends BaseActivity {
                 dismissLoading();
                 detailBean = new Gson().fromJson(response, MVDetailBean.class);
                 videoplayer.setUp(detailBean.getUrl(), detailBean.getTitle());
+                Glide.with(DetailActivity.this).load(detailBean.getPosterPic()).centerCrop().into(videoplayer.ivThumb);
                 describeFragment = MVDescribeFragment.newInstance(detailBean);
                 relativeMvFragment = RelativeMvFragment.newInstance(detailBean);
                 setFragment(describeFragment);
@@ -130,6 +132,7 @@ public class DetailActivity extends BaseActivity {
             builder = new MaterialDialog.Builder(this);
             builder.title("等一下");
             builder.content("正在努力加载...")
+                    .cancelable(false)
                     .progress(true, 0);
         }
         materialDialog = builder.show();

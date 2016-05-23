@@ -65,7 +65,7 @@ public class RelativeMvRecycleAdapter extends RecyclerView.Adapter<RelativeMvRec
         holder.artistName.setText(videosBean.getArtistName());
         holder.playCount.setText("播放次数：" + videosBean.getTotalViews());
         holder.title.setText(videosBean.getTitle());
-        Glide.with(activity).load(videosBean.getPosterPic()).centerCrop().into(holder.posterImg);
+        Glide.with(activity).load(videosBean.getPosterPic()).placeholder(R.drawable.empty_logo).centerCrop().into(holder.posterImg);
         holder.itemRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
