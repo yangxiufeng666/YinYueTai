@@ -9,6 +9,7 @@
 - 悦单详情页<br>
 - 视频播放优化<br>
 - 缓存
+- 代码封装重构
 
 #thanks
 [butterknife](https://github.com/JakeWharton/butterknife)<br/>
