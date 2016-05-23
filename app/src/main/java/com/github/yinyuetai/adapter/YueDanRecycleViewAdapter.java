@@ -1,6 +1,7 @@
 package com.github.yinyuetai.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.yinyuetai.R;
+import com.github.yinyuetai.activity.YueDanDetailActivity;
 import com.github.yinyuetai.domain.YueDanBean;
 
 import java.util.List;
@@ -28,6 +30,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class YueDanRecycleViewAdapter extends RecyclerView.Adapter<YueDanRecycleViewAdapter.YueDanHolder> {
 
     static class YueDanHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.item_root)
+        RelativeLayout itemRoot;
         @Bind(R.id.poster_img)
         ImageView posterImg;
         @Bind(R.id.profile_image)
@@ -51,10 +55,10 @@ public class YueDanRecycleViewAdapter extends RecyclerView.Adapter<YueDanRecycle
     private Activity activity;
     private RelativeLayout.LayoutParams layoutParams;
 
-    public YueDanRecycleViewAdapter(List<YueDanBean.PlayListsBean> playLists, Activity activity,int mWidth,int mHeight) {
+    public YueDanRecycleViewAdapter(List<YueDanBean.PlayListsBean> playLists, Activity activity, int mWidth, int mHeight) {
         this.playLists = playLists;
         this.activity = activity;
-        layoutParams = new RelativeLayout.LayoutParams(mWidth,mHeight);
+        layoutParams = new RelativeLayout.LayoutParams(mWidth, mHeight);
     }
 
     @Override
@@ -65,7 +69,7 @@ public class YueDanRecycleViewAdapter extends RecyclerView.Adapter<YueDanRecycle
 
     @Override
     public void onBindViewHolder(YueDanHolder holder, int position) {
-        YueDanBean.PlayListsBean playListsBean = playLists.get(position);
+        final YueDanBean.PlayListsBean playListsBean = playLists.get(position);
         holder.posterImg.setLayoutParams(layoutParams);
         holder.itemTransbg.setLayoutParams(layoutParams);
         holder.title.setText(playListsBean.getTitle());
@@ -73,6 +77,16 @@ public class YueDanRecycleViewAdapter extends RecyclerView.Adapter<YueDanRecycle
         holder.playCount.setText("收录高清MV" + playListsBean.getVideoCount() + "首");
         Glide.with(activity).load(playListsBean.getPlayListBigPic()).into(holder.posterImg);
         Glide.with(activity).load(playListsBean.getCreator().getLargeAvatar()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.profileImage);
+        holder.itemRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(activity, YueDanDetailActivity.class);
+                intent.putExtra("id",playListsBean.getId());
+                activity.startActivity(intent);
+                activity.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+            }
+        });
     }
 
     @Override
