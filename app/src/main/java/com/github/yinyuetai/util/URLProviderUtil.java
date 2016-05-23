@@ -3,16 +3,16 @@ package com.github.yinyuetai.util;
 public class URLProviderUtil {
 	public static String getMainPageUrl(int offset,int size){
 		String url = "http://mapi.yinyuetai.com/suggestions/front_page.json?deviceinfo="
-				+ "{\"aid\":\"10201022\",\"os\":\"Android\","
+				+ "{\"aid\":\"10201036\",\"os\":\"Android\","
 				+ "\"ov\":"+"\""+ Util.getSystemversion() +"\""+","
 				+ "\"rn\":\"480*800\","
 				+ "\"dn\":"+"\""+Util.getPhoneModel()+"\""+","
-				+ "\"cr\":\"00000\","
+				+ "\"cr\":\"46000\","
 				+ "\"as\":"
 				+ "\"WIFI\","
 				+ "\"uid\":"
-				+ "\"bc8255b6efc478ce334ae187bdd20fd9\","
-				+ "\"clid\":110003000}"
+				+ "\"dbcaa6c4482bc05ecb0bf39dabf207d2\","
+				+ "\"clid\":110025000}"
 				+ "&offset="+offset
 				+"&size="+size
 				+"&v=4&rn=640*540";
@@ -20,30 +20,30 @@ public class URLProviderUtil {
 	}
 	public static String getMVareaUrl(){
 		String url = "http://mapi.yinyuetai.com/video/get_mv_areas.json?deviceinfo="
-				+ "{\"aid\":\"10201022\",\"os\":\"Android\","
+				+ "{\"aid\":\"10201036\",\"os\":\"Android\","
 				+ "\"ov\":"+"\""+ Util.getSystemversion() +"\""+","
 				+ "\"rn\":\"480*800\","
 				+ "\"dn\":"+"\""+Util.getPhoneModel()+"\""+","
-				+ "\"cr\":\"00000\","
+				+ "\"cr\":\"46000\","
 				+ "\"as\":"
 				+ "\"WIFI\","
 				+ "\"uid\":"
-				+ "\"bc8255b6efc478ce334ae187bdd20fd9\","
-				+ "\"clid\":110003000}";
+				+ "\"dbcaa6c4482bc05ecb0bf39dabf207d2\","
+				+ "\"clid\":110025000}";
 		return url;
 	}
 	public static String getMVListUrl(String area,int offset,int size){
 		String url = "http://mapi.yinyuetai.com/video/list.json?deviceinfo="
-				+ "{\"aid\":\"10201022\",\"os\":\"Android\","
+				+ "{\"aid\":\"10201036\",\"os\":\"Android\","
 				+ "\"ov\":"+"\""+ Util.getSystemversion() +"\""+","
 				+ "\"rn\":\"480*800\","
 				+ "\"dn\":"+"\""+Util.getPhoneModel()+"\""+","
-				+ "\"cr\":\"00000\","
+				+ "\"cr\":\"46000\","
 				+ "\"as\":"
 				+ "\"WIFI\","
 				+ "\"uid\":"
-				+ "\"bc8255b6efc478ce334ae187bdd20fd9\","
-				+ "\"clid\":110003000}"
+				+ "\"dbcaa6c4482bc05ecb0bf39dabf207d2\","
+				+ "\"clid\":110025000}"
 				+ "&area="+area
 				+ "&offset="+offset
 				+ "&size="+size;
@@ -51,16 +51,16 @@ public class URLProviderUtil {
 	}
 	public static String getMainPageYueDanUrl(int offset,int size){
 		String url = "http://mapi.yinyuetai.com/playlist/list.json?deviceinfo="
-				+ "{\"aid\":\"10201022\",\"os\":\"Android\","
+				+ "{\"aid\":\"10201036\",\"os\":\"Android\","
 				+ "\"ov\":"+"\""+ Util.getSystemversion() +"\""+","
 				+ "\"rn\":\"480*800\","
 				+ "\"dn\":"+"\""+Util.getPhoneModel()+"\""+","
-				+ "\"cr\":\"00000\","
+				+ "\"cr\":\"46000\","
 				+ "\"as\":"
 				+ "\"WIFI\","
 				+ "\"uid\":"
-				+ "\"bc8255b6efc478ce334ae187bdd20fd9\","
-				+ "\"clid\":110003000}"
+				+ "\"dbcaa6c4482bc05ecb0bf39dabf207d2\","
+				+ "\"clid\":110025000}"
 				+ "&offset="+offset
 				+ "&size="+size;
 		return url;
@@ -75,16 +75,16 @@ public class URLProviderUtil {
      */
 	public static String getYinYueProgramList(String artistIds,int offset,int size){
 		String url = "http://mapi.yinyuetai.com/playlist/show.json?deviceinfo="
-				+ "{\"aid\":\"10201022\",\"os\":\"Android\","
+				+ "{\"aid\":\"10201036\",\"os\":\"Android\","
 				+ "\"ov\":"+"\""+ Util.getSystemversion() +"\""+","
 				+ "\"rn\":\"480*800\","
 				+ "\"dn\":"+"\""+Util.getPhoneModel()+"\""+","
-				+ "\"cr\":\"00000\","
+				+ "\"cr\":\"46000\","
 				+ "\"as\":"
 				+ "\"WIFI\","
 				+ "\"uid\":"
-				+ "\"bc8255b6efc478ce334ae187bdd20fd9\","
-				+ "\"clid\":110003000}"
+				+ "\"dbcaa6c4482bc05ecb0bf39dabf207d2\","
+				+ "\"clid\":110025000}"
 				+ "&offset="+offset
 				+ "&size="+size
 				+ "&artistIds="+artistIds;
@@ -96,16 +96,16 @@ public class URLProviderUtil {
 	 */
 	public static String getVChartAreasUrl(){
 		String url = "http://mapi.yinyuetai.com/vchart/get_vchart_areas.json?deviceinfo="
-				+ "{\"aid\":\"10201022\",\"os\":\"Android\","
+				+ "{\"aid\":\"10201036\",\"os\":\"Android\","
 				+ "\"ov\":"+"\""+ Util.getSystemversion() +"\""+","
 				+ "\"rn\":\"480*800\","
 				+ "\"dn\":"+"\""+Util.getPhoneModel()+"\""+","
-				+ "\"cr\":\"00000\","
+				+ "\"cr\":\"46000\","
 				+ "\"as\":"
 				+ "\"WIFI\","
 				+ "\"uid\":"
-				+ "\"bc8255b6efc478ce334ae187bdd20fd9\","
-				+ "\"clid\":110003000}";
+				+ "\"dbcaa6c4482bc05ecb0bf39dabf207d2\","
+				+ "\"clid\":110025000}";
 		return url;
 	}
 	/**
@@ -114,16 +114,16 @@ public class URLProviderUtil {
 	 */
 	public static String getVChartPeriodUrl(String area){
 		String url = "http://mapi.yinyuetai.com/vchart/period.json?deviceinfo="
-				+ "{\"aid\":\"10201022\",\"os\":\"Android\","
+				+ "{\"aid\":\"10201036\",\"os\":\"Android\","
 				+ "\"ov\":"+"\""+ Util.getSystemversion() +"\""+","
 				+ "\"rn\":\"480*800\","
 				+ "\"dn\":"+"\""+Util.getPhoneModel()+"\""+","
-				+ "\"cr\":\"00000\","
+				+ "\"cr\":\"46000\","
 				+ "\"as\":"
 				+ "\"WIFI\","
 				+ "\"uid\":"
-				+ "\"bc8255b6efc478ce334ae187bdd20fd9\","
-				+ "\"clid\":110003000}"
+				+ "\"dbcaa6c4482bc05ecb0bf39dabf207d2\","
+				+ "\"clid\":110025000}"
 				+ "&area="+area;
 		return url;
 	}
@@ -135,16 +135,16 @@ public class URLProviderUtil {
 	 */
 	public static String getVChartListUrl(String area,int dateCode){
 		String url = "http://mapi.yinyuetai.com/vchart/show.json?deviceinfo="
-				+ "{\"aid\":\"10201022\",\"os\":\"Android\","
+				+ "{\"aid\":\"10201036\",\"os\":\"Android\","
 				+ "\"ov\":"+"\""+ Util.getSystemversion() +"\""+","
 				+ "\"rn\":\"480*800\","
 				+ "\"dn\":"+"\""+Util.getPhoneModel()+"\""+","
-				+ "\"cr\":\"00000\","
+				+ "\"cr\":\"46000\","
 				+ "\"as\":"
 				+ "\"WIFI\","
 				+ "\"uid\":"
-				+ "\"bc8255b6efc478ce334ae187bdd20fd9\","
-				+ "\"clid\":110003000}"
+				+ "\"dbcaa6c4482bc05ecb0bf39dabf207d2\","
+				+ "\"clid\":110025000}"
 				+ "&area="+area
 				+ "&datecode="+dateCode;
 		return url;
@@ -156,16 +156,16 @@ public class URLProviderUtil {
 	 */
 	public static String getRelativeVideoListUrl(int id){
 		String url = "http://mapi.yinyuetai.com/video/show.json?deviceinfo="
-				+ "{\"aid\":\"10201022\",\"os\":\"Android\","
+				+ "{\"aid\":\"10201036\",\"os\":\"Android\","
 				+ "\"ov\":"+"\""+ Util.getSystemversion() +"\""+","
 				+ "\"rn\":\"480*800\","
 				+ "\"dn\":"+"\""+Util.getPhoneModel()+"\""+","
-				+ "\"cr\":\"00000\","
+				+ "\"cr\":\"46000\","
 				+ "\"as\":"
 				+ "\"WIFI\","
 				+ "\"uid\":"
-				+ "\"bc8255b6efc478ce334ae187bdd20fd9\","
-				+ "\"clid\":110003000}"
+				+ "\"dbcaa6c4482bc05ecb0bf39dabf207d2\","
+				+ "\"clid\":110025000}"
 				+ "&relatedVideos=true"
 				+ "&id="+id;
 		return url;
@@ -177,16 +177,16 @@ public class URLProviderUtil {
 	 */
 	public static String getPeopleYueDanList(int id){
 		String url = "http://mapi.yinyuetai.com/playlist/show.json?deviceinfo="
-				+ "{\"aid\":\"10201022\",\"os\":\"Android\","
+				+ "{\"aid\":\"10201036\",\"os\":\"Android\","
 				+ "\"ov\":"+"\""+ Util.getSystemversion() +"\""+","
 				+ "\"rn\":\"480*800\","
 				+ "\"dn\":"+"\""+Util.getPhoneModel()+"\""+","
-				+ "\"cr\":\"00000\","
+				+ "\"cr\":\"46000\","
 				+ "\"as\":"
 				+ "\"WIFI\","
 				+ "\"uid\":"
-				+ "\"bc8255b6efc478ce334ae187bdd20fd9\","
-				+ "\"clid\":110003000}"
+				+ "\"dbcaa6c4482bc05ecb0bf39dabf207d2\","
+				+ "\"clid\":110025000}"
 				+ "&id="+id;
 		return url;
 	}
