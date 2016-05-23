@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:layout_height="match_parent">
     <android.support.v7.widget.Toolbar
@@ -8,8 +9,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/tab_color_1"/>
-    <WebView
-        android:id="@+id/webview"
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:id="@+id/progress"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:progress="30"
+        android:secondaryProgress="100"
+        app:mpb_progressStyle="horizontal"
+        app:mpb_useIntrinsicPadding="false"
+        app:mpb_showTrack="false"
+        android:progressDrawable="@color/colorPrimary"
+
+        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding" />
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
 </LinearLayout>

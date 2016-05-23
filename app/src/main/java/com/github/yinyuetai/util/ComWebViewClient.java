@@ -18,10 +18,16 @@ public class ComWebViewClient extends WebViewClient{
         void onReceivedError();
     }
     private PageLoadListener pageLoadListener;
-    private WebView webview;
-    public ComWebViewClient(PageLoadListener pageLoadListener,WebView webview) {
+
+    public void setPageLoadListener(PageLoadListener pageLoadListener) {
         this.pageLoadListener = pageLoadListener;
+    }
+
+    public ComWebViewClient(WebView webview) {
         webview.getSettings().setJavaScriptEnabled(true);
+        webview.getSettings().setBuiltInZoomControls(false);
+        webview.getSettings().setSupportZoom(false);
+        webview.getSettings().setDisplayZoomControls(false);
     }
 
     @Override

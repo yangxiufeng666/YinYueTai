@@ -108,6 +108,7 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
                 Intent intent = new Intent();
                 switch (tag){
                     case 0:
+                    case 4:
                     case 10:
                         intent.setClass(activity, WebActivity.class);
                         Bundle bundle = new Bundle();

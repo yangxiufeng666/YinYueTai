@@ -9,6 +9,15 @@ import android.webkit.WebView;
  * Created by Mr.Yangxiufeng on 2016/5/9.
  */
 public class ComWebViewChromeClient extends WebChromeClient{
+    private ProgressListener listener;
+    public interface ProgressListener{
+        public void onProgressChanged(int progress);
+    }
+
+    public void setListener(ProgressListener listener) {
+        this.listener = listener;
+    }
+
     @Override
     public void onCloseWindow(WebView window) {
         super.onCloseWindow(window);
@@ -27,5 +36,14 @@ public class ComWebViewChromeClient extends WebChromeClient{
     @Override
     public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
         return super.onJsPrompt(view, url, message, defaultValue, result);
+    }
+
+    @Override
+    public void onProgressChanged(WebView view, int newProgress) {
+        super.onProgressChanged(view, newProgress);
+        if (listener != null){
+            listener.onProgressChanged(newProgress);
+        }
+
     }
 }
