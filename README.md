@@ -4,6 +4,7 @@
 
 #show
 ![image](https://github.com/babylikebird/YinYueTai/blob/master/yinyuetai.gif)
+![image](https://github.com/babylikebird/YinYueTai/blob/master/yinyuetai1.gif)
 
 #TO DO LIST
 - 悦单详情页<br>
