@@ -46,7 +46,6 @@ public class OkHttpManager {
      * @param callBack
      */
     public void asyncGet(String url, Object tag,final CallBack callBack) {
-        System.out.println(url);
         Request request = new Request.Builder().url(url).tag(tag).build();
         okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
             @Override

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <kankan.wheel.widget.WheelView android:id="@+id/year"
+        android:layout_height="110dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"/>
+
+    <kankan.wheel.widget.WheelView android:id="@+id/period"
+        android:layout_height="110dp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1.5"/>
+</LinearLayout>
