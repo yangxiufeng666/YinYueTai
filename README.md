@@ -9,7 +9,6 @@
 ![image](https://github.com/babylikebird/YinYueTai/blob/master/yinyuetai.gif)
 
 #TO DO LIST
-- 悦单详情页<br>
 - 视频播放优化<br>
 - 缓存
 - 代码封装重构
