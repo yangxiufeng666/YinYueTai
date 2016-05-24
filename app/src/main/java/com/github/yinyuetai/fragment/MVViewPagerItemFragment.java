@@ -144,6 +144,7 @@ public class MVViewPagerItemFragment extends Fragment {
 
             @Override
             public void onResponse(String response) {
+                System.out.println(response);
                 dismissProgress(response);
             }
         });

@@ -51,18 +51,23 @@ public class MVRecycleViewAdapter extends RecyclerView.Adapter<MVRecycleViewAdap
         holder.itemTransbg.setLayoutParams(layoutParams);
         holder.name.setText(videoBean.getTitle());
         holder.author.setText(videoBean.getDescription());
-        holder.playCount.setText("播放次数：" + videoBean.getTotalViews());
-        Glide.with(activity).load(videoBean.getAlbumImg()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.posterImg);
-        holder.itemRoot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(activity, DetailActivity.class);
-                intent.putExtra("id", videoBean.getId());
-                activity.startActivity(intent);
-                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        });
+        if (videoBean.isAd()){
+            Glide.with(activity).load(videoBean.getThumbnailPic()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.posterImg);
+            holder.playCount.setText("");
+        }else {
+            Glide.with(activity).load(videoBean.getAlbumImg()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.posterImg);
+            holder.playCount.setText("播放次数：" + videoBean.getTotalViews());
+            holder.itemRoot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setClass(activity, DetailActivity.class);
+                    intent.putExtra("id", videoBean.getId());
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                }
+            });
+        }
     }
 
     @Override

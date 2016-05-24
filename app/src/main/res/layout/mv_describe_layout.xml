@@ -49,6 +49,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textSize="11sp"
                 android:textColor="@color/green_text"
                 android:text="播放次数:2000"/>
             <TextView
@@ -57,6 +58,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textSize="11sp"
                 android:textColor="@color/green_text"
                 android:text="PC端:200"/>
             <TextView
@@ -65,6 +67,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:textSize="11sp"
                 android:textColor="@color/green_text"
                 android:text="移动端:200"/>
         </LinearLayout>

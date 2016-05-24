@@ -40,6 +40,7 @@ public class VideoBean implements Parcelable {
     private String traceUrl;
     private String clickUrl;
     private String score;
+    private boolean ad;
     /**
      * artistId : 30971
      * artistName : STAR!调查团
@@ -287,6 +288,14 @@ public class VideoBean implements Parcelable {
         this.artists = artists;
     }
 
+    public boolean isAd() {
+        return ad;
+    }
+
+    public void setAd(boolean ad) {
+        this.ad = ad;
+    }
+
     public VideoBean() {
     }
 
@@ -378,6 +387,7 @@ public class VideoBean implements Parcelable {
         dest.writeString(this.traceUrl);
         dest.writeString(this.clickUrl);
         dest.writeString(this.score);
+        dest.writeByte(this.ad ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.artists);
     }
 
@@ -411,6 +421,7 @@ public class VideoBean implements Parcelable {
         this.traceUrl = in.readString();
         this.clickUrl = in.readString();
         this.score = in.readString();
+        this.ad = in.readByte() != 0;
         this.artists = in.createTypedArrayList(ArtistsBean.CREATOR);
     }
 
