@@ -184,7 +184,8 @@ public class VChartViewPagerItemFragment extends Fragment {
                             updateCities(periodWheelView,p);
                         }
                     });
-                    yearWheelView.setCurrentItem(1);
+                    yearWheelView.setCurrentItem(0);
+                    updateCities(periodWheelView,sparseArray.get(0));
                 }else{
                     materialDialog.show();
                 }
@@ -250,6 +251,7 @@ public class VChartViewPagerItemFragment extends Fragment {
     private void updateCities(WheelView city, List<VChartPeriod.PeriodsBean> list) {
         periodAdapter = new PeriodAdapter(getActivity(),list);
         city.setViewAdapter(periodAdapter);
+        city.setCurrentItem(0);
     }
     /**
      * Adapter for countries
