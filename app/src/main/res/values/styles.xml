@@ -9,7 +9,11 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
     <style name="Theme.full" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowBackground">@drawable/default_splash_bg</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
     <!-- App Theme Launch -->
     <style name="AppThemeLaunch" parent="AppTheme">
