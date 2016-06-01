@@ -108,9 +108,11 @@ public class VChartFragment extends Fragment {
                         areaBeanArrayList.add(field);
                     }
                     ArrayList<Fragment> fragments = new ArrayList<>();
+                    int index=1;
                     for (AreaBean area :
                             areaBeanArrayList) {
-                        fragments.add(VChartViewPagerItemFragment.newInstance(area.getCode()));
+                        fragments.add(VChartViewPagerItemFragment.newInstance(area.getCode(),index));
+                        index++;
                     }
                     initViewPager(fragments);
                 } catch (JsonSyntaxException e) {

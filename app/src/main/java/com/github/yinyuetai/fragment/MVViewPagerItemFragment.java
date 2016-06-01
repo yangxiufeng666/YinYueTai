@@ -42,10 +42,11 @@ public class MVViewPagerItemFragment extends Fragment {
     @Bind(R.id.fab)
     FloatingActionButton fab;
 
-    public static Fragment getInstance(String areaCode) {
+    public static Fragment getInstance(String areaCode,int index) {
         MVViewPagerItemFragment mvViewPagerItemFragment = new MVViewPagerItemFragment();
         Bundle bundle = new Bundle();
         bundle.putString("areaCode", areaCode);
+        bundle.putInt("index",index);
         mvViewPagerItemFragment.setArguments(bundle);
         return mvViewPagerItemFragment;
     }
@@ -71,11 +72,12 @@ public class MVViewPagerItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.mv_viewpager_item_fragment, container, false);
-            Bundle bundle = getArguments();
-            areaCode = bundle.getString("areaCode");
             boserverView();
             ButterKnife.bind(this, rootView);
-            load();
+            Bundle bundle = getArguments();
+            if (bundle.getInt("index")==1){
+                load();
+            }
         }
         ButterKnife.bind(this, rootView);
         return rootView;
@@ -86,9 +88,24 @@ public class MVViewPagerItemFragment extends Fragment {
         mWidth = metric.widthPixels;
         mHeight = (mWidth * 360) / 640;
     }
+    private boolean hasLoadedOnce = false; // your boolean field
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Log.e("TTT","onActivityCreated areaCode="+areaCode+",this.isVisible()="+this.isVisible()+",isVisibleToUser="+isVisibleToUser);
+        if (this.isVisible()) {
+            // we check that the fragment is becoming visible
+            if (isVisibleToUser && !hasLoadedOnce) {
+                hasLoadedOnce = true;
+                load();
+            }
+        }
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        areaCode = bundle.getString("areaCode");
     }
 
     private void initView() {
@@ -116,7 +133,7 @@ public class MVViewPagerItemFragment extends Fragment {
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_2);
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
-                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, getResources()
                         .getDisplayMetrics()));
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

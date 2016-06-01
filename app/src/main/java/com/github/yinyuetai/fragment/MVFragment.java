@@ -100,9 +100,11 @@ public class MVFragment extends Fragment {
                         areaBeanArrayList.add(field);
                     }
                     ArrayList<Fragment> fragments = new ArrayList<>();
+                    int index=1;
                     for (AreaBean area :
                             areaBeanArrayList) {
-                        fragments.add(MVViewPagerItemFragment.getInstance(area.getCode()));
+                        fragments.add(MVViewPagerItemFragment.getInstance(area.getCode(),index));
+                        index++;
                     }
                     initViewPager(fragments);
                 } catch (JsonSyntaxException e) {

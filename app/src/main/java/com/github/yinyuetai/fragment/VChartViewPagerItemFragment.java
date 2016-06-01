@@ -84,11 +84,13 @@ public class VChartViewPagerItemFragment extends Fragment {
     private WheelView yearWheelView;
     private PeriodAdapter periodAdapter;
     private boolean refresh;
+    private int index;
 
-    public static Fragment newInstance(String areaCode) {
+    public static Fragment newInstance(String areaCode,int index) {
         VChartViewPagerItemFragment vChartViewPagerItemFragment = new VChartViewPagerItemFragment();
         Bundle bundle = new Bundle();
         bundle.putString("areaCode", areaCode);
+        bundle.putInt("index",index);
         vChartViewPagerItemFragment.setArguments(bundle);
         return vChartViewPagerItemFragment;
     }
@@ -104,11 +106,26 @@ public class VChartViewPagerItemFragment extends Fragment {
         if (!hasCreatedOnce) {
             hasCreatedOnce = true;
             initView();
-            getPeriod();
+            Bundle bundle = getArguments();
+            if (bundle.getInt("index")==1){
+                getPeriod();
+            }
+
         }
         return rootView;
     }
-
+    private boolean hasLoadedOnce = false; // your boolean field
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            // we check that the fragment is becoming visible
+            if (isVisibleToUser && !hasLoadedOnce) {
+                hasLoadedOnce = true;
+                getPeriod();
+            }
+        }
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -245,6 +262,7 @@ public class VChartViewPagerItemFragment extends Fragment {
                 }else{
                     Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
                 }
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
