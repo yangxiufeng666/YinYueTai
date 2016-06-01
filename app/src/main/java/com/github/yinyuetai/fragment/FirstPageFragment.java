@@ -56,6 +56,7 @@ public class FirstPageFragment extends Fragment {
     private int mWidth;
     private int mHeight;
     private Runnable action;
+    private boolean refresh;
     private MaterialDialog.Builder builder;
     private MaterialDialog materialDialog;
     private int lastVisibleItem;
@@ -100,7 +101,8 @@ public class FirstPageFragment extends Fragment {
         action = new Runnable() {
             @Override
             public void run() {
-                swipeRefreshLayout.setRefreshing(false);
+                refresh = true;
+                getData(0, SIZE);
             }
         };
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -154,11 +156,17 @@ public class FirstPageFragment extends Fragment {
         materialDialog.dismiss();
     }
 
-    private void getData(int offset, int size) {
+    private void getData(int offset, final int size) {
         OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMainPageUrl(offset, size), FirstPageFragment.this, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
                 swipeRefreshLayout.setRefreshing(false);
+                if (refresh){
+                    refresh = false;
+                    Toast.makeText(getActivity(),"刷新失败",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -176,6 +184,11 @@ public class FirstPageFragment extends Fragment {
                     if (el.isJsonArray()) {
                         jsonArray = el.getAsJsonArray();
                     }
+                    if (refresh){
+                        refresh = false;
+                        firstPageBeanList.clear();
+                        mOffset = 0;
+                    }
                     Iterator it = jsonArray.iterator();
                     if (it.hasNext()) {
                         hasMore = true;
@@ -187,7 +200,6 @@ public class FirstPageFragment extends Fragment {
                             firstPageBeanList.add(field);
                             size++;
                         }
-                        System.out.println(firstPageBeanList.size());
                         mOffset += size;
                         recycleViewAdapter.notifyDataSetChanged();
 

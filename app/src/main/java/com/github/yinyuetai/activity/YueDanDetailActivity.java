@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -22,6 +23,7 @@ import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
 import com.github.yinyuetai.util.URLProviderUtil;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -68,18 +70,24 @@ public class YueDanDetailActivity extends BaseActivity {
         OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getPeopleYueDanList(id), this, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
+                Toast.makeText(YueDanDetailActivity.this,"获取数据失败.",Toast.LENGTH_SHORT).show();
                 dismissLoading();
             }
 
             @Override
             public void onResponse(String response) {
                 dismissLoading();
-                yueDanDetailBean = new Gson().fromJson(response,YueDanDetailBean.class);
-                videoplayer.setUp(yueDanDetailBean.getVideos().get(0).getHdUrl(), yueDanDetailBean.getVideos().get(0).getTitle());
-                Glide.with(YueDanDetailActivity.this).load(yueDanDetailBean.getThumbnailPic()).centerCrop().into(videoplayer.ivThumb);
-                describeFragment = YueDanDescribeFragment.newInstance(yueDanDetailBean);
-                yueDanListFragment = YueDanListFragment.newInstance(yueDanDetailBean);
-                setFragment(describeFragment);
+                try {
+                    yueDanDetailBean = new Gson().fromJson(response,YueDanDetailBean.class);
+                    videoplayer.setUp(yueDanDetailBean.getVideos().get(0).getHdUrl(), yueDanDetailBean.getVideos().get(0).getTitle());
+                    Glide.with(YueDanDetailActivity.this).load(yueDanDetailBean.getThumbnailPic()).centerCrop().into(videoplayer.ivThumb);
+                    describeFragment = YueDanDescribeFragment.newInstance(yueDanDetailBean);
+                    yueDanListFragment = YueDanListFragment.newInstance(yueDanDetailBean);
+                    setFragment(describeFragment);
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                    Toast.makeText(YueDanDetailActivity.this,"error:"+response,Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

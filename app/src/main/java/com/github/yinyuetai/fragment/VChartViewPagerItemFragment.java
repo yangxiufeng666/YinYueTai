@@ -64,6 +64,7 @@ public class VChartViewPagerItemFragment extends Fragment {
     private View rootView;
     private boolean hasCreatedOnce;
     private String areaCode;
+    private int dateCode;
 
     private VChartPeriod vChartPeriod;
     private List<VChartPeriod.PeriodsBean> periodsBeanArrayList;
@@ -82,6 +83,7 @@ public class VChartViewPagerItemFragment extends Fragment {
     private WheelView periodWheelView;
     private WheelView yearWheelView;
     private PeriodAdapter periodAdapter;
+    private boolean refresh;
 
     public static Fragment newInstance(String areaCode) {
         VChartViewPagerItemFragment vChartViewPagerItemFragment = new VChartViewPagerItemFragment();
@@ -131,7 +133,8 @@ public class VChartViewPagerItemFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(false);
+                refresh = true;
+                getDataByPeriod(areaCode, dateCode);
             }
         });
         periodLayout.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +154,8 @@ public class VChartViewPagerItemFragment extends Fragment {
                                         swipeRefreshLayout.setRefreshing(true);
                                         videosBeen.clear();
                                         viewAdapter.notifyDataSetChanged();
-                                        getDataByPeriod(areaCode, currentPeriodsBean.getDateCode());
+                                        dateCode = currentPeriodsBean.getDateCode();
+                                        getDataByPeriod(areaCode, dateCode);
                                     }
                                 }
                             })
@@ -235,7 +239,12 @@ public class VChartViewPagerItemFragment extends Fragment {
         OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getVChartListUrl(area, dateCode), this, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
-                swipeRefreshLayout.setRefreshing(false);
+                if (refresh){
+                    refresh = false;
+                    Toast.makeText(getActivity(),"刷新失败",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -243,6 +252,10 @@ public class VChartViewPagerItemFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
                 try {
                     vChartBean = new Gson().fromJson(response, VChartBean.class);
+                    if (refresh){
+                        refresh = false;
+                        videosBeen.clear();
+                    }
                     videosBeen.addAll(vChartBean.getVideos());
                     viewAdapter.notifyDataSetChanged();
                 } catch (JsonSyntaxException e) {

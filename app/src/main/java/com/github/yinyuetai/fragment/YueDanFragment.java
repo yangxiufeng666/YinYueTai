@@ -57,6 +57,7 @@ public class YueDanFragment extends Fragment {
 
     private int mWidth;
     private int mHeight;
+    private boolean refresh;
 
     private void showLoading() {
         if (builder == null) {
@@ -107,7 +108,8 @@ public class YueDanFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                dismissProgress(null);
+                refresh = true;
+                getData(0,SIZE);
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -139,7 +141,13 @@ public class YueDanFragment extends Fragment {
         OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMainPageYueDanUrl(offset, size), YueDanFragment.this, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
-                dismissProgress(null);
+                if (refresh){
+                    refresh = false;
+                    Toast.makeText(getActivity(),"刷新失败",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
+                }
+                swipeRefreshLayout.setRefreshing(false);
                 dismissLoading();
             }
 
@@ -164,9 +172,13 @@ public class YueDanFragment extends Fragment {
             public void run() {
                 swipeRefreshLayout.setRefreshing(false);
                 if (response != null) {
-                    YueDanBean yueDanBean = null;
                     try {
-                        yueDanBean = new Gson().fromJson(response, YueDanBean.class);
+                        YueDanBean yueDanBean = new Gson().fromJson(response, YueDanBean.class);
+                        if (refresh){
+                            refresh = false;
+                            playLists.clear();
+                            mOffset = 0;
+                        }
                         if (yueDanBean.getPlayLists() == null || yueDanBean.getPlayLists().size() == 0) {
                             hasMore = false;
                         } else {

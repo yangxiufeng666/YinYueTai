@@ -65,7 +65,7 @@ public class MVViewPagerItemFragment extends Fragment {
     private Runnable action;
     private int mWidth;
     private int mHeight;
-
+    private boolean refresh;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,8 +76,6 @@ public class MVViewPagerItemFragment extends Fragment {
             boserverView();
             ButterKnife.bind(this, rootView);
             load();
-        } else {
-            ButterKnife.bind(this, rootView);
         }
         ButterKnife.bind(this, rootView);
         return rootView;
@@ -87,7 +85,6 @@ public class MVViewPagerItemFragment extends Fragment {
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
         mWidth = metric.widthPixels;
         mHeight = (mWidth * 360) / 640;
-        Log.i("MVViewPagerItemFragment", "mHeight =" + mHeight);
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -125,7 +122,8 @@ public class MVViewPagerItemFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                dismissProgress(null);
+                refresh = true;
+                getData(0,SIZE);
             }
         });
         fab.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +140,12 @@ public class MVViewPagerItemFragment extends Fragment {
             @Override
             public void onError(Call call, Exception e) {
                 dismissProgress(null);
+                if (refresh){
+                    refresh = false;
+                    Toast.makeText(getActivity(),"刷新失败",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -165,6 +169,11 @@ public class MVViewPagerItemFragment extends Fragment {
                 if (response != null) {
                     try {
                         MVListBean mvListBean = new Gson().fromJson(response, MVListBean.class);
+                        if (refresh){
+                            refresh = false;
+                            mOffset = 0;
+                            videosList.clear();
+                        }
                         if (mvListBean.getVideos() == null || mvListBean.getVideos().size() == 0) {
                             hasMore = false;
                         } else {
