@@ -13,6 +13,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
@@ -23,6 +24,7 @@ import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
 import com.github.yinyuetai.util.URLProviderUtil;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 
@@ -161,16 +163,22 @@ public class MVViewPagerItemFragment extends Fragment {
             public void run() {
                 swipeRefreshLayout.setRefreshing(false);
                 if (response != null) {
-                    MVListBean mvListBean = new Gson().fromJson(response, MVListBean.class);
-                    if (mvListBean.getVideos() == null || mvListBean.getVideos().size() == 0) {
-                        hasMore = false;
-                    } else {
-                        hasMore = true;
-                        int pos = videosList.size() - 1;
-                        videosList.addAll(mvListBean.getVideos());
-                        recycleViewAdapter.notifyItemRangeChanged(pos, mvListBean.getVideos().size());
-                        mOffset += mvListBean.getVideos().size();
+                    try {
+                        MVListBean mvListBean = new Gson().fromJson(response, MVListBean.class);
+                        if (mvListBean.getVideos() == null || mvListBean.getVideos().size() == 0) {
+                            hasMore = false;
+                        } else {
+                            hasMore = true;
+                            int pos = videosList.size() - 1;
+                            videosList.addAll(mvListBean.getVideos());
+                            recycleViewAdapter.notifyItemRangeChanged(pos, mvListBean.getVideos().size());
+                            mOffset += mvListBean.getVideos().size();
+                        }
+                    } catch (JsonSyntaxException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(),"error:"+response,Toast.LENGTH_SHORT).show();
                     }
+
                 }
             }
         };

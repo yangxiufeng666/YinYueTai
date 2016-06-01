@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.yinyuetai.R;
@@ -20,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -81,26 +83,32 @@ public class MVFragment extends Fragment {
                 //创建一个JsonParser
                 JsonParser parser = new JsonParser();
                 //通过JsonParser对象可以把json格式的字符串解析成一个JsonElement对象
-                JsonElement el = parser.parse(response);
-                //把JsonElement对象转换成JsonArray
-                JsonArray jsonArray = null;
-                if(el.isJsonArray()){
-                    jsonArray = el.getAsJsonArray();
+                JsonElement el = null;
+                try {
+                    el = parser.parse(response);
+                    //把JsonElement对象转换成JsonArray
+                    JsonArray jsonArray = null;
+                    if(el.isJsonArray()){
+                        jsonArray = el.getAsJsonArray();
+                    }
+                    areaBeanArrayList = new ArrayList<AreaBean>();
+                    Iterator it = jsonArray.iterator();
+                    while(it.hasNext()){
+                        JsonElement e = (JsonElement)it.next();
+                        //JsonElement转换为JavaBean对象
+                        AreaBean field = new Gson().fromJson(e, AreaBean.class);
+                        areaBeanArrayList.add(field);
+                    }
+                    ArrayList<Fragment> fragments = new ArrayList<>();
+                    for (AreaBean area :
+                            areaBeanArrayList) {
+                        fragments.add(MVViewPagerItemFragment.getInstance(area.getCode()));
+                    }
+                    initViewPager(fragments);
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(),"error:"+response,Toast.LENGTH_SHORT).show();
                 }
-                areaBeanArrayList = new ArrayList<AreaBean>();
-                Iterator it = jsonArray.iterator();
-                while(it.hasNext()){
-                    JsonElement e = (JsonElement)it.next();
-                    //JsonElement转换为JavaBean对象
-                    AreaBean field = new Gson().fromJson(e, AreaBean.class);
-                    areaBeanArrayList.add(field);
-                }
-                ArrayList<Fragment> fragments = new ArrayList<>();
-                for (AreaBean area :
-                        areaBeanArrayList) {
-                    fragments.add(MVViewPagerItemFragment.getInstance(area.getCode()));
-                }
-                initViewPager(fragments);
                 dismissLoading();
             }
         });

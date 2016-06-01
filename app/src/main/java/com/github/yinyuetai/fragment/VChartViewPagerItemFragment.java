@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -29,6 +30,7 @@ import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
 import com.github.yinyuetai.util.URLProviderUtil;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -201,24 +203,30 @@ public class VChartViewPagerItemFragment extends Fragment {
 
             @Override
             public void onResponse(String response) {
-                vChartPeriod = new Gson().fromJson(response, VChartPeriod.class);
-                periodsBeanArrayList = vChartPeriod.getPeriods();
-                VChartPeriod.PeriodsBean currentPeriodsBean = periodsBeanArrayList.get(0);
-                vchartPeriod.setText(String.format(getString(R.string.period_format), currentPeriodsBean.getYear(), currentPeriodsBean.getNo(), currentPeriodsBean.getBeginDateText(), currentPeriodsBean.getEndDateText()));
-                getDataByPeriod(areaCode, currentPeriodsBean.getDateCode());
-                years = vChartPeriod.getYears();
-                sparseArray = new SparseArray<>();
-                int index=0;
-                for (Integer integer : years){
-                    List<VChartPeriod.PeriodsBean> list = new ArrayList<>();
-                    for (VChartPeriod.PeriodsBean p : periodsBeanArrayList){
-                        if (integer == p.getYear()){
-                           list.add(p);
+                try {
+                    vChartPeriod = new Gson().fromJson(response, VChartPeriod.class);
+                    periodsBeanArrayList = vChartPeriod.getPeriods();
+                    VChartPeriod.PeriodsBean currentPeriodsBean = periodsBeanArrayList.get(0);
+                    vchartPeriod.setText(String.format(getString(R.string.period_format), currentPeriodsBean.getYear(), currentPeriodsBean.getNo(), currentPeriodsBean.getBeginDateText(), currentPeriodsBean.getEndDateText()));
+                    getDataByPeriod(areaCode, currentPeriodsBean.getDateCode());
+                    years = vChartPeriod.getYears();
+                    sparseArray = new SparseArray<>();
+                    int index=0;
+                    for (Integer integer : years){
+                        List<VChartPeriod.PeriodsBean> list = new ArrayList<>();
+                        for (VChartPeriod.PeriodsBean p : periodsBeanArrayList){
+                            if (integer == p.getYear()){
+                                list.add(p);
+                            }
                         }
+                        sparseArray.put(index,list);
+                        index++;
                     }
-                    sparseArray.put(index,list);
-                    index++;
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(),"error:"+response,Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
     }
@@ -233,9 +241,14 @@ public class VChartViewPagerItemFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 swipeRefreshLayout.setRefreshing(false);
-                vChartBean = new Gson().fromJson(response, VChartBean.class);
-                videosBeen.addAll(vChartBean.getVideos());
-                viewAdapter.notifyDataSetChanged();
+                try {
+                    vChartBean = new Gson().fromJson(response, VChartBean.class);
+                    videosBeen.addAll(vChartBean.getVideos());
+                    viewAdapter.notifyDataSetChanged();
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(),"error:"+response,Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

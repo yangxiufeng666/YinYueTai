@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -25,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -165,29 +167,36 @@ public class FirstPageFragment extends Fragment {
                 //创建一个JsonParser
                 JsonParser parser = new JsonParser();
                 //通过JsonParser对象可以把json格式的字符串解析成一个JsonElement对象
-                JsonElement el = parser.parse(response);
-                //把JsonElement对象转换成JsonArray
-                JsonArray jsonArray = null;
-                if (el.isJsonArray()) {
-                    jsonArray = el.getAsJsonArray();
-                }
-                Iterator it = jsonArray.iterator();
-                if (it.hasNext()) {
-                    hasMore = true;
-                    int size = 0;
-                    while (it.hasNext()) {
-                        JsonElement e = (JsonElement) it.next();
-                        //JsonElement转换为JavaBean对象
-                        VideoBean field = new Gson().fromJson(e, VideoBean.class);
-                        firstPageBeanList.add(field);
-                        size++;
+                Log.e("response",response);
+                JsonElement el = null;
+                try {
+                    el = parser.parse(response);
+                    //把JsonElement对象转换成JsonArray
+                    JsonArray jsonArray = null;
+                    if (el.isJsonArray()) {
+                        jsonArray = el.getAsJsonArray();
                     }
-                    System.out.println(firstPageBeanList.size());
-                    mOffset += size;
-                    recycleViewAdapter.notifyDataSetChanged();
+                    Iterator it = jsonArray.iterator();
+                    if (it.hasNext()) {
+                        hasMore = true;
+                        int size = 0;
+                        while (it.hasNext()) {
+                            JsonElement e = (JsonElement) it.next();
+                            //JsonElement转换为JavaBean对象
+                            VideoBean field = new Gson().fromJson(e, VideoBean.class);
+                            firstPageBeanList.add(field);
+                            size++;
+                        }
+                        System.out.println(firstPageBeanList.size());
+                        mOffset += size;
+                        recycleViewAdapter.notifyDataSetChanged();
 
-                } else {
-                    hasMore = false;
+                    } else {
+                        hasMore = false;
+                    }
+                } catch (JsonSyntaxException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(),"error:"+response,Toast.LENGTH_SHORT).show();
                 }
                 dismissLoading();
                 swipeRefreshLayout.setRefreshing(false);

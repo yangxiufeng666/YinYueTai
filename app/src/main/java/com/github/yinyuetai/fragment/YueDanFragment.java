@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -23,6 +24,7 @@ import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
 import com.github.yinyuetai.util.URLProviderUtil;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,16 +164,23 @@ public class YueDanFragment extends Fragment {
             public void run() {
                 swipeRefreshLayout.setRefreshing(false);
                 if (response != null) {
-                    YueDanBean yueDanBean = new Gson().fromJson(response, YueDanBean.class);
-                    if (yueDanBean.getPlayLists() == null || yueDanBean.getPlayLists().size() == 0) {
-                        hasMore = false;
-                    } else {
-                        hasMore = true;
-                        int pos = playLists.size() - 1;
-                        playLists.addAll(yueDanBean.getPlayLists());
-                        recycleViewAdapter.notifyItemRangeChanged(pos, yueDanBean.getPlayLists().size());
-                        mOffset += yueDanBean.getPlayLists().size();
+                    YueDanBean yueDanBean = null;
+                    try {
+                        yueDanBean = new Gson().fromJson(response, YueDanBean.class);
+                        if (yueDanBean.getPlayLists() == null || yueDanBean.getPlayLists().size() == 0) {
+                            hasMore = false;
+                        } else {
+                            hasMore = true;
+                            int pos = playLists.size() - 1;
+                            playLists.addAll(yueDanBean.getPlayLists());
+                            recycleViewAdapter.notifyItemRangeChanged(pos, yueDanBean.getPlayLists().size());
+                            mOffset += yueDanBean.getPlayLists().size();
+                        }
+                    } catch (JsonSyntaxException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(),"error:"+response,Toast.LENGTH_SHORT).show();
                     }
+
                 }
             }
         };
