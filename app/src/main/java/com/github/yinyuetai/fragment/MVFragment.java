@@ -2,9 +2,11 @@ package com.github.yinyuetai.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,11 +42,14 @@ public class MVFragment extends Fragment {
     TabLayout tabLayout;
     @Bind(R.id.mv_pager)
     ViewPager mvPager;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
     private View rootView;
     private ArrayList<AreaBean> areaBeanArrayList;
     private MVViewPagerAdapter pagerAdapter;
     private MaterialDialog.Builder builder;
     private MaterialDialog materialDialog;
+    ArrayList<Fragment> fragments = new ArrayList<>();
     private void showLoading(){
         if (builder == null){
 
@@ -65,10 +70,22 @@ public class MVFragment extends Fragment {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.mv_page_fragment, container, false);
             ButterKnife.bind(this, rootView);
+            initView();
             initArea();
         }
         ButterKnife.bind(this, rootView);
         return rootView;
+    }
+    private void initView(){
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment f = fragments.get(tabLayout.getSelectedTabPosition());
+                if (f != null){
+                    ((MVViewPagerItemFragment)f).smoothScrollToTop();
+                }
+            }
+        });
     }
     private void initArea(){
         showLoading();
@@ -91,7 +108,7 @@ public class MVFragment extends Fragment {
                     if(el.isJsonArray()){
                         jsonArray = el.getAsJsonArray();
                     }
-                    areaBeanArrayList = new ArrayList<AreaBean>();
+                    areaBeanArrayList = new ArrayList<>();
                     Iterator it = jsonArray.iterator();
                     while(it.hasNext()){
                         JsonElement e = (JsonElement)it.next();
@@ -99,7 +116,7 @@ public class MVFragment extends Fragment {
                         AreaBean field = new Gson().fromJson(e, AreaBean.class);
                         areaBeanArrayList.add(field);
                     }
-                    ArrayList<Fragment> fragments = new ArrayList<>();
+
                     int index=1;
                     for (AreaBean area :
                             areaBeanArrayList) {
@@ -115,6 +132,7 @@ public class MVFragment extends Fragment {
             }
         });
     }
+
     private void initViewPager(ArrayList<Fragment> fragments){
         pagerAdapter = new MVViewPagerAdapter(getFragmentManager(),fragments,areaBeanArrayList);
         mvPager.setAdapter(pagerAdapter);
@@ -124,5 +142,9 @@ public class MVFragment extends Fragment {
     public void onDestroyView() {
         ButterKnife.unbind(this);
         super.onDestroyView();
+    }
+    public interface ArrowUpInterface{
+        void smoothScrollToTop();
+        void scrollToTop();
     }
 }

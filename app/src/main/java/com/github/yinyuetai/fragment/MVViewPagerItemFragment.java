@@ -2,13 +2,11 @@ package com.github.yinyuetai.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,12 +35,9 @@ import okhttp3.Call;
  * DATE 2016/5/11
  * YinYueTai
  */
-public class MVViewPagerItemFragment extends Fragment {
+public class MVViewPagerItemFragment extends Fragment implements MVFragment.ArrowUpInterface{
 
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
-
-    public static Fragment getInstance(String areaCode,int index) {
+    public static MVViewPagerItemFragment getInstance(String areaCode,int index) {
         MVViewPagerItemFragment mvViewPagerItemFragment = new MVViewPagerItemFragment();
         Bundle bundle = new Bundle();
         bundle.putString("areaCode", areaCode);
@@ -144,12 +139,7 @@ public class MVViewPagerItemFragment extends Fragment {
                 getData(0,SIZE);
             }
         });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mvRecyclerView.smoothScrollToPosition(0);
-            }
-        });
+
     }
 
     private void getData(int offset, int size) {
@@ -225,5 +215,15 @@ public class MVViewPagerItemFragment extends Fragment {
         }
         ButterKnife.unbind(this);
         super.onDestroyView();
+    }
+
+    @Override
+    public void smoothScrollToTop() {
+        mvRecyclerView.smoothScrollToPosition(0);
+    }
+
+    @Override
+    public void scrollToTop() {
+        mvRecyclerView.scrollToPosition(0);
     }
 }
