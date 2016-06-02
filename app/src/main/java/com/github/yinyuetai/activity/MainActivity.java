@@ -1,28 +1,22 @@
 package com.github.yinyuetai.activity;
 
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.SparseArray;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.AlertDialogWrapper;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.fragment.FirstPageFragment;
 import com.github.yinyuetai.fragment.MVFragment;
 import com.github.yinyuetai.fragment.VChartFragment;
 import com.github.yinyuetai.fragment.YueDanFragment;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
 
@@ -30,6 +24,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
+    @Bind(R.id.setting_icon)
+    ImageView settingIcon;
     private SparseArray<Fragment> fragments;
     private SparseArray<Integer> colors;
     @Bind(R.id.toolBar)
@@ -40,7 +36,6 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setSupportActionBar(toolBar);
         toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
         fragments = new SparseArray<>();
         colors = new SparseArray<>();
