@@ -50,8 +50,7 @@ public class WebActivity extends BaseActivity {
         ButterKnife.bind(this);
         toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
         setSupportActionBar(toolBar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        toolBar.setNavigationIcon(R.drawable.ic_back_white_48dp);
         setTranslucenttatus(ContextCompat.getColor(this, R.color.tab_color_1));
         webview.setWebViewClient(new ComWebViewClient(webview));
         ComWebViewChromeClient chromeClient = new ComWebViewChromeClient();
