@@ -71,7 +71,7 @@ public class FirstPageFragment extends Fragment {
             rootView = inflater.inflate(R.layout.first_page_fragment, container, false);
             ButterKnife.bind(this, rootView);
             firstPageBeanList = new ArrayList<>();
-            boserverView();
+            observerView();
             initList();
             getData(mOffset, SIZE);
         }
@@ -79,17 +79,11 @@ public class FirstPageFragment extends Fragment {
         return rootView;
     }
 
-    private void boserverView() {
+    private void observerView() {
         DisplayMetrics metric = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
         mWidth = metric.widthPixels;
         mHeight = (mWidth * 540) / 640;
-        Log.i("HomeActivity", "mHeight =" + mHeight);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     private void initList() {

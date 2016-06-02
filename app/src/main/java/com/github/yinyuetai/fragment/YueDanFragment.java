@@ -74,7 +74,7 @@ public class YueDanFragment extends Fragment {
     private void dismissLoading() {
         materialDialog.dismiss();
     }
-    private void boserverView() {
+    private void observerView() {
         DisplayMetrics metric = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
         mWidth = metric.widthPixels;
@@ -86,7 +86,7 @@ public class YueDanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.common_recycleview_layout, container, false);
-            boserverView();
+            observerView();
             ButterKnife.bind(this, rootView);
             initView();
             showLoading();

@@ -84,7 +84,6 @@ public class VChartViewPagerItemFragment extends Fragment {
     private WheelView yearWheelView;
     private PeriodAdapter periodAdapter;
     private boolean refresh;
-    private int index;
 
     public static Fragment newInstance(String areaCode,int index) {
         VChartViewPagerItemFragment vChartViewPagerItemFragment = new VChartViewPagerItemFragment();
@@ -100,7 +99,7 @@ public class VChartViewPagerItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.vchart_viewpager_fragment, container, false);
-            boserverView();
+            observerView();
         }
         ButterKnife.bind(this, rootView);
         if (!hasCreatedOnce) {
@@ -108,6 +107,7 @@ public class VChartViewPagerItemFragment extends Fragment {
             initView();
             Bundle bundle = getArguments();
             if (bundle.getInt("index")==1){
+                hasLoadedOnce = true;
                 getPeriod();
             }
 
@@ -131,7 +131,7 @@ public class VChartViewPagerItemFragment extends Fragment {
         super.onCreate(savedInstanceState);
         areaCode = getArguments().getString("areaCode");
     }
-    private void boserverView() {
+    private void observerView() {
         DisplayMetrics metric = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
         mWidth = metric.widthPixels;
@@ -144,7 +144,7 @@ public class VChartViewPagerItemFragment extends Fragment {
         recyclerView.setAdapter(viewAdapter);
         swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_3);
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
-                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources()
                         .getDisplayMetrics()));
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

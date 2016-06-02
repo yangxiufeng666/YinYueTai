@@ -72,17 +72,19 @@ public class MVViewPagerItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.mv_viewpager_item_fragment, container, false);
-            boserverView();
+            observerView();
             ButterKnife.bind(this, rootView);
             Bundle bundle = getArguments();
+            initView();
             if (bundle.getInt("index")==1){
+                hasLoadedOnce = true;
                 load();
             }
         }
         ButterKnife.bind(this, rootView);
         return rootView;
     }
-    private void boserverView() {
+    private void observerView() {
         DisplayMetrics metric = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
         mWidth = metric.widthPixels;
@@ -92,7 +94,6 @@ public class MVViewPagerItemFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        Log.e("TTT","onActivityCreated areaCode="+areaCode+",this.isVisible()="+this.isVisible()+",isVisibleToUser="+isVisibleToUser);
         if (this.isVisible()) {
             // we check that the fragment is becoming visible
             if (isVisibleToUser && !hasLoadedOnce) {
@@ -133,7 +134,7 @@ public class MVViewPagerItemFragment extends Fragment {
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_2);
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
-                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, getResources()
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources()
                         .getDisplayMetrics()));
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -178,7 +179,6 @@ public class MVViewPagerItemFragment extends Fragment {
     }
 
     private void dismissProgress(final String response) {
-        //为了swipeRefreshLayout能显示出来，好看一些，故意延迟500ms
         action = new Runnable() {
             @Override
             public void run() {
@@ -215,7 +215,6 @@ public class MVViewPagerItemFragment extends Fragment {
     }
 
     protected void load() {
-        initView();
         getData(mOffset, SIZE);
     }
 
