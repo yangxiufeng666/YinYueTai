@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="false"
+    android:fitsSystemWindows="true"
     tools:context=".activity.MainActivity">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="36dp"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -21,20 +21,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:text="音乐台"/>
                 <ImageView
                     android:id="@+id/setting_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="12dp"
                     android:clickable="true"
+                    android:scaleType="center"
                     android:src="@drawable/ic_settings_white_18dp"/>
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>

@@ -1,6 +1,7 @@
 package com.github.yinyuetai.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.AlertDialogWrapper;
@@ -66,6 +68,13 @@ public class MainActivity extends BaseActivity {
         mBottomBar.mapColorForTab(1, ContextCompat.getColor(this, R.color.tab_color_2));
         mBottomBar.mapColorForTab(2, ContextCompat.getColor(this, R.color.tab_color_3));
         mBottomBar.mapColorForTab(3, ContextCompat.getColor(this, R.color.tab_color_4));
+        settingIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,SettingActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setFragment(Fragment fragment) {
