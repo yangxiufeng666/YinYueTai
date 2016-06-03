@@ -161,6 +161,7 @@ public class FirstPageFragment extends Fragment {
                 }else{
                     Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
                 }
+                dismissLoading();
             }
 
             @Override

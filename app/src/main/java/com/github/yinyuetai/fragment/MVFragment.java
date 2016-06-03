@@ -92,7 +92,8 @@ public class MVFragment extends Fragment {
         OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMVareaUrl(), MVFragment.this, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
-
+                dismissLoading();
+                Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
             }
 
             @Override
