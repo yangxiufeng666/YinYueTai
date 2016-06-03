@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.activity.YueDanDetailActivity;
 import com.github.yinyuetai.domain.YueDanDetailBean;
+import com.github.yinyuetai.listener.PlayVideoListener;
 
 import java.util.List;
 
@@ -45,10 +46,12 @@ public class YueDanDetailRecycleViewAdapter extends RecyclerView.Adapter<YueDanD
     }
     private Activity activity;
     private List<YueDanDetailBean.VideosBean> videosBeanList;
+    private PlayVideoListener playVideoListener;
 
-    public YueDanDetailRecycleViewAdapter(Activity activity, List<YueDanDetailBean.VideosBean> videosBeanList) {
+    public YueDanDetailRecycleViewAdapter(Activity activity, List<YueDanDetailBean.VideosBean> videosBeanList,PlayVideoListener playVideoListener) {
         this.activity = activity;
         this.videosBeanList = videosBeanList;
+        this.playVideoListener = playVideoListener;
     }
 
     @Override
@@ -67,11 +70,12 @@ public class YueDanDetailRecycleViewAdapter extends RecyclerView.Adapter<YueDanD
         holder.itemRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(activity, YueDanDetailActivity.class);
-                intent.putExtra("id", videosBean.getId());
-                activity.startActivity(intent);
-                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//                Intent intent = new Intent();
+//                intent.setClass(activity, YueDanDetailActivity.class);
+//                intent.putExtra("id", videosBean.getId());
+//                activity.startActivity(intent);
+//                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                playVideoListener.playVideo(videosBean.getHdUrl(),videosBean.getTitle());
             }
         });
     }

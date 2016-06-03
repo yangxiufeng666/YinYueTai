@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.YueDanDetailRecycleViewAdapter;
 import com.github.yinyuetai.domain.YueDanDetailBean;
+import com.github.yinyuetai.listener.PlayVideoListener;
 import com.github.yinyuetai.widget.RecycleViewDivider;
 
 import butterknife.Bind;
@@ -35,6 +36,11 @@ public class YueDanListFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
+    private PlayVideoListener playVideoListener;
+
+    public void setPlayVideoListener(PlayVideoListener playVideoListener) {
+        this.playVideoListener = playVideoListener;
+    }
 
     @Nullable
     @Override
@@ -51,7 +57,7 @@ public class YueDanListFragment extends Fragment {
     }
     private void initView(){
         YueDanDetailBean yueDanDetailBean = getArguments().getParcelable("yueDanDetailBean");
-        YueDanDetailRecycleViewAdapter adapter = new YueDanDetailRecycleViewAdapter(getActivity(),yueDanDetailBean.getVideos());
+        YueDanDetailRecycleViewAdapter adapter = new YueDanDetailRecycleViewAdapter(getActivity(),yueDanDetailBean.getVideos(),playVideoListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(),LinearLayoutManager.HORIZONTAL));

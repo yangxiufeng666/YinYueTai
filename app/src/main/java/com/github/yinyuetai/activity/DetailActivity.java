@@ -101,7 +101,8 @@ public class DetailActivity extends BaseActivity {
                 dismissLoading();
                 detailBean = new Gson().fromJson(response, MVDetailBean.class);
                 videoplayer.setUp(detailBean.getUrl(), detailBean.getTitle());
-                Glide.with(DetailActivity.this).load(detailBean.getPosterPic()).centerCrop().into(videoplayer.ivThumb);
+//                Glide.with(DetailActivity.this).load(detailBean.getPosterPic()).centerCrop().into(videoplayer.ivThumb);
+                videoplayer.ivThumb.performClick();
                 describeFragment = MVDescribeFragment.newInstance(detailBean);
                 relativeMvFragment = RelativeMvFragment.newInstance(detailBean);
                 setFragment(describeFragment);
