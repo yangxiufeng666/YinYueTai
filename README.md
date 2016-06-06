@@ -1,6 +1,6 @@
 # YinYueTai
-这个项目是基于[MusicStation](https://github.com/babylikebird/MusicStation)
-的第二个版本，之前的项目是几年前无聊的时候抓取音乐台数据形成的，最近不断有人star或者fork之前的MusicStation项目，并且发邮件给我说不能demo获取不到数据等等问题，希望我修改。但是由于很久没有维护之前的项目了，查看了一些抓取的API，还是可以用的，打算重新写这个项目供大家参考，一起学习，欢迎star，fork。本项目仅供学习，禁止商用，抓取的数据均违反音悦台的版权。
+这个项目起源于[MusicStation](https://github.com/babylikebird/MusicStation)
+，MusicStation是几年前做视频聚合的时候抓取音乐台数据形成的，最近不断有人star或者fork之前的MusicStation项目，并且发Email给我说demo获取不到数据等等问题，希望我修改。但是由于很久没有维护之前的项目了，查看了一些抓取的API，还是可以用的，打算重新写这个项目供大家参考，一起学习，欢迎star。由于抓取的数据均违反音悦台的版权，所以本项目仅供学习，禁止商用。
 
 #show
 ####[demo](http://beta.qq.com/m/0xe9)
