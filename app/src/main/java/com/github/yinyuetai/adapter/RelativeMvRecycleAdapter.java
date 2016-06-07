@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
-import com.github.yinyuetai.mv.MVDetailActivity;
 import com.github.yinyuetai.domain.MVDetailBean;
+import com.github.yinyuetai.mv.MVDetailActivity;
 
 import java.util.List;
 

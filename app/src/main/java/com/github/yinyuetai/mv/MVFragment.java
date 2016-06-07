@@ -48,6 +48,7 @@ public class MVFragment extends Fragment implements MVFragmentContract.View{
             ButterKnife.bind(this, rootView);
             initView();
             new MVFragmentPresenter(this);
+            showLoading();
             presenter.getData(0,0);
         }
         ButterKnife.bind(this, rootView);
@@ -81,6 +82,7 @@ public class MVFragment extends Fragment implements MVFragmentContract.View{
 
     @Override
     public void setData(ArrayList<AreaBean> areaBeanArrayList) {
+        dismissLoading();
         for (AreaBean area :
                 areaBeanArrayList) {
             fragments.add(MVViewPagerItemFragment.getInstance(area.getCode()));

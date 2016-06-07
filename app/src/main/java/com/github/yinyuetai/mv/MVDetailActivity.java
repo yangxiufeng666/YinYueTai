@@ -99,7 +99,6 @@ public class MVDetailActivity extends BaseActivity {
                 dismissLoading();
                 detailBean = new Gson().fromJson(response, MVDetailBean.class);
                 videoplayer.setUp(detailBean.getUrl(), detailBean.getTitle());
-//                Glide.with(MVDetailActivity.this).load(detailBean.getPosterPic()).centerCrop().into(videoplayer.ivThumb);
                 videoplayer.ivThumb.performClick();
                 describeFragment = MVDescribeFragment.newInstance(detailBean);
                 relativeMvFragment = RelativeMvFragment.newInstance(detailBean);

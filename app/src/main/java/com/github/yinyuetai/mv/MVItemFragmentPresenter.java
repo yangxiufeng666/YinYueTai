@@ -38,7 +38,6 @@ public class MVItemFragmentPresenter implements MVItemFragmentContract.Presenter
 
             @Override
             public void onResponse(String response) {
-                itemView.dismissLoading();
                 if (response != null) {
                     try {
                         MVListBean mvListBean = new Gson().fromJson(response, MVListBean.class);

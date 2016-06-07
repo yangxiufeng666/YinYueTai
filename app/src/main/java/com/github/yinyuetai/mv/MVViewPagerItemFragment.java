@@ -141,6 +141,7 @@ public class MVViewPagerItemFragment extends Fragment implements ArrowUpListener
 
     @Override
     public void setData(List<VideoBean> videoList) {
+        dismissLoading();
         if (refresh){
             refresh = false;
             mOffset = 0;
@@ -159,7 +160,7 @@ public class MVViewPagerItemFragment extends Fragment implements ArrowUpListener
 
     @Override
     public void setError(String msg) {
-        swipeRefreshLayout.setRefreshing(false);
+        dismissLoading();
         if (refresh){
             refresh = false;
             Toast.makeText(getActivity(),"刷新失败",Toast.LENGTH_SHORT).show();

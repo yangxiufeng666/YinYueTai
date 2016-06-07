@@ -30,11 +30,9 @@ public class MVFragmentPresenter implements MVFragmentContract.Presenter{
 
     @Override
     public void getData(int offset, int size) {
-        mvView.showLoading();
         OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMVareaUrl(), mvView, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
-                mvView.dismissLoading();
                 mvView.setError(e.getLocalizedMessage());
             }
 
@@ -65,7 +63,6 @@ public class MVFragmentPresenter implements MVFragmentContract.Presenter{
                     e.printStackTrace();
                     mvView.setError(e.getLocalizedMessage());
                 }
-                mvView.dismissLoading();
             }
         });
     }

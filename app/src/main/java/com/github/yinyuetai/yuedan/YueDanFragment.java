@@ -38,7 +38,7 @@ import okhttp3.Call;
  * DATE 2016/5/10
  * YinYueTai
  */
-public class YueDanFragment extends Fragment {
+public class YueDanFragment extends Fragment implements YueDanFragmentContract.View{
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
     @Bind(R.id.swipeRefreshLayout)
@@ -59,21 +59,8 @@ public class YueDanFragment extends Fragment {
     private int mHeight;
     private boolean refresh;
 
-    private void showLoading() {
-        if (builder == null) {
+    private YueDanFragmentContract.Presenter presenter;
 
-            builder = new MaterialDialog.Builder(getActivity());
-            builder.cancelable(false);
-            builder.title("等一下");
-            builder.content("正在努力加载...")
-                    .progress(true, 0);
-        }
-        materialDialog = builder.show();
-    }
-
-    private void dismissLoading() {
-        materialDialog.dismiss();
-    }
     private void observerView() {
         DisplayMetrics metric = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
@@ -89,8 +76,9 @@ public class YueDanFragment extends Fragment {
             observerView();
             ButterKnife.bind(this, rootView);
             initView();
+            new YueDanFragmentPresenter(this);
             showLoading();
-            getData(mOffset, SIZE);
+            presenter.getData(mOffset, SIZE);
         }
         ButterKnife.bind(this, rootView);
         return rootView;
@@ -109,7 +97,7 @@ public class YueDanFragment extends Fragment {
             @Override
             public void onRefresh() {
                 refresh = true;
-                getData(0,SIZE);
+                presenter.getData(0,SIZE);
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -123,7 +111,8 @@ public class YueDanFragment extends Fragment {
                     Glide.with(getActivity()).resumeRequests();
                 }
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && hasMore && (lastVisibleItem == recycleViewAdapter.getItemCount() - 1)) {
-                    getData(mOffset + 1, SIZE);
+                    showProgress(true);
+                    presenter.getData(mOffset + 1, SIZE);
                 }
             }
 
@@ -136,75 +125,67 @@ public class YueDanFragment extends Fragment {
         });
     }
 
-    private void getData(int offset, int size) {
-        showProgress();
-        OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMainPageYueDanUrl(offset, size), YueDanFragment.this, new StringCallBack() {
-            @Override
-            public void onError(Call call, Exception e) {
-                if (refresh){
-                    refresh = false;
-                    Toast.makeText(getActivity(),"刷新失败",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
-                }
-                swipeRefreshLayout.setRefreshing(false);
-                dismissLoading();
-            }
-
-            @Override
-            public void onResponse(String response) {
-                dismissLoading();
-                dismissProgress(response);
-            }
-        });
-    }
-
-    private void showProgress() {
-        swipeRefreshLayout.setRefreshing(true);
-    }
-
-    private Runnable action;
-
-    private void dismissProgress(final String response) {
-        //为了swipeRefreshLayout能显示出来，好看一些，故意延迟500ms
-        action = new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(false);
-                if (response != null) {
-                    try {
-                        YueDanBean yueDanBean = new Gson().fromJson(response, YueDanBean.class);
-                        if (refresh){
-                            refresh = false;
-                            playLists.clear();
-                            mOffset = 0;
-                        }
-                        if (yueDanBean.getPlayLists() == null || yueDanBean.getPlayLists().size() == 0) {
-                            hasMore = false;
-                        } else {
-                            hasMore = true;
-                            int pos = playLists.size() - 1;
-                            playLists.addAll(yueDanBean.getPlayLists());
-                            recycleViewAdapter.notifyItemRangeChanged(pos, yueDanBean.getPlayLists().size());
-                            mOffset += yueDanBean.getPlayLists().size();
-                        }
-                    } catch (JsonSyntaxException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getActivity(),"error:"+response,Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            }
-        };
-        swipeRefreshLayout.postDelayed(action, 250);
+    @Override
+    public void onDestroyView() {
+        ButterKnife.unbind(this);
+        super.onDestroyView();
     }
 
     @Override
-    public void onDestroyView() {
-        if (action != null) {
-            swipeRefreshLayout.removeCallbacks(action);
+    public void setData(List<YueDanBean.PlayListsBean> data) {
+        dismissLoading();
+        showProgress(false);
+        if (refresh){
+            refresh = false;
+            playLists.clear();
+            mOffset = 0;
         }
-        ButterKnife.unbind(this);
-        super.onDestroyView();
+        if (data == null || data.size() == 0) {
+            hasMore = false;
+        } else {
+            hasMore = true;
+            int pos = playLists.size() - 1;
+            playLists.addAll(data);
+            recycleViewAdapter.notifyItemRangeChanged(pos, data.size());
+            mOffset += data.size();
+        }
+    }
+
+    @Override
+    public void setError(String msg) {
+        dismissLoading();
+        showProgress(false);
+        if (refresh){
+            refresh = false;
+            Toast.makeText(getActivity(),"刷新失败",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void setPresenter(YueDanFragmentContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+    @Override
+    public void showLoading() {
+        if (builder == null) {
+            builder = new MaterialDialog.Builder(getActivity());
+            builder.cancelable(false);
+            builder.title("等一下");
+            builder.content("正在努力加载...")
+                    .progress(true, 0);
+        }
+        materialDialog = builder.show();
+    }
+    @Override
+    public void dismissLoading() {
+        materialDialog.dismiss();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showProgress(boolean flag) {
+        swipeRefreshLayout.setRefreshing(flag);
     }
 }

@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.yinyuetai.R;
-import com.github.yinyuetai.mv.MVDetailActivity;
 import com.github.yinyuetai.domain.VideoBean;
+import com.github.yinyuetai.mv.MVDetailActivity;
 
 import java.util.ArrayList;
 
