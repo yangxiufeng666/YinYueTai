@@ -15,22 +15,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.MVViewPagerAdapter;
 import com.github.yinyuetai.domain.AreaBean;
-import com.github.yinyuetai.http.OkHttpManager;
-import com.github.yinyuetai.http.callback.StringCallBack;
 import com.github.yinyuetai.listener.ArrowUpListener;
-import com.github.yinyuetai.util.URLProviderUtil;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import okhttp3.Call;
 
 /**
  * Created by Mr.Yangxiufeng
@@ -91,11 +81,9 @@ public class MVFragment extends Fragment implements MVFragmentContract.View{
 
     @Override
     public void setData(ArrayList<AreaBean> areaBeanArrayList) {
-        int index=1;
         for (AreaBean area :
                 areaBeanArrayList) {
-            fragments.add(MVViewPagerItemFragment.getInstance(area.getCode(),index));
-            index++;
+            fragments.add(MVViewPagerItemFragment.getInstance(area.getCode()));
         }
         initViewPager(fragments,areaBeanArrayList);
     }
