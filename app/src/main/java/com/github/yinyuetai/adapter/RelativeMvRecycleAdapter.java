@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
-import com.github.yinyuetai.activity.DetailActivity;
+import com.github.yinyuetai.mv.MVDetailActivity;
 import com.github.yinyuetai.domain.MVDetailBean;
 
 import java.util.List;
@@ -70,7 +70,7 @@ public class RelativeMvRecycleAdapter extends RecyclerView.Adapter<RelativeMvRec
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(activity, DetailActivity.class);
+                intent.setClass(activity, MVDetailActivity.class);
                 intent.putExtra("id", videosBean.getId());
                 activity.startActivity(intent);
                 activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

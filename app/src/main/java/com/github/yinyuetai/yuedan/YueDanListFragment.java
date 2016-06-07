@@ -1,4 +1,4 @@
-package com.github.yinyuetai.fragment;
+package com.github.yinyuetai.yuedan;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,8 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.yinyuetai.R;
-import com.github.yinyuetai.adapter.RelativeMvRecycleAdapter;
-import com.github.yinyuetai.domain.MVDetailBean;
+import com.github.yinyuetai.adapter.YueDanDetailRecycleViewAdapter;
+import com.github.yinyuetai.domain.YueDanDetailBean;
+import com.github.yinyuetai.listener.PlayVideoListener;
 import com.github.yinyuetai.widget.RecycleViewDivider;
 
 import butterknife.Bind;
@@ -19,29 +20,28 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Mr.Yangxiufeng
- * DATE 2016/5/20
+ * DATE 2016/5/23
  * YinYueTai
  */
-public class RelativeMvFragment extends Fragment {
+public class YueDanListFragment extends Fragment {
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
-    private MVDetailBean mvDetailBean;
     private View rootView;
     private boolean hasLoadOnce;
-    private RelativeMvRecycleAdapter adapter;
 
-    public static RelativeMvFragment newInstance(MVDetailBean mvDetailBean) {
-        RelativeMvFragment fragment = new RelativeMvFragment();
+    public static YueDanListFragment newInstance(YueDanDetailBean yueDanDetailBean) {
+        YueDanListFragment fragment = new YueDanListFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("mvDetailBean", mvDetailBean);
+        bundle.putParcelable("yueDanDetailBean", yueDanDetailBean);
         fragment.setArguments(bundle);
         return fragment;
     }
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mvDetailBean = getArguments().getParcelable("mvDetailBean");
+    private PlayVideoListener playVideoListener;
+
+    public void setPlayVideoListener(PlayVideoListener playVideoListener) {
+        this.playVideoListener = playVideoListener;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,12 +51,13 @@ public class RelativeMvFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         if (!hasLoadOnce){
             hasLoadOnce = true;
-            initData();
+            initView();
         }
         return rootView;
     }
-    private void initData(){
-        adapter = new RelativeMvRecycleAdapter(getActivity(),mvDetailBean.getRelatedVideos());
+    private void initView(){
+        YueDanDetailBean yueDanDetailBean = getArguments().getParcelable("yueDanDetailBean");
+        YueDanDetailRecycleViewAdapter adapter = new YueDanDetailRecycleViewAdapter(getActivity(),yueDanDetailBean.getVideos(),playVideoListener);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(),LinearLayoutManager.HORIZONTAL));

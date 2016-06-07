@@ -1,4 +1,4 @@
-package com.github.yinyuetai.activity;
+package com.github.yinyuetai.main;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,10 +15,12 @@ import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.github.yinyuetai.R;
-import com.github.yinyuetai.fragment.FirstPageFragment;
-import com.github.yinyuetai.fragment.MVFragment;
-import com.github.yinyuetai.fragment.VChartFragment;
-import com.github.yinyuetai.fragment.YueDanFragment;
+import com.github.yinyuetai.activity.BaseActivity;
+import com.github.yinyuetai.setting.SettingActivity;
+import com.github.yinyuetai.homepage.HomePageFragment;
+import com.github.yinyuetai.mv.MVFragment;
+import com.github.yinyuetai.vchart.VChartFragment;
+import com.github.yinyuetai.yuedan.YueDanFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
 
@@ -41,7 +43,7 @@ public class MainActivity extends BaseActivity {
         toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
         fragments = new SparseArray<>();
         colors = new SparseArray<>();
-        fragments.put(R.id.bottomBarItem1, new FirstPageFragment());
+        fragments.put(R.id.bottomBarItem1, new HomePageFragment());
         fragments.put(R.id.bottomBarItem2, new MVFragment());
         fragments.put(R.id.bottomBarItem3, new VChartFragment());
         fragments.put(R.id.bottomBarItem4, new YueDanFragment());

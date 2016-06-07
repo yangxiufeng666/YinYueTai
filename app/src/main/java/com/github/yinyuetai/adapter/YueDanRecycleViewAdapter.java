@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.yinyuetai.R;
-import com.github.yinyuetai.activity.YueDanDetailActivity;
+import com.github.yinyuetai.yuedan.YueDanDetailActivity;
 import com.github.yinyuetai.domain.YueDanBean;
 
 import java.util.List;

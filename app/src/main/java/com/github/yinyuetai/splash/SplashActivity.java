@@ -1,8 +1,7 @@
-package com.github.yinyuetai.activity;
+package com.github.yinyuetai.splash;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
@@ -10,6 +9,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.github.yinyuetai.R;
+import com.github.yinyuetai.main.MainActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

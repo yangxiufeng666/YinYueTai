@@ -1,4 +1,4 @@
-package com.github.yinyuetai.fragment;
+package com.github.yinyuetai.mv;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -1,12 +1,10 @@
-package com.github.yinyuetai.fragment;
+package com.github.yinyuetai.vchart;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,19 +35,17 @@ import okhttp3.Call;
  * DATE 2016/5/10
  * YinYueTai
  */
-public class MVFragment extends Fragment {
+public class VChartFragment extends Fragment {
     @Bind(R.id.tabLayout)
     TabLayout tabLayout;
-    @Bind(R.id.mv_pager)
-    ViewPager mvPager;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
+    @Bind(R.id.view_pager)
+    ViewPager viewPager;
     private View rootView;
+    private boolean hasCreatedOnce;
     private ArrayList<AreaBean> areaBeanArrayList;
     private MVViewPagerAdapter pagerAdapter;
     private MaterialDialog.Builder builder;
     private MaterialDialog materialDialog;
-    ArrayList<Fragment> fragments = new ArrayList<>();
     private void showLoading(){
         if (builder == null){
 
@@ -67,29 +63,23 @@ public class MVFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (rootView == null) {
-            rootView = inflater.inflate(R.layout.mv_page_fragment, container, false);
-            ButterKnife.bind(this, rootView);
-            initView();
-            initArea();
+        if (rootView==null){
+            rootView = inflater.inflate(R.layout.vchart_page_fragment, container, false);
         }
         ButterKnife.bind(this, rootView);
+        if (!hasCreatedOnce){
+            hasCreatedOnce = true;
+            initView();
+            getArea();
+        }
         return rootView;
     }
     private void initView(){
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment f = fragments.get(tabLayout.getSelectedTabPosition());
-                if (f != null){
-                    ((MVViewPagerItemFragment)f).smoothScrollToTop();
-                }
-            }
-        });
+
     }
-    private void initArea(){
+    private void getArea(){
         showLoading();
-        OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMVareaUrl(), MVFragment.this, new StringCallBack() {
+        OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getVChartAreasUrl(), VChartFragment.this, new StringCallBack() {
             @Override
             public void onError(Call call, Exception e) {
                 dismissLoading();
@@ -109,7 +99,7 @@ public class MVFragment extends Fragment {
                     if(el.isJsonArray()){
                         jsonArray = el.getAsJsonArray();
                     }
-                    areaBeanArrayList = new ArrayList<>();
+                    areaBeanArrayList = new ArrayList<AreaBean>();
                     Iterator it = jsonArray.iterator();
                     while(it.hasNext()){
                         JsonElement e = (JsonElement)it.next();
@@ -117,11 +107,11 @@ public class MVFragment extends Fragment {
                         AreaBean field = new Gson().fromJson(e, AreaBean.class);
                         areaBeanArrayList.add(field);
                     }
-
+                    ArrayList<Fragment> fragments = new ArrayList<>();
                     int index=1;
                     for (AreaBean area :
                             areaBeanArrayList) {
-                        fragments.add(MVViewPagerItemFragment.getInstance(area.getCode(),index));
+                        fragments.add(VChartViewPagerItemFragment.newInstance(area.getCode(),index));
                         index++;
                     }
                     initViewPager(fragments);
@@ -133,19 +123,14 @@ public class MVFragment extends Fragment {
             }
         });
     }
-
     private void initViewPager(ArrayList<Fragment> fragments){
         pagerAdapter = new MVViewPagerAdapter(getFragmentManager(),fragments,areaBeanArrayList);
-        mvPager.setAdapter(pagerAdapter);
-        tabLayout.setupWithViewPager(mvPager);
+        viewPager.setAdapter(pagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
     @Override
     public void onDestroyView() {
-        ButterKnife.unbind(this);
         super.onDestroyView();
-    }
-    public interface ArrowUpInterface{
-        void smoothScrollToTop();
-        void scrollToTop();
+        ButterKnife.unbind(this);
     }
 }

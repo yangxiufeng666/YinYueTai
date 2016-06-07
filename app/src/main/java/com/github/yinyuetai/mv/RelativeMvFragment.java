@@ -1,4 +1,4 @@
-package com.github.yinyuetai.fragment;
+package com.github.yinyuetai.mv;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,9 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.yinyuetai.R;
-import com.github.yinyuetai.adapter.YueDanDetailRecycleViewAdapter;
-import com.github.yinyuetai.domain.YueDanDetailBean;
-import com.github.yinyuetai.listener.PlayVideoListener;
+import com.github.yinyuetai.adapter.RelativeMvRecycleAdapter;
+import com.github.yinyuetai.domain.MVDetailBean;
 import com.github.yinyuetai.widget.RecycleViewDivider;
 
 import butterknife.Bind;
@@ -20,28 +19,29 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Mr.Yangxiufeng
- * DATE 2016/5/23
+ * DATE 2016/5/20
  * YinYueTai
  */
-public class YueDanListFragment extends Fragment {
+public class RelativeMvFragment extends Fragment {
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
+    private MVDetailBean mvDetailBean;
     private View rootView;
     private boolean hasLoadOnce;
+    private RelativeMvRecycleAdapter adapter;
 
-    public static YueDanListFragment newInstance(YueDanDetailBean yueDanDetailBean) {
-        YueDanListFragment fragment = new YueDanListFragment();
+    public static RelativeMvFragment newInstance(MVDetailBean mvDetailBean) {
+        RelativeMvFragment fragment = new RelativeMvFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("yueDanDetailBean", yueDanDetailBean);
+        bundle.putParcelable("mvDetailBean", mvDetailBean);
         fragment.setArguments(bundle);
         return fragment;
     }
-    private PlayVideoListener playVideoListener;
-
-    public void setPlayVideoListener(PlayVideoListener playVideoListener) {
-        this.playVideoListener = playVideoListener;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mvDetailBean = getArguments().getParcelable("mvDetailBean");
     }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,13 +51,12 @@ public class YueDanListFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         if (!hasLoadOnce){
             hasLoadOnce = true;
-            initView();
+            initData();
         }
         return rootView;
     }
-    private void initView(){
-        YueDanDetailBean yueDanDetailBean = getArguments().getParcelable("yueDanDetailBean");
-        YueDanDetailRecycleViewAdapter adapter = new YueDanDetailRecycleViewAdapter(getActivity(),yueDanDetailBean.getVideos(),playVideoListener);
+    private void initData(){
+        adapter = new RelativeMvRecycleAdapter(getActivity(),mvDetailBean.getRelatedVideos());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new RecycleViewDivider(getActivity(),LinearLayoutManager.HORIZONTAL));

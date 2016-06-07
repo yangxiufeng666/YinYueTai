@@ -1,4 +1,4 @@
-package com.github.yinyuetai.fragment;
+package com.github.yinyuetai.homepage;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,30 +18,18 @@ import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.FirstRecycleViewAdapter;
 import com.github.yinyuetai.domain.VideoBean;
-import com.github.yinyuetai.http.OkHttpManager;
-import com.github.yinyuetai.http.callback.StringCallBack;
-import com.github.yinyuetai.util.URLProviderUtil;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import okhttp3.Call;
 
 /**
  * Created by Mr.Yangxiufeng
  * DATE 2016/5/10
  * YinYueTai
  */
-public class FirstPageFragment extends Fragment {
-
-
+public class HomePageFragment extends Fragment implements HomePageFragmentContract.View {
     @Bind(R.id.first_page_recyclerView)
     RecyclerView firstPageRecyclerView;
     @Bind(R.id.swipeRefreshLayout)
@@ -55,7 +42,6 @@ public class FirstPageFragment extends Fragment {
     private ArrayList<VideoBean> firstPageBeanList;
     private int mWidth;
     private int mHeight;
-    private Runnable action;
     private boolean refresh;
     private MaterialDialog.Builder builder;
     private MaterialDialog materialDialog;
@@ -63,6 +49,8 @@ public class FirstPageFragment extends Fragment {
     boolean hasMore = true;
     private static final int SIZE = 20;
     private int mOffset = 0;
+
+    private HomePageFragmentContract.Presenter firstPagePresenter;
 
     @Nullable
     @Override
@@ -72,8 +60,9 @@ public class FirstPageFragment extends Fragment {
             ButterKnife.bind(this, rootView);
             firstPageBeanList = new ArrayList<>();
             observerView();
-            initList();
-            getData(mOffset, SIZE);
+            new HomePagePresenter(this);
+            initView();
+            firstPagePresenter.getData(mOffset, SIZE);
         }
         ButterKnife.bind(this, rootView);
         return rootView;
@@ -86,23 +75,17 @@ public class FirstPageFragment extends Fragment {
         mHeight = (mWidth * 540) / 640;
     }
 
-    private void initList() {
+    private void initView() {
         recycleViewAdapter = new FirstRecycleViewAdapter(firstPageBeanList, getActivity(), mWidth, mHeight);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         firstPageRecyclerView.setLayoutManager(linearLayoutManager);
         firstPageRecyclerView.setAdapter(recycleViewAdapter);
         swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_1);
-        action = new Runnable() {
-            @Override
-            public void run() {
-                refresh = true;
-                getData(0, SIZE);
-            }
-        };
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefreshLayout.postDelayed(action, 200);
+                refresh = true;
+                firstPagePresenter.getData(0, SIZE);
             }
         });
         showLoading();
@@ -115,7 +98,7 @@ public class FirstPageFragment extends Fragment {
                 }
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItem + 1 == recycleViewAdapter.getItemCount()) && hasMore) {
                     swipeRefreshLayout.setRefreshing(true);
-                    getData(mOffset, SIZE);
+                    firstPagePresenter.getData(mOffset, SIZE);
                 }
             }
 
@@ -136,7 +119,6 @@ public class FirstPageFragment extends Fragment {
 
     private void showLoading() {
         if (builder == null) {
-
             builder = new MaterialDialog.Builder(getActivity());
             builder.cancelable(false);
             builder.title("等一下");
@@ -150,73 +132,45 @@ public class FirstPageFragment extends Fragment {
         materialDialog.dismiss();
     }
 
-    private void getData(int offset, final int size) {
-        OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMainPageUrl(offset, size), FirstPageFragment.this, new StringCallBack() {
-            @Override
-            public void onError(Call call, Exception e) {
-                swipeRefreshLayout.setRefreshing(false);
-                if (refresh){
-                    refresh = false;
-                    Toast.makeText(getActivity(),"刷新失败",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
-                }
-                dismissLoading();
-            }
-
-            @Override
-            public void onResponse(String response) {
-                swipeRefreshLayout.setRefreshing(false);
-                //创建一个JsonParser
-                JsonParser parser = new JsonParser();
-                //通过JsonParser对象可以把json格式的字符串解析成一个JsonElement对象
-                Log.e("response",response);
-                JsonElement el = null;
-                try {
-                    el = parser.parse(response);
-                    //把JsonElement对象转换成JsonArray
-                    JsonArray jsonArray = null;
-                    if (el.isJsonArray()) {
-                        jsonArray = el.getAsJsonArray();
-                    }
-                    if (refresh){
-                        refresh = false;
-                        firstPageBeanList.clear();
-                        mOffset = 0;
-                    }
-                    Iterator it = jsonArray.iterator();
-                    if (it.hasNext()) {
-                        hasMore = true;
-                        int size = 0;
-                        while (it.hasNext()) {
-                            JsonElement e = (JsonElement) it.next();
-                            //JsonElement转换为JavaBean对象
-                            VideoBean field = new Gson().fromJson(e, VideoBean.class);
-                            firstPageBeanList.add(field);
-                            size++;
-                        }
-                        mOffset += size;
-                        recycleViewAdapter.notifyDataSetChanged();
-
-                    } else {
-                        hasMore = false;
-                    }
-                } catch (JsonSyntaxException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(),"error:"+response,Toast.LENGTH_SHORT).show();
-                }
-                dismissLoading();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
+    @Override
+    public void onDestroyView() {
+        ButterKnife.unbind(this);
+        super.onDestroyView();
     }
 
     @Override
-    public void onDestroyView() {
-        if (action != null) {
-            swipeRefreshLayout.removeCallbacks(action);
+    public void setData(ArrayList<VideoBean> dataList) {
+        if (refresh){
+            refresh = false;
+            firstPageBeanList.clear();
+            mOffset = 0;
         }
-        ButterKnife.unbind(this);
-        super.onDestroyView();
+        if (dataList.size() > 0){
+            hasMore = true;
+        }else {
+            hasMore = false;
+        }
+        mOffset += dataList.size();
+        firstPageBeanList.addAll(dataList);
+        recycleViewAdapter.notifyDataSetChanged();
+        dismissLoading();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void setError(String msg) {
+        swipeRefreshLayout.setRefreshing(false);
+        if (refresh){
+            refresh = false;
+            Toast.makeText(getActivity(),"刷新失败",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
+        }
+        dismissLoading();
+    }
+
+    @Override
+    public void setPresenter(HomePageFragmentContract.Presenter presenter) {
+        this.firstPagePresenter = presenter;
     }
 }

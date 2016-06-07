@@ -1,4 +1,4 @@
-package com.github.yinyuetai.fragment;
+package com.github.yinyuetai.vchart;
 
 import android.content.Context;
 import android.os.Bundle;
