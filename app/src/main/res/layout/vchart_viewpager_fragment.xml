@@ -14,35 +14,20 @@
             android:background="@color/tab_color_2"/>
         <RelativeLayout
             android:id="@+id/period_layout"
-            android:layout_height="wrap_content"
+            android:layout_height="28dp"
             android:layout_width="match_parent"
             android:clickable="true"
-            android:background="@color/tab_color_3">
-            <ImageView
-                android:id="@+id/vchart_left_period"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/period_left_selector"
-                android:layout_alignParentLeft="true"
-                android:clickable="true"
-                android:focusable="true"/>
+            android:background="@drawable/item_transtop">
 
             <TextView
                 android:id="@+id/vchart_period"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
-            <ImageView
-                android:id="@+id/vchart_right_period"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/period_right_selector"
-                android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:focusable="true"/>
 
         </RelativeLayout>
         <android.support.v7.widget.RecyclerView

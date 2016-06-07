@@ -14,7 +14,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,14 +22,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.VCharRecycleViewAdapter;
-import com.github.yinyuetai.domain.VChartBean;
 import com.github.yinyuetai.domain.VChartPeriod;
 import com.github.yinyuetai.domain.VideoBean;
-import com.github.yinyuetai.http.OkHttpManager;
-import com.github.yinyuetai.http.callback.StringCallBack;
-import com.github.yinyuetai.util.URLProviderUtil;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,20 +34,15 @@ import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
-import okhttp3.Call;
 
 /**
  * Created by Mr.Yangxiufeng
  * DATE 2016/5/12
  * YinYueTai
  */
-public class VChartViewPagerItemFragment extends Fragment {
-    @Bind(R.id.vchart_left_period)
-    ImageView vchartLeftPeriod;
+public class VChartViewPagerItemFragment extends Fragment implements VChartPagerItemContract.View{
     @Bind(R.id.vchart_period)
     TextView vchartPeriod;
-    @Bind(R.id.vchart_right_period)
-    ImageView vchartRightPeriod;
     @Bind(R.id.period_layout)
     RelativeLayout periodLayout;
     @Bind(R.id.recyclerView)
@@ -66,18 +54,14 @@ public class VChartViewPagerItemFragment extends Fragment {
     private String areaCode;
     private int dateCode;
 
-    private VChartPeriod vChartPeriod;
     private List<VChartPeriod.PeriodsBean> periodsBeanArrayList;
-    private VChartBean vChartBean;
     private List<VideoBean> videosBeen = new ArrayList<>();
-
     private VCharRecycleViewAdapter viewAdapter;
-
     private int mWidth;
     private int mHeight;
 
     private MaterialDialog materialDialog;
-    List<Integer> years;
+    private List<Integer> years;
     boolean scrolling;
     private SparseArray<List<VChartPeriod.PeriodsBean>> sparseArray;
     private WheelView periodWheelView;
@@ -85,11 +69,12 @@ public class VChartViewPagerItemFragment extends Fragment {
     private PeriodAdapter periodAdapter;
     private boolean refresh;
 
-    public static Fragment newInstance(String areaCode,int index) {
+    private VChartPagerItemContract.Presenter presenter;
+
+    public static Fragment newInstance(String areaCode) {
         VChartViewPagerItemFragment vChartViewPagerItemFragment = new VChartViewPagerItemFragment();
         Bundle bundle = new Bundle();
         bundle.putString("areaCode", areaCode);
-        bundle.putInt("index",index);
         vChartViewPagerItemFragment.setArguments(bundle);
         return vChartViewPagerItemFragment;
     }
@@ -105,26 +90,10 @@ public class VChartViewPagerItemFragment extends Fragment {
         if (!hasCreatedOnce) {
             hasCreatedOnce = true;
             initView();
-            Bundle bundle = getArguments();
-            if (bundle.getInt("index")==1){
-                hasLoadedOnce = true;
-                getPeriod();
-            }
-
+            new VChartPagerItemPresenter(this);
+            presenter.getPeriod(areaCode);
         }
         return rootView;
-    }
-    private boolean hasLoadedOnce = false; // your boolean field
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (this.isVisible()) {
-            // we check that the fragment is becoming visible
-            if (isVisibleToUser && !hasLoadedOnce) {
-                hasLoadedOnce = true;
-                getPeriod();
-            }
-        }
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -151,7 +120,7 @@ public class VChartViewPagerItemFragment extends Fragment {
             @Override
             public void onRefresh() {
                 refresh = true;
-                getDataByPeriod(areaCode, dateCode);
+                presenter.getDataByPeriod(areaCode, dateCode);
             }
         });
         periodLayout.setOnClickListener(new View.OnClickListener() {
@@ -172,11 +141,10 @@ public class VChartViewPagerItemFragment extends Fragment {
                                         videosBeen.clear();
                                         viewAdapter.notifyDataSetChanged();
                                         dateCode = currentPeriodsBean.getDateCode();
-                                        getDataByPeriod(areaCode, dateCode);
+                                        presenter.getDataByPeriod(areaCode, dateCode);
                                     }
                                 }
-                            })
-                            .show();
+                            }).show();
                     yearWheelView = (WheelView) materialDialog.getCustomView().findViewById(R.id.year);
                     yearWheelView.setViewAdapter(new YearsAdapter(getActivity(),years));
                     periodWheelView = (WheelView) materialDialog.getCustomView().findViewById(R.id.period);
@@ -215,79 +183,57 @@ public class VChartViewPagerItemFragment extends Fragment {
             }
         });
     }
-    private void getPeriod() {
-        OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getVChartPeriodUrl(areaCode), VChartViewPagerItemFragment.this, new StringCallBack() {
-            @Override
-            public void onError(Call call, Exception e) {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onResponse(String response) {
-                try {
-                    vChartPeriod = new Gson().fromJson(response, VChartPeriod.class);
-                    periodsBeanArrayList = vChartPeriod.getPeriods();
-                    VChartPeriod.PeriodsBean currentPeriodsBean = periodsBeanArrayList.get(0);
-                    vchartPeriod.setText(String.format(getString(R.string.period_format), currentPeriodsBean.getYear(), currentPeriodsBean.getNo(), currentPeriodsBean.getBeginDateText(), currentPeriodsBean.getEndDateText()));
-                    getDataByPeriod(areaCode, currentPeriodsBean.getDateCode());
-                    years = vChartPeriod.getYears();
-                    sparseArray = new SparseArray<>();
-                    int index=0;
-                    for (Integer integer : years){
-                        List<VChartPeriod.PeriodsBean> list = new ArrayList<>();
-                        for (VChartPeriod.PeriodsBean p : periodsBeanArrayList){
-                            if (integer == p.getYear()){
-                                list.add(p);
-                            }
-                        }
-                        sparseArray.put(index,list);
-                        index++;
-                    }
-                } catch (JsonSyntaxException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(),"error:"+response,Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-    }
-
-    private void getDataByPeriod(String area, int dateCode) {
-        OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getVChartListUrl(area, dateCode), this, new StringCallBack() {
-            @Override
-            public void onError(Call call, Exception e) {
-                if (refresh){
-                    refresh = false;
-                    Toast.makeText(getActivity(),"刷新失败",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
-                }
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onResponse(String response) {
-                swipeRefreshLayout.setRefreshing(false);
-                try {
-                    vChartBean = new Gson().fromJson(response, VChartBean.class);
-                    if (refresh){
-                        refresh = false;
-                        videosBeen.clear();
-                    }
-                    videosBeen.addAll(vChartBean.getVideos());
-                    viewAdapter.notifyDataSetChanged();
-                } catch (JsonSyntaxException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(),"error:"+response,Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+    @Override
+    public void setAreaData(VChartPeriod vChartPeriod) {
+        periodsBeanArrayList = vChartPeriod.getPeriods();
+        VChartPeriod.PeriodsBean currentPeriodsBean = periodsBeanArrayList.get(0);
+        vchartPeriod.setText(String.format(getString(R.string.period_format), currentPeriodsBean.getYear(), currentPeriodsBean.getNo(), currentPeriodsBean.getBeginDateText(), currentPeriodsBean.getEndDateText()));
+        presenter.getDataByPeriod(areaCode, currentPeriodsBean.getDateCode());
+        years = vChartPeriod.getYears();
+        sparseArray = new SparseArray<>();
+        int index=0;
+        for (Integer integer : years){
+            List<VChartPeriod.PeriodsBean> list = new ArrayList<>();
+            for (VChartPeriod.PeriodsBean p : periodsBeanArrayList){
+                if (integer == p.getYear()){
+                    list.add(p);
+                }
+            }
+            sparseArray.put(index,list);
+            index++;
+        }
+    }
+
+    @Override
+    public void setVideoData(List<VideoBean> videoBeen) {
+        swipeRefreshLayout.setRefreshing(false);
+        if (refresh){
+            refresh = false;
+            videosBeen.clear();
+        }
+        videosBeen.addAll(videoBeen);
+        viewAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setError(String msg) {
+        if (refresh){
+            refresh = false;
+            Toast.makeText(getActivity(),"刷新失败",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    public void setPresenter(VChartPagerItemContract.Presenter presenter) {
+        this.presenter = presenter;
     }
     /**
      * Updates the city wheel

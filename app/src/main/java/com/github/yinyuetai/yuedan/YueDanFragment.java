@@ -20,18 +20,12 @@ import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.YueDanRecycleViewAdapter;
 import com.github.yinyuetai.domain.YueDanBean;
-import com.github.yinyuetai.http.OkHttpManager;
-import com.github.yinyuetai.http.callback.StringCallBack;
-import com.github.yinyuetai.util.URLProviderUtil;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import okhttp3.Call;
 
 /**
  * Created by Mr.Yangxiufeng

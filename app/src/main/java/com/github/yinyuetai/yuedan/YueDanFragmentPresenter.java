@@ -1,7 +1,5 @@
 package com.github.yinyuetai.yuedan;
 
-import android.widget.Toast;
-
 import com.github.yinyuetai.domain.YueDanBean;
 import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
