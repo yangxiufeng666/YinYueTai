@@ -20,6 +20,7 @@ import com.github.yinyuetai.domain.MVListBean;
 import com.github.yinyuetai.domain.VideoBean;
 import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
+import com.github.yinyuetai.listener.ArrowUpListener;
 import com.github.yinyuetai.util.URLProviderUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -35,7 +36,7 @@ import okhttp3.Call;
  * DATE 2016/5/11
  * YinYueTai
  */
-public class MVViewPagerItemFragment extends Fragment implements MVFragment.ArrowUpInterface{
+public class MVViewPagerItemFragment extends Fragment implements ArrowUpListener{
 
     public static MVViewPagerItemFragment getInstance(String areaCode,int index) {
         MVViewPagerItemFragment mvViewPagerItemFragment = new MVViewPagerItemFragment();

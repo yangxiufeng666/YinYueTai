@@ -17,6 +17,7 @@ import com.github.yinyuetai.adapter.MVViewPagerAdapter;
 import com.github.yinyuetai.domain.AreaBean;
 import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
+import com.github.yinyuetai.listener.ArrowUpListener;
 import com.github.yinyuetai.util.URLProviderUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -44,12 +45,68 @@ public class MVFragment extends Fragment implements MVFragmentContract.View{
     @Bind(R.id.fab)
     FloatingActionButton fab;
     private View rootView;
-    private ArrayList<AreaBean> areaBeanArrayList;
     private MVViewPagerAdapter pagerAdapter;
     private MaterialDialog.Builder builder;
     private MaterialDialog materialDialog;
-    ArrayList<Fragment> fragments = new ArrayList<>();
-    private void showLoading(){
+    ArrayList<MVViewPagerItemFragment> fragments = new ArrayList<>();
+    private MVFragmentContract.Presenter presenter;
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (rootView == null) {
+            rootView = inflater.inflate(R.layout.mv_page_fragment, container, false);
+            ButterKnife.bind(this, rootView);
+            initView();
+            new MVFragmentPresenter(this);
+            presenter.getData(0,0);
+        }
+        ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+    private void initView(){
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrowUpListener listener = fragments.get(tabLayout.getSelectedTabPosition());
+                if (listener != null){
+                    listener.smoothScrollToTop();
+                }
+            }
+        });
+    }
+    private void initViewPager(ArrayList<MVViewPagerItemFragment> fragments,ArrayList<AreaBean> areaBeanArrayList){
+        pagerAdapter = new MVViewPagerAdapter(getFragmentManager(),fragments,areaBeanArrayList);
+        mvPager.setAdapter(pagerAdapter);
+        tabLayout.setupWithViewPager(mvPager);
+    }
+    @Override
+    public void onDestroyView() {
+        ButterKnife.unbind(this);
+        super.onDestroyView();
+    }
+    @Override
+    public void setPresenter(MVFragmentContract.Presenter presenter) {
+        this.presenter = presenter;
+    }
+
+    @Override
+    public void setData(ArrayList<AreaBean> areaBeanArrayList) {
+        int index=1;
+        for (AreaBean area :
+                areaBeanArrayList) {
+            fragments.add(MVViewPagerItemFragment.getInstance(area.getCode(),index));
+            index++;
+        }
+        initViewPager(fragments,areaBeanArrayList);
+    }
+
+    @Override
+    public void setError(String msg) {
+        dismissLoading();
+        Toast.makeText(getActivity(),"获取数据失败:"+msg,Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    public void showLoading(){
         if (builder == null){
 
             builder = new MaterialDialog.Builder(getActivity());
@@ -60,106 +117,8 @@ public class MVFragment extends Fragment implements MVFragmentContract.View{
         }
         materialDialog = builder.show();
     }
-    private void dismissLoading(){
+    @Override
+    public void dismissLoading(){
         materialDialog.dismiss();
-    }
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (rootView == null) {
-            rootView = inflater.inflate(R.layout.mv_page_fragment, container, false);
-            ButterKnife.bind(this, rootView);
-            initView();
-            initArea();
-        }
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-    private void initView(){
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment f = fragments.get(tabLayout.getSelectedTabPosition());
-                if (f != null){
-                    ((MVViewPagerItemFragment)f).smoothScrollToTop();
-                }
-            }
-        });
-    }
-    private void initArea(){
-        showLoading();
-        OkHttpManager.getOkHttpManager().asyncGet(URLProviderUtil.getMVareaUrl(), MVFragment.this, new StringCallBack() {
-            @Override
-            public void onError(Call call, Exception e) {
-                dismissLoading();
-                Toast.makeText(getActivity(),"获取数据失败",Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResponse(String response) {
-                //创建一个JsonParser
-                JsonParser parser = new JsonParser();
-                //通过JsonParser对象可以把json格式的字符串解析成一个JsonElement对象
-                JsonElement el = null;
-                try {
-                    el = parser.parse(response);
-                    //把JsonElement对象转换成JsonArray
-                    JsonArray jsonArray = null;
-                    if(el.isJsonArray()){
-                        jsonArray = el.getAsJsonArray();
-                    }
-                    areaBeanArrayList = new ArrayList<>();
-                    Iterator it = jsonArray.iterator();
-                    while(it.hasNext()){
-                        JsonElement e = (JsonElement)it.next();
-                        //JsonElement转换为JavaBean对象
-                        AreaBean field = new Gson().fromJson(e, AreaBean.class);
-                        areaBeanArrayList.add(field);
-                    }
-
-                    int index=1;
-                    for (AreaBean area :
-                            areaBeanArrayList) {
-                        fragments.add(MVViewPagerItemFragment.getInstance(area.getCode(),index));
-                        index++;
-                    }
-                    initViewPager(fragments);
-                } catch (JsonSyntaxException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(),"error:"+response,Toast.LENGTH_SHORT).show();
-                }
-                dismissLoading();
-            }
-        });
-    }
-
-    private void initViewPager(ArrayList<Fragment> fragments){
-        pagerAdapter = new MVViewPagerAdapter(getFragmentManager(),fragments,areaBeanArrayList);
-        mvPager.setAdapter(pagerAdapter);
-        tabLayout.setupWithViewPager(mvPager);
-    }
-    @Override
-    public void onDestroyView() {
-        ButterKnife.unbind(this);
-        super.onDestroyView();
-    }
-    public interface ArrowUpInterface{
-        void smoothScrollToTop();
-        void scrollToTop();
-    }
-
-    @Override
-    public void setPresenter(MVFragmentContract.Presenter presenter) {
-
-    }
-
-    @Override
-    public void setData(ArrayList<AreaBean> areaBeanArrayList) {
-
-    }
-
-    @Override
-    public void setError(String msg) {
-
     }
 }

@@ -50,7 +50,7 @@ public class HomePageFragment extends Fragment implements HomePageFragmentContra
     private static final int SIZE = 20;
     private int mOffset = 0;
 
-    private HomePageFragmentContract.Presenter firstPagePresenter;
+    private HomePageFragmentContract.Presenter presenter;
 
     @Nullable
     @Override
@@ -62,7 +62,7 @@ public class HomePageFragment extends Fragment implements HomePageFragmentContra
             observerView();
             new HomePagePresenter(this);
             initView();
-            firstPagePresenter.getData(mOffset, SIZE);
+            presenter.getData(mOffset, SIZE);
         }
         ButterKnife.bind(this, rootView);
         return rootView;
@@ -85,7 +85,7 @@ public class HomePageFragment extends Fragment implements HomePageFragmentContra
             @Override
             public void onRefresh() {
                 refresh = true;
-                firstPagePresenter.getData(0, SIZE);
+                presenter.getData(0, SIZE);
             }
         });
         showLoading();
@@ -98,7 +98,7 @@ public class HomePageFragment extends Fragment implements HomePageFragmentContra
                 }
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItem + 1 == recycleViewAdapter.getItemCount()) && hasMore) {
                     swipeRefreshLayout.setRefreshing(true);
-                    firstPagePresenter.getData(mOffset, SIZE);
+                    presenter.getData(mOffset, SIZE);
                 }
             }
 
@@ -171,6 +171,6 @@ public class HomePageFragment extends Fragment implements HomePageFragmentContra
 
     @Override
     public void setPresenter(HomePageFragmentContract.Presenter presenter) {
-        this.firstPagePresenter = presenter;
+        this.presenter = presenter;
     }
 }

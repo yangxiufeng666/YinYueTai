@@ -18,5 +18,7 @@ public interface MVFragmentContract {
     interface View extends BaseView<Presenter>{
         void setData(ArrayList<AreaBean> areaBeanArrayList);
         void setError(String msg);
+        void showLoading();
+        void dismissLoading();
     }
 }
