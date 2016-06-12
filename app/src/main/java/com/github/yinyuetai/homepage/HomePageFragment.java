@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.github.yinyuetai.BaseFragment;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.FirstRecycleViewAdapter;
 import com.github.yinyuetai.domain.VideoBean;
@@ -29,26 +30,17 @@ import butterknife.ButterKnife;
  * DATE 2016/5/10
  * YinYueTai
  */
-public class HomePageFragment extends Fragment implements HomePageFragmentContract.View {
+public class HomePageFragment extends BaseFragment implements HomePageFragmentContract.View {
     @Bind(R.id.first_page_recyclerView)
     RecyclerView firstPageRecyclerView;
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    private LinearLayoutManager linearLayoutManager;
     private FirstRecycleViewAdapter recycleViewAdapter;
-    private View rootView;
     private ArrayList<VideoBean> firstPageBeanList;
-    private int mWidth;
-    private int mHeight;
-    private boolean refresh;
     private MaterialDialog.Builder builder;
     private MaterialDialog materialDialog;
-    private int lastVisibleItem;
-    boolean hasMore = true;
-    private static final int SIZE = 20;
-    private int mOffset = 0;
 
     private HomePageFragmentContract.Presenter presenter;
 
@@ -59,20 +51,13 @@ public class HomePageFragment extends Fragment implements HomePageFragmentContra
             rootView = inflater.inflate(R.layout.first_page_fragment, container, false);
             ButterKnife.bind(this, rootView);
             firstPageBeanList = new ArrayList<>();
-            observerView();
+            observerView(540,640);
             new HomePagePresenter(this);
             initView();
             presenter.getData(mOffset, SIZE);
         }
         ButterKnife.bind(this, rootView);
         return rootView;
-    }
-
-    private void observerView() {
-        DisplayMetrics metric = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
-        mWidth = metric.widthPixels;
-        mHeight = (mWidth * 540) / 640;
     }
 
     private void initView() {

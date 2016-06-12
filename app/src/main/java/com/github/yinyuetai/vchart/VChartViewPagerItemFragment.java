@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.yinyuetai.BaseFragment;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.VCharRecycleViewAdapter;
 import com.github.yinyuetai.domain.VChartPeriod;
@@ -40,7 +41,7 @@ import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
  * DATE 2016/5/12
  * YinYueTai
  */
-public class VChartViewPagerItemFragment extends Fragment implements VChartPagerItemContract.View{
+public class VChartViewPagerItemFragment extends BaseFragment implements VChartPagerItemContract.View{
     @Bind(R.id.vchart_period)
     TextView vchartPeriod;
     @Bind(R.id.period_layout)
@@ -49,7 +50,6 @@ public class VChartViewPagerItemFragment extends Fragment implements VChartPager
     RecyclerView recyclerView;
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
-    private View rootView;
     private boolean hasCreatedOnce;
     private String areaCode;
     private int dateCode;
@@ -57,8 +57,6 @@ public class VChartViewPagerItemFragment extends Fragment implements VChartPager
     private List<VChartPeriod.PeriodsBean> periodsBeanArrayList;
     private List<VideoBean> videosBeen = new ArrayList<>();
     private VCharRecycleViewAdapter viewAdapter;
-    private int mWidth;
-    private int mHeight;
 
     private MaterialDialog materialDialog;
     private List<Integer> years;
@@ -67,7 +65,6 @@ public class VChartViewPagerItemFragment extends Fragment implements VChartPager
     private WheelView periodWheelView;
     private WheelView yearWheelView;
     private PeriodAdapter periodAdapter;
-    private boolean refresh;
 
     private VChartPagerItemContract.Presenter presenter;
 
@@ -84,7 +81,7 @@ public class VChartViewPagerItemFragment extends Fragment implements VChartPager
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.vchart_viewpager_fragment, container, false);
-            observerView();
+            observerView(360,640);
         }
         ButterKnife.bind(this, rootView);
         if (!hasCreatedOnce) {
@@ -99,12 +96,6 @@ public class VChartViewPagerItemFragment extends Fragment implements VChartPager
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         areaCode = getArguments().getString("areaCode");
-    }
-    private void observerView() {
-        DisplayMetrics metric = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
-        mWidth = metric.widthPixels;
-        mHeight = (mWidth * 360) / 640;
     }
     private void initView() {
 

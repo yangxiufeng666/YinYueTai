@@ -46,7 +46,7 @@ public class MVDetailActivity extends BaseActivity {
     private MVDetailBean detailBean;
 
     private MVDescribeFragment describeFragment;
-    private RelativeMvFragment relativeMvFragment;
+    private MVRelativeFragment relativeMvFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class MVDetailActivity extends BaseActivity {
                 videoplayer.setUp(detailBean.getUrl(), detailBean.getTitle());
                 videoplayer.ivThumb.performClick();
                 describeFragment = MVDescribeFragment.newInstance(detailBean);
-                relativeMvFragment = RelativeMvFragment.newInstance(detailBean);
+                relativeMvFragment = MVRelativeFragment.newInstance(detailBean);
                 setFragment(describeFragment);
             }
         });

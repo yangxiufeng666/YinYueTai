@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.github.yinyuetai.BaseFragment;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.YueDanRecycleViewAdapter;
 import com.github.yinyuetai.domain.YueDanBean;
@@ -32,42 +33,27 @@ import butterknife.ButterKnife;
  * DATE 2016/5/10
  * YinYueTai
  */
-public class YueDanFragment extends Fragment implements YueDanFragmentContract.View{
+public class YueDanFragment extends BaseFragment implements YueDanFragmentContract.View{
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefreshLayout;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    private View rootView;
-    private int lastVisibleItem;
-    boolean hasMore = true;
-    private static final int SIZE = 20;
-    private int mOffset = 0;
     private YueDanRecycleViewAdapter recycleViewAdapter;
     List<YueDanBean.PlayListsBean> playLists = new ArrayList<>();
     private MaterialDialog.Builder builder;
     private MaterialDialog materialDialog;
 
-    private int mWidth;
-    private int mHeight;
-    private boolean refresh;
-
     private YueDanFragmentContract.Presenter presenter;
 
-    private void observerView() {
-        DisplayMetrics metric = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
-        mWidth = metric.widthPixels;
-        mHeight = (mWidth * 360) / 640;
-    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.common_recycleview_layout, container, false);
-            observerView();
+            observerView(360,640);
             ButterKnife.bind(this, rootView);
             initView();
             new YueDanFragmentPresenter(this);

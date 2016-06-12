@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.github.yinyuetai.BaseFragment;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.MVRecycleViewAdapter;
 import com.github.yinyuetai.domain.VideoBean;
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
  * DATE 2016/5/11
  * YinYueTai
  */
-public class MVViewPagerItemFragment extends Fragment implements ArrowUpListener,MVItemFragmentContract.View{
+public class MVViewPagerItemFragment extends BaseFragment implements ArrowUpListener,MVItemFragmentContract.View{
 
     public static MVViewPagerItemFragment getInstance(String areaCode) {
         MVViewPagerItemFragment mvViewPagerItemFragment = new MVViewPagerItemFragment();
@@ -40,9 +41,6 @@ public class MVViewPagerItemFragment extends Fragment implements ArrowUpListener
         mvViewPagerItemFragment.setArguments(bundle);
         return mvViewPagerItemFragment;
     }
-
-    private static final int SIZE = 20;
-    private int mOffset = 0;
     private String areaCode;
     @Bind(R.id.mv_RecyclerView)
     RecyclerView mvRecyclerView;
@@ -50,12 +48,6 @@ public class MVViewPagerItemFragment extends Fragment implements ArrowUpListener
     SwipeRefreshLayout swipeRefreshLayout;
     MVRecycleViewAdapter recycleViewAdapter;
     private ArrayList<VideoBean> videosList = new ArrayList<>();
-    private View rootView;
-    private int lastVisibleItem;
-    boolean hasMore = true;
-    private int mWidth;
-    private int mHeight;
-    private boolean refresh;
     private MVItemFragmentContract.Presenter presenter;
     @Nullable
     @Override
@@ -63,7 +55,7 @@ public class MVViewPagerItemFragment extends Fragment implements ArrowUpListener
         Log.e("setUserVisibleHint","onCreateView="+areaCode);
         if (rootView == null) {
             rootView = inflater.inflate(R.layout.mv_viewpager_item_fragment, container, false);
-            observerView();
+            observerView(360,640);
             ButterKnife.bind(this, rootView);
             initView();
             new MVItemFragmentPresenter(this);
@@ -71,12 +63,6 @@ public class MVViewPagerItemFragment extends Fragment implements ArrowUpListener
         }
         ButterKnife.bind(this, rootView);
         return rootView;
-    }
-    private void observerView() {
-        DisplayMetrics metric = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metric);
-        mWidth = metric.widthPixels;
-        mHeight = (mWidth * 360) / 640;
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
