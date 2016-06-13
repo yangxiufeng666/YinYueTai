@@ -130,7 +130,6 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
                         return;
                 }
                 activity.startActivity(intent);
-                activity.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
         });
     }

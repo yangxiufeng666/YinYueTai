@@ -62,7 +62,6 @@ public class VCharRecycleViewAdapter extends RecyclerView.Adapter<VCharRecycleVi
                 intent.setClass(activity, MVDetailActivity.class);
                 intent.putExtra("id", videoBean.getId());
                 activity.startActivity(intent);
-                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
 

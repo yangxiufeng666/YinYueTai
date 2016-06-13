@@ -73,7 +73,6 @@ public class RelativeMvRecycleAdapter extends RecyclerView.Adapter<RelativeMvRec
                 intent.setClass(activity, MVDetailActivity.class);
                 intent.putExtra("id", videosBean.getId());
                 activity.startActivity(intent);
-                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
     }

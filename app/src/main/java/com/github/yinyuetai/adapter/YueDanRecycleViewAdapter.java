@@ -84,7 +84,6 @@ public class YueDanRecycleViewAdapter extends RecyclerView.Adapter<YueDanRecycle
                 intent.setClass(activity, YueDanDetailActivity.class);
                 intent.putExtra("id",playListsBean.getId());
                 activity.startActivity(intent);
-                activity.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
         });
     }

@@ -64,7 +64,6 @@ public class MVRecycleViewAdapter extends RecyclerView.Adapter<MVRecycleViewAdap
                     intent.setClass(activity, MVDetailActivity.class);
                     intent.putExtra("id", videoBean.getId());
                     activity.startActivity(intent);
-                    activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }
             });
         }

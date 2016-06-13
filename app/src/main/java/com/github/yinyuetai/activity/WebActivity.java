@@ -49,6 +49,7 @@ public class WebActivity extends BaseActivity {
         toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
         setSupportActionBar(toolBar);
         toolBar.setNavigationIcon(R.drawable.ic_back_white_48dp);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTranslucenttatus(ContextCompat.getColor(this, R.color.tab_color_1));
         webview.setWebViewClient(new ComWebViewClient(webview));
         ComWebViewChromeClient chromeClient = new ComWebViewChromeClient();
