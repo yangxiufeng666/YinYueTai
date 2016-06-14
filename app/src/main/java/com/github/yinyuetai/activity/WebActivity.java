@@ -5,12 +5,10 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.yinyuetai.R;
@@ -51,6 +49,7 @@ public class WebActivity extends BaseActivity {
         toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
         setSupportActionBar(toolBar);
         toolBar.setNavigationIcon(R.drawable.ic_back_white_48dp);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTranslucenttatus(ContextCompat.getColor(this, R.color.tab_color_1));
         webview.setWebViewClient(new ComWebViewClient(webview));
         ComWebViewChromeClient chromeClient = new ComWebViewChromeClient();

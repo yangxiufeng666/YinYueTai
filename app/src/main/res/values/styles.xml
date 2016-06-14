@@ -8,21 +8,28 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
-    <style name="Theme.full" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="ActivityTheme" parent="AppTheme">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+    </style>
+    <style name="ActivityTheme.splash">
         <item name="windowActionBar">false</item>
         <item name="android:windowBackground">@drawable/default_splash_bg</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
     </style>
+
     <!-- App Theme Launch -->
     <style name="AppThemeLaunch" parent="AppTheme">
         <item name="android:windowBackground">@color/color_primary</item>
     </style>
     <style name="AnimationActivity" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>
+        <!--<item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>
         <item name="android:activityOpenExitAnimation">@android:anim/fade_out</item>
-        <item name="android:activityCloseEnterAnimation">@android:anim/fade_out</item>
-        <item name="android:activityCloseExitAnimation">@android:anim/fade_in</item>
+        <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>-->
+        <item name="android:activityOpenEnterAnimation">@anim/activity_new</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_finish</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_new</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_finish</item>
     </style>
 </resources>

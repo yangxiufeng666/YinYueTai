@@ -1,7 +1,6 @@
 package com.github.yinyuetai.util;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;

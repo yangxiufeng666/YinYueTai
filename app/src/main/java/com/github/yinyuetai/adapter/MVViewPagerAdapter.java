@@ -18,7 +18,7 @@ public class MVViewPagerAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Fragment> fragments=new ArrayList<>();
     ArrayList<AreaBean> areaBeanArrayList = new ArrayList<>();
 
-    public MVViewPagerAdapter(FragmentManager fm,ArrayList<Fragment> fragments,ArrayList<AreaBean> areaBeanArrayList) {
+    public MVViewPagerAdapter(FragmentManager fm,ArrayList<? extends Fragment> fragments,ArrayList<AreaBean> areaBeanArrayList) {
         super(fm);
         this.fragments.addAll(fragments);
         this.areaBeanArrayList.addAll(areaBeanArrayList);

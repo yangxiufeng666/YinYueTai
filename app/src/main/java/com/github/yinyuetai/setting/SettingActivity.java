@@ -1,4 +1,4 @@
-package com.github.yinyuetai.activity;
+package com.github.yinyuetai.setting;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;

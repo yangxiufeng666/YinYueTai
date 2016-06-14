@@ -1,7 +1,6 @@
 package com.github.yinyuetai.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
-import com.github.yinyuetai.activity.YueDanDetailActivity;
 import com.github.yinyuetai.domain.YueDanDetailBean;
 import com.github.yinyuetai.listener.PlayVideoListener;
 

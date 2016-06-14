@@ -1,4 +1,4 @@
-package com.github.yinyuetai.activity;
+package com.github.yinyuetai.yuedan;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,11 +10,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
+import com.github.yinyuetai.activity.BaseActivity;
 import com.github.yinyuetai.domain.YueDanDetailBean;
-import com.github.yinyuetai.fragment.YueDanDescribeFragment;
-import com.github.yinyuetai.fragment.YueDanListFragment;
 import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
 import com.github.yinyuetai.listener.PlayVideoListener;

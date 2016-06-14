@@ -1,4 +1,4 @@
-package com.github.yinyuetai.fragment;
+package com.github.yinyuetai.mv;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  * DATE 2016/5/20
  * YinYueTai
  */
-public class RelativeMvFragment extends Fragment {
+public class MVRelativeFragment extends Fragment {
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
     private MVDetailBean mvDetailBean;
@@ -30,8 +30,8 @@ public class RelativeMvFragment extends Fragment {
     private boolean hasLoadOnce;
     private RelativeMvRecycleAdapter adapter;
 
-    public static RelativeMvFragment newInstance(MVDetailBean mvDetailBean) {
-        RelativeMvFragment fragment = new RelativeMvFragment();
+    public static MVRelativeFragment newInstance(MVDetailBean mvDetailBean) {
+        MVRelativeFragment fragment = new MVRelativeFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable("mvDetailBean", mvDetailBean);
         fragment.setArguments(bundle);

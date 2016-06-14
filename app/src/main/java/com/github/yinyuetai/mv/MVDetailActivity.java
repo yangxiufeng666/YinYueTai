@@ -1,4 +1,4 @@
-package com.github.yinyuetai.activity;
+package com.github.yinyuetai.mv;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,11 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
+import com.github.yinyuetai.activity.BaseActivity;
 import com.github.yinyuetai.domain.MVDetailBean;
-import com.github.yinyuetai.fragment.MVDescribeFragment;
-import com.github.yinyuetai.fragment.RelativeMvFragment;
 import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
 import com.github.yinyuetai.util.URLProviderUtil;
@@ -31,7 +29,7 @@ import okhttp3.Call;
  * DATE 2016/5/17
  * YinYueTai
  */
-public class DetailActivity extends BaseActivity {
+public class MVDetailActivity extends BaseActivity {
     int id;
     @Bind(R.id.videoplayer)
     JCVideoPlayerStandard videoplayer;
@@ -48,7 +46,7 @@ public class DetailActivity extends BaseActivity {
     private MVDetailBean detailBean;
 
     private MVDescribeFragment describeFragment;
-    private RelativeMvFragment relativeMvFragment;
+    private MVRelativeFragment relativeMvFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,10 +99,9 @@ public class DetailActivity extends BaseActivity {
                 dismissLoading();
                 detailBean = new Gson().fromJson(response, MVDetailBean.class);
                 videoplayer.setUp(detailBean.getUrl(), detailBean.getTitle());
-//                Glide.with(DetailActivity.this).load(detailBean.getPosterPic()).centerCrop().into(videoplayer.ivThumb);
                 videoplayer.ivThumb.performClick();
                 describeFragment = MVDescribeFragment.newInstance(detailBean);
-                relativeMvFragment = RelativeMvFragment.newInstance(detailBean);
+                relativeMvFragment = MVRelativeFragment.newInstance(detailBean);
                 setFragment(describeFragment);
             }
         });

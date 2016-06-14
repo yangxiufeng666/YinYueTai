@@ -13,8 +13,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.yinyuetai.R;
-import com.github.yinyuetai.activity.YueDanDetailActivity;
 import com.github.yinyuetai.domain.YueDanBean;
+import com.github.yinyuetai.yuedan.YueDanDetailActivity;
 
 import java.util.List;
 
@@ -84,7 +84,6 @@ public class YueDanRecycleViewAdapter extends RecyclerView.Adapter<YueDanRecycle
                 intent.setClass(activity, YueDanDetailActivity.class);
                 intent.putExtra("id",playListsBean.getId());
                 activity.startActivity(intent);
-                activity.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
         });
     }

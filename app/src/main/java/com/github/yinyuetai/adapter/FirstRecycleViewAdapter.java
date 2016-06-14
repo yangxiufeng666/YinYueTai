@@ -15,10 +15,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.yinyuetai.R;
-import com.github.yinyuetai.activity.DetailActivity;
 import com.github.yinyuetai.activity.WebActivity;
-import com.github.yinyuetai.activity.YueDanDetailActivity;
 import com.github.yinyuetai.domain.VideoBean;
+import com.github.yinyuetai.mv.MVDetailActivity;
+import com.github.yinyuetai.yuedan.YueDanDetailActivity;
 
 import java.util.ArrayList;
 
@@ -118,7 +118,7 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
                     case 1:
                     case 5:
                     case 7:
-                        intent.setClass(activity, DetailActivity.class);
+                        intent.setClass(activity, MVDetailActivity.class);
                         intent.putExtra("id",pageBean.getId());
                         break;
                     case 2:
@@ -130,7 +130,6 @@ public class FirstRecycleViewAdapter extends RecyclerView.Adapter<FirstRecycleVi
                         return;
                 }
                 activity.startActivity(intent);
-                activity.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
         });
     }
