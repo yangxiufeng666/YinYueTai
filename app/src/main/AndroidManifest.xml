@@ -29,15 +29,13 @@
         </activity>
         <activity android:name=".main.MainActivity"
             android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/ActivityTheme">
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".mv.MVDetailActivity"
-            android:theme="@style/ActivityTheme"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
@@ -46,7 +44,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.WebActivity"
-            android:theme="@style/ActivityTheme"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
@@ -55,7 +52,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".yuedan.YueDanDetailActivity"
-            android:theme="@style/ActivityTheme"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
@@ -64,7 +60,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".setting.SettingActivity"
-            android:theme="@style/ActivityTheme"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>

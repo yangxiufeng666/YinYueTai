@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
+import com.github.yinyuetai.activity.BaseActivity;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
  * DATE 2016/6/3
  * YinYueTai
  */
-public class SettingActivity extends AppCompatActivity {
+public class SettingActivity extends BaseActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.cacheSize)
@@ -73,6 +74,7 @@ public class SettingActivity extends AppCompatActivity {
                 cacheSize.setText("0.00M");
             }
         });
+        setTranslucenttatus(ContextCompat.getColor(this, R.color.colorPrimaryDark));
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

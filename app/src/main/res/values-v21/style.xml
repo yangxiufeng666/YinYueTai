@@ -2,8 +2,9 @@
 <resources>
     <!-- App Theme Launch -->
     <style name="AppThemeLaunch" parent="AppTheme">
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowBackground">@color/color_primary</item>
+        <!--<item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:windowTranslucentNavigation">true</item>-->
+        <!--<item name="android:windowBackground">@color/transparent</item>-->
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 </resources>

@@ -58,7 +58,6 @@ public class MainActivity extends BaseActivity {
                 Fragment targetFragment = fragments.get(menuItemId);
                 setFragment(targetFragment);
                 toolBar.setBackgroundColor(colors.get(menuItemId));
-                setTranslucenttatus(colors.get(menuItemId));
             }
 
             @Override
@@ -77,6 +76,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+        setTranslucenttatus(ContextCompat.getColor(this, R.color.colorPrimaryDark));
     }
 
     private void setFragment(Fragment fragment) {
