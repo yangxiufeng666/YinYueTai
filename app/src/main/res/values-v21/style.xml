@@ -7,4 +7,8 @@
         <!--<item name="android:windowBackground">@color/transparent</item>-->
         <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
+    <style name="ActivityTheme.aboutactivity">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 </resources>

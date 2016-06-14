@@ -1,5 +1,6 @@
 package com.github.yinyuetai.setting;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.yinyuetai.R;
+import com.github.yinyuetai.activity.AboutActivity;
 import com.github.yinyuetai.activity.BaseActivity;
 
 import java.io.File;
@@ -75,6 +77,13 @@ public class SettingActivity extends BaseActivity {
             }
         });
         setTranslucenttatus(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingActivity.this, AboutActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
