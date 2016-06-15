@@ -7,9 +7,7 @@
 #show
 ####[demo](http://beta.qq.com/m/0xe9)
 - 1<br>
-![image](https://github.com/babylikebird/YinYueTai/blob/master/yinyuetai1.gif)
-- 2<br>
-![image](https://github.com/babylikebird/YinYueTai/blob/master/yinyuetai.gif)
+![image](https://github.com/babylikebird/YinYueTai/blob/master/show.gif)
 
 #TO DO LIST
 - 视频播放优化<br>
