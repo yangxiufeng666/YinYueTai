@@ -23,9 +23,13 @@
         <item name="android:windowBackground">@color/transparent</item>
     </style>
     <style name="AnimationActivity" parent="@android:style/Animation.Activity">
+        <!--当我们从 A1 启动 A2 时，A2 出现在屏幕上，这个动画叫做 android:activityOpenEnterAnimation-->
         <item name="android:activityOpenEnterAnimation">@anim/activity_new</item>
-        <item name="android:activityOpenExitAnimation">@anim/activity_finish</item>
-        <item name="android:activityCloseEnterAnimation">@anim/activity_new</item>
+        <!--当我们从 A1 启动 A2 时，A1 从屏幕上消失，这个动画叫做 android:activityOpenExitAnimation-->
+        <!--<item name="android:activityOpenExitAnimation">@anim/activity_finish</item>-->
+        <!--当我们从 A2 退出回到 A1 时，A1 出现在屏幕上，这个叫做 android:activityCloseEnterAnimation-->
+        <!--<item name="android:activityCloseEnterAnimation">@anim/activity_new</item>-->
+        <!--当我们从 A2 退出回到 A1 时，A2 从屏幕上消失，这个叫做 android:activityCloseExitAnimation-->
         <item name="android:activityCloseExitAnimation">@anim/activity_finish</item>
     </style>
     <style name="Widget.CardContent" parent="android:Widget">
