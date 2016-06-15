@@ -6,10 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
     </style>
     <style name="ActivityTheme" parent="AppTheme">
-        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
     </style>
     <style name="ActivityTheme.splash">
         <item name="windowActionBar">false</item>
@@ -17,19 +16,28 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-
+    <style name="ActivityTheme.aboutactivity">
+    </style>
     <!-- App Theme Launch -->
     <style name="AppThemeLaunch" parent="AppTheme">
-        <item name="android:windowBackground">@color/color_primary</item>
+        <item name="android:windowBackground">@color/transparent</item>
     </style>
     <style name="AnimationActivity" parent="@android:style/Animation.Activity">
-        <!--<item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:activityOpenExitAnimation">@android:anim/fade_out</item>
-        <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>-->
+        <!--当我们从 A1 启动 A2 时，A2 出现在屏幕上，这个动画叫做 android:activityOpenEnterAnimation-->
         <item name="android:activityOpenEnterAnimation">@anim/activity_new</item>
-        <item name="android:activityOpenExitAnimation">@anim/activity_finish</item>
-        <item name="android:activityCloseEnterAnimation">@anim/activity_new</item>
+        <!--当我们从 A1 启动 A2 时，A1 从屏幕上消失，这个动画叫做 android:activityOpenExitAnimation-->
+        <!--<item name="android:activityOpenExitAnimation">@anim/activity_finish</item>-->
+        <!--当我们从 A2 退出回到 A1 时，A1 出现在屏幕上，这个叫做 android:activityCloseEnterAnimation-->
+        <!--<item name="android:activityCloseEnterAnimation">@anim/activity_new</item>-->
+        <!--当我们从 A2 退出回到 A1 时，A2 从屏幕上消失，这个叫做 android:activityCloseExitAnimation-->
         <item name="android:activityCloseExitAnimation">@anim/activity_finish</item>
     </style>
+    <style name="Widget.CardContent" parent="android:Widget">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
 </resources>
