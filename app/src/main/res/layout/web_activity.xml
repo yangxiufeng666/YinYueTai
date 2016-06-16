@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Light"
-        android:background="@color/tab_color_1"/>
+        android:background="@color/colorPrimary"/>
     <me.zhanghai.android.materialprogressbar.MaterialProgressBar
         android:id="@+id/progress"
         android:layout_width="match_parent"

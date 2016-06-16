@@ -31,7 +31,6 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.setting_icon)
     ImageView settingIcon;
     private SparseArray<Fragment> fragments;
-    private SparseArray<Integer> colors;
     @Bind(R.id.toolBar)
     Toolbar toolBar;
 
@@ -42,22 +41,16 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
         fragments = new SparseArray<>();
-        colors = new SparseArray<>();
         fragments.put(R.id.bottomBarItem1, new HomePageFragment());
         fragments.put(R.id.bottomBarItem2, new MVFragment());
         fragments.put(R.id.bottomBarItem3, new VChartFragment());
         fragments.put(R.id.bottomBarItem4, new YueDanFragment());
-        colors.put(R.id.bottomBarItem1, ContextCompat.getColor(this, R.color.tab_color_1));
-        colors.put(R.id.bottomBarItem2, ContextCompat.getColor(this, R.color.tab_color_2));
-        colors.put(R.id.bottomBarItem3, ContextCompat.getColor(this, R.color.tab_color_3));
-        colors.put(R.id.bottomBarItem4, ContextCompat.getColor(this, R.color.tab_color_4));
         BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
         mBottomBar.setItemsFromMenu(R.menu.bottom_menu, new OnMenuTabClickListener() {
             @Override
             public void onMenuTabSelected(@IdRes int menuItemId) {
                 Fragment targetFragment = fragments.get(menuItemId);
                 setFragment(targetFragment);
-                toolBar.setBackgroundColor(colors.get(menuItemId));
             }
 
             @Override
@@ -65,10 +58,10 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-        mBottomBar.mapColorForTab(0, ContextCompat.getColor(this, R.color.tab_color_1));
-        mBottomBar.mapColorForTab(1, ContextCompat.getColor(this, R.color.tab_color_2));
-        mBottomBar.mapColorForTab(2, ContextCompat.getColor(this, R.color.tab_color_3));
-        mBottomBar.mapColorForTab(3, ContextCompat.getColor(this, R.color.tab_color_4));
+        mBottomBar.mapColorForTab(0, ContextCompat.getColor(this, R.color.colorPrimary));
+        mBottomBar.mapColorForTab(1, ContextCompat.getColor(this, R.color.colorPrimary));
+        mBottomBar.mapColorForTab(2, ContextCompat.getColor(this, R.color.colorPrimary));
+        mBottomBar.mapColorForTab(3, ContextCompat.getColor(this, R.color.colorPrimary));
         settingIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

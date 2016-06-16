@@ -94,7 +94,7 @@ public class MVViewPagerItemFragment extends BaseFragment implements ArrowUpList
                 Glide.with(getActivity()).pauseRequests();
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_2);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources()
                         .getDisplayMetrics()));

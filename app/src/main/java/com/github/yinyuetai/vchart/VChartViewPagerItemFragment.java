@@ -102,7 +102,7 @@ public class VChartViewPagerItemFragment extends BaseFragment implements VChartP
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         viewAdapter = new VCharRecycleViewAdapter(getActivity(), videosBeen,mWidth,mHeight);
         recyclerView.setAdapter(viewAdapter);
-        swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_3);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources()
                         .getDisplayMetrics()));
