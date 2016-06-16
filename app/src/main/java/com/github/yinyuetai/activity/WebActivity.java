@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +26,7 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
  * YinYueTai
  */
 public class WebActivity extends BaseActivity {
-    @Bind(R.id.toolBar)
+    @Bind(R.id.toolbar)
     Toolbar toolBar;
     @Bind(R.id.webview)
     WebView webview;
@@ -46,9 +47,9 @@ public class WebActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web_activity);
         ButterKnife.bind(this);
-        toolBar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
         setSupportActionBar(toolBar);
-        toolBar.setNavigationIcon(R.drawable.ic_back_white_48dp);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         setTranslucenttatus(ContextCompat.getColor(this, R.color.colorPrimary));
         webview.setWebViewClient(new ComWebViewClient(webview));
         ComWebViewChromeClient chromeClient = new ComWebViewChromeClient();

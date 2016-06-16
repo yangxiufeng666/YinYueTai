@@ -58,7 +58,7 @@ public class SettingActivity extends BaseActivity {
         toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.white));
         toolbar.setTitle("设置");
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         currentVersion.setText(getVersionName());
         File file = Glide.getPhotoCacheDir(this);
         DecimalFormat fnum = new DecimalFormat("##0.00");
