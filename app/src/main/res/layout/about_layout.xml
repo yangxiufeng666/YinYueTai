@@ -17,7 +17,7 @@
             app:contentScrim="@color/colorPrimary">
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/about_banner"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax" />

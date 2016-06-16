@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.util.ComWebViewChromeClient;
 import com.github.yinyuetai.util.ComWebViewClient;
@@ -32,8 +31,6 @@ public class WebActivity extends BaseActivity {
     WebView webview;
     @Bind(R.id.progress)
     MaterialProgressBar progressBar;
-    private MaterialDialog.Builder builder;
-    private MaterialDialog materialDialog;
 
     private ComWebViewChromeClient.ProgressListener progressListener = new ComWebViewChromeClient.ProgressListener() {
         @Override
