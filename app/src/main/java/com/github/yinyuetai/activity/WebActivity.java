@@ -24,7 +24,7 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
  * DATE 2016/5/17
  * YinYueTai
  */
-public class WebActivity extends BaseActivity {
+public class WebActivity extends SwipeBackAppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolBar;
     @Bind(R.id.webview)

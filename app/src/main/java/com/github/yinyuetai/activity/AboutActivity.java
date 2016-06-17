@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  * DATE 2016/6/14
  * YinYueTai
  */
-public class AboutActivity extends BaseActivity {
+public class AboutActivity extends SwipeBackAppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.collapsing_toolbar)

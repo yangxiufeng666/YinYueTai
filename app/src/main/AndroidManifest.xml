@@ -37,6 +37,7 @@
         </activity>
         <activity android:name=".mv.MVDetailActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme.windowIsTranslucent"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,6 +46,7 @@
         </activity>
         <activity android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme.windowIsTranslucent"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,6 +55,7 @@
         </activity>
         <activity android:name=".yuedan.YueDanDetailActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme.windowIsTranslucent"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,6 +64,7 @@
         </activity>
         <activity android:name=".setting.SettingActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme.windowIsTranslucent"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
