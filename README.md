@@ -6,7 +6,7 @@
 
 
 #show
-####[demo](http://beta.qq.com/m/tdqf)
+####[demo](http://beta.qq.com/m/50u1)
 - 1<br>
 ![image](https://github.com/babylikebird/YinYueTai/blob/master/show.gif)
 
