@@ -47,7 +47,7 @@ public class WebActivity extends BaseActivity {
         setSupportActionBar(toolBar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        setTranslucenttatus(ContextCompat.getColor(this, R.color.colorPrimary));
+        setTranslucentStatus(ContextCompat.getColor(this, R.color.colorPrimary));
         webview.setWebViewClient(new ComWebViewClient(webview));
         ComWebViewChromeClient chromeClient = new ComWebViewChromeClient();
         chromeClient.setListener(progressListener);

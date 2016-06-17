@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-        setTranslucenttatus(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        setTranslucentStatus(ContextCompat.getColor(this, R.color.colorPrimaryDark));
     }
 
     private void setFragment(Fragment fragment) {

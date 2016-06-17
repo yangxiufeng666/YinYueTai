@@ -28,7 +28,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTranslucenttatus(ContextCompat.getColor(this, R.color.colorPrimary));
+        setTranslucentStatus(ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.about_layout);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);

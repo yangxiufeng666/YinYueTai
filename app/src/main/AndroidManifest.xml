@@ -69,7 +69,7 @@
         </activity>
         <activity android:name=".activity.AboutActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityTheme.aboutactivity"
+            android:theme="@style/ActivityTheme.aboutActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

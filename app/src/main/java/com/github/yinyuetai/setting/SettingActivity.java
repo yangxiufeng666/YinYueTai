@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -76,7 +75,7 @@ public class SettingActivity extends BaseActivity {
                 cacheSize.setText("0.00M");
             }
         });
-        setTranslucenttatus(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        setTranslucentStatus(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,9 +95,7 @@ public class SettingActivity extends BaseActivity {
     }
     private String getVersionName()
     {
-        // 获取packagemanager的实例
         PackageManager packageManager = getPackageManager();
-        // getPackageName()是你当前类的包名，0代表是获取版本信息
         PackageInfo packInfo = null;
         try {
             packInfo = packageManager.getPackageInfo(getPackageName(),0);
