@@ -19,7 +19,7 @@ public class BaseActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-    protected void setTranslucenttatus(int color) {
+    protected void setTranslucentStatus(int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.setFlags(
@@ -30,6 +30,5 @@ public class BaseActivity extends AppCompatActivity{
             tintManager.setNavigationBarTintEnabled(true);
             tintManager.setTintColor(color);
         }
-
     }
 }

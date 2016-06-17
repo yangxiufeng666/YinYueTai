@@ -11,7 +11,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/tab_color_2"/>
+            android:background="@color/colorPrimary"/>
         <RelativeLayout
             android:id="@+id/period_layout"
             android:layout_height="28dp"

@@ -16,7 +16,12 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-    <style name="ActivityTheme.aboutactivity">
+    <style name="ActivityTheme.aboutActivity">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+    <style name="ActivityTheme.windowIsTranslucent">
+        <!--swipeBack需要设置，windowIsTranslucent，如果A->B,B需要滑动退出，需要windowIsTranslucent，A不要设置（如设置在5.0一下会显示桌面，5.0以上，显示黑屏）-->
+        <item name="android:windowIsTranslucent">true</item>
     </style>
     <!-- App Theme Launch -->
     <style name="AppThemeLaunch" parent="AppTheme">

@@ -65,7 +65,7 @@ public class HomePageFragment extends BaseFragment implements HomePageFragmentCo
         linearLayoutManager = new LinearLayoutManager(getActivity());
         firstPageRecyclerView.setLayoutManager(linearLayoutManager);
         firstPageRecyclerView.setAdapter(recycleViewAdapter);
-        swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_1);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -97,7 +97,7 @@ public class HomePageFragment extends BaseFragment implements HomePageFragmentCo
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firstPageRecyclerView.smoothScrollToPosition(0);
+                firstPageRecyclerView.scrollToPosition(0);
             }
         });
     }

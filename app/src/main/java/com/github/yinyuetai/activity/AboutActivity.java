@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  * DATE 2016/6/14
  * YinYueTai
  */
-public class AboutActivity extends BaseActivity {
+public class AboutActivity extends SwipeBackAppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.collapsing_toolbar)
@@ -28,7 +28,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTranslucenttatus(ContextCompat.getColor(this, R.color.colorPrimary));
+        setTranslucentStatus(ContextCompat.getColor(this, R.color.colorPrimary));
         setContentView(R.layout.about_layout);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);

@@ -37,6 +37,7 @@
         </activity>
         <activity android:name=".mv.MVDetailActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme.windowIsTranslucent"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,6 +46,7 @@
         </activity>
         <activity android:name=".activity.WebActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme.windowIsTranslucent"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,6 +55,7 @@
         </activity>
         <activity android:name=".yuedan.YueDanDetailActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme.windowIsTranslucent"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,6 +64,7 @@
         </activity>
         <activity android:name=".setting.SettingActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme.windowIsTranslucent"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -69,7 +73,7 @@
         </activity>
         <activity android:name=".activity.AboutActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityTheme.aboutactivity"
+            android:theme="@style/ActivityTheme.aboutActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -85,7 +89,7 @@
         <!-- 配置APP版本号 -->
         <meta-data
             android:name="BUGLY_APP_VERSION"
-            android:value="1.0.0" />
+            android:value="1.0.2" />
         <!-- 配置Bugly调试模式（true或者false）-->
         <meta-data
             android:name="BUGLY_ENABLE_DEBUG"

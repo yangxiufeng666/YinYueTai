@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#FF4081</color>
     <color name="colorPrimary">#31c3ff</color>
     <color name="colorPrimaryDark">#54b3cc</color>
     <color name="colorAccent">#FF4081</color>
-
-    <color name="tab_color_1">#31c3ff</color>
-    <color name="tab_color_2">#31c3ff</color>
-    <color name="tab_color_3">#31c3ff</color>
-    <color name="tab_color_4">#31c3ff</color>
 
     <color name="transparent_black">#99000000</color>
     <color name="green_light">#1ec399</color>

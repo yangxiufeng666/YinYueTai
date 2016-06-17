@@ -2,11 +2,9 @@ package com.github.yinyuetai.mv;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -19,7 +17,6 @@ import com.github.yinyuetai.BaseFragment;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.MVRecycleViewAdapter;
 import com.github.yinyuetai.domain.VideoBean;
-import com.github.yinyuetai.listener.ArrowUpListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +29,7 @@ import butterknife.ButterKnife;
  * DATE 2016/5/11
  * YinYueTai
  */
-public class MVViewPagerItemFragment extends BaseFragment implements ArrowUpListener,MVItemFragmentContract.View{
+public class MVViewPagerItemFragment extends BaseFragment implements MVItemFragmentContract.View{
 
     public static MVViewPagerItemFragment getInstance(String areaCode) {
         MVViewPagerItemFragment mvViewPagerItemFragment = new MVViewPagerItemFragment();
@@ -94,7 +91,7 @@ public class MVViewPagerItemFragment extends BaseFragment implements ArrowUpList
                 Glide.with(getActivity()).pauseRequests();
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_2);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setProgressViewOffset(false, 0, (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources()
                         .getDisplayMetrics()));
@@ -113,16 +110,6 @@ public class MVViewPagerItemFragment extends BaseFragment implements ArrowUpList
     public void onDestroyView() {
         ButterKnife.unbind(this);
         super.onDestroyView();
-    }
-
-    @Override
-    public void smoothScrollToTop() {
-        mvRecyclerView.smoothScrollToPosition(0);
-    }
-
-    @Override
-    public void scrollToTop() {
-        mvRecyclerView.scrollToPosition(0);
     }
 
     @Override

@@ -14,7 +14,7 @@
 		app:tabIndicatorColor="@color/white"
 		app:tabMode="scrollable"
 		android:layout_alignParentTop="true"
-		android:background="@color/tab_color_2"
+		android:background="@color/colorPrimary"
 	/>
 	<android.support.v4.view.ViewPager
 		android:layout_below="@id/tabLayout"
@@ -26,7 +26,7 @@
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:layout_margin="16dp"
 		android:src="@drawable/ic_arrow_upward_white_18dp"
-		app:backgroundTint="@color/tab_color_2"
+		app:backgroundTint="@color/colorPrimary"
 		android:layout_alignParentBottom="true"
 		android:layout_alignParentRight="true"
 		android:layout_gravity="bottom|end" />

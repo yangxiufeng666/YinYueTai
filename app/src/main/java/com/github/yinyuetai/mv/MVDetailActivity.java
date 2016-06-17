@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.activity.BaseActivity;
+import com.github.yinyuetai.activity.SwipeBackAppCompatActivity;
 import com.github.yinyuetai.domain.MVDetailBean;
 import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
@@ -29,7 +30,7 @@ import okhttp3.Call;
  * DATE 2016/5/17
  * YinYueTai
  */
-public class MVDetailActivity extends BaseActivity {
+public class MVDetailActivity extends SwipeBackAppCompatActivity {
     int id;
     @Bind(R.id.videoplayer)
     JCVideoPlayerStandard videoplayer;
@@ -99,7 +100,7 @@ public class MVDetailActivity extends BaseActivity {
                 dismissLoading();
                 detailBean = new Gson().fromJson(response, MVDetailBean.class);
                 videoplayer.setUp(detailBean.getUrl(), detailBean.getTitle());
-                videoplayer.ivThumb.performClick();
+                videoplayer.startButton.performClick();
                 describeFragment = MVDescribeFragment.newInstance(detailBean);
                 relativeMvFragment = MVRelativeFragment.newInstance(detailBean);
                 setFragment(describeFragment);

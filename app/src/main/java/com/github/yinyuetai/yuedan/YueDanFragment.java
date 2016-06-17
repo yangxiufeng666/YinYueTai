@@ -65,14 +65,14 @@ public class YueDanFragment extends BaseFragment implements YueDanFragmentContra
     }
 
     private void initView() {
-        fab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getActivity(),R.color.tab_color_4)));
+        fab.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getActivity(),R.color.colorPrimary)));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.smoothScrollToPosition(0);
+                recyclerView.scrollToPosition(0);
             }
         });
-        swipeRefreshLayout.setColorSchemeResources(R.color.tab_color_4);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.activity.BaseActivity;
+import com.github.yinyuetai.activity.SwipeBackAppCompatActivity;
 import com.github.yinyuetai.domain.YueDanDetailBean;
 import com.github.yinyuetai.http.OkHttpManager;
 import com.github.yinyuetai.http.callback.StringCallBack;
@@ -31,7 +32,7 @@ import okhttp3.Call;
  * DATE 2016/5/17
  * YinYueTai
  */
-public class YueDanDetailActivity extends BaseActivity {
+public class YueDanDetailActivity extends SwipeBackAppCompatActivity {
     @Bind(R.id.videoplayer)
     JCVideoPlayerStandard videoplayer;
     @Bind(R.id.yuedan_describe)
@@ -75,8 +76,7 @@ public class YueDanDetailActivity extends BaseActivity {
                 try {
                     yueDanDetailBean = new Gson().fromJson(response,YueDanDetailBean.class);
                     videoplayer.setUp(yueDanDetailBean.getVideos().get(0).getHdUrl(), yueDanDetailBean.getVideos().get(0).getTitle());
-                    videoplayer.ivThumb.performClick();
-//                    Glide.with(YueDanDetailActivity.this).load(yueDanDetailBean.getThumbnailPic()).centerCrop().into(videoplayer.ivThumb);
+                    videoplayer.startButton.performClick();
                     describeFragment = YueDanDescribeFragment.newInstance(yueDanDetailBean);
                     yueDanListFragment = YueDanListFragment.newInstance(yueDanDetailBean);
                     yueDanListFragment.setPlayVideoListener(playVideoListener);
@@ -156,7 +156,7 @@ public class YueDanDetailActivity extends BaseActivity {
         @Override
         public void playVideo(String url,String title) {
             videoplayer.setUp(url, title);
-            videoplayer.ivThumb.performClick();
+            videoplayer.startButton.performClick();
         }
     };
 }

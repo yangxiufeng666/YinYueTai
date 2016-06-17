@@ -10,6 +10,7 @@
     <LinearLayout
         android:id="@+id/nav"
         android:layout_below="@+id/videoplayer"
+        android:background="@color/bb_darkBackgroundColor"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -2,6 +2,7 @@ package com.github.yinyuetai;
 
 import android.app.Application;
 
+import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
 
@@ -13,5 +14,6 @@ public class YinYueApplication extends Application{
     public void onCreate() {
         super.onCreate();
         CrashReport.initCrashReport(getApplicationContext());
+        LeakCanary.install(this);
     }
 }
