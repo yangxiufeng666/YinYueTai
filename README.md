@@ -15,6 +15,18 @@
 - 缓存
 - 代码封装重构
 
+#Version
+#### v1.0.2 20160616
+ * 增加swipeback侧滑关闭activity
+ * 优化部分代码
+
+
+------
+#### v1.0.1
+init
+ 
+
+
 #thanks
 [butterknife](https://github.com/JakeWharton/butterknife)<br/>
 [gson](https://github.com/google/gson)<br/>
@@ -24,4 +36,5 @@
 [circleimageview](https://github.com/hdodenhof/CircleImageView)<br/>
 [systembartint](https://github.com/jgilfelt/SystemBarTint)<br/>
 [material-dialogs](https://github.com/afollestad/material-dialogs)<br/>
-[JieCaoVideoPlayer](https://github.com/lipangit/JieCaoVideoPlayer)
+[JieCaoVideoPlayer](https://github.com/lipangit/JieCaoVideoPlayer)<br/>
+[SwipeBackLayout](https://github.com/babylikebird/SwipeBackLayout)
