@@ -76,8 +76,7 @@ public class YueDanDetailActivity extends SwipeBackAppCompatActivity {
                 try {
                     yueDanDetailBean = new Gson().fromJson(response,YueDanDetailBean.class);
                     videoplayer.setUp(yueDanDetailBean.getVideos().get(0).getHdUrl(), yueDanDetailBean.getVideos().get(0).getTitle());
-                    videoplayer.ivThumb.performClick();
-//                    Glide.with(YueDanDetailActivity.this).load(yueDanDetailBean.getThumbnailPic()).centerCrop().into(videoplayer.ivThumb);
+                    videoplayer.startButton.performClick();
                     describeFragment = YueDanDescribeFragment.newInstance(yueDanDetailBean);
                     yueDanListFragment = YueDanListFragment.newInstance(yueDanDetailBean);
                     yueDanListFragment.setPlayVideoListener(playVideoListener);
@@ -157,7 +156,7 @@ public class YueDanDetailActivity extends SwipeBackAppCompatActivity {
         @Override
         public void playVideo(String url,String title) {
             videoplayer.setUp(url, title);
-            videoplayer.ivThumb.performClick();
+            videoplayer.startButton.performClick();
         }
     };
 }

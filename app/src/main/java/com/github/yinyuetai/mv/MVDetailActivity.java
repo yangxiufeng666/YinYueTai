@@ -100,7 +100,7 @@ public class MVDetailActivity extends SwipeBackAppCompatActivity {
                 dismissLoading();
                 detailBean = new Gson().fromJson(response, MVDetailBean.class);
                 videoplayer.setUp(detailBean.getUrl(), detailBean.getTitle());
-                videoplayer.ivThumb.performClick();
+                videoplayer.startButton.performClick();
                 describeFragment = MVDescribeFragment.newInstance(detailBean);
                 relativeMvFragment = MVRelativeFragment.newInstance(detailBean);
                 setFragment(describeFragment);
