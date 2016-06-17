@@ -97,7 +97,7 @@ public class HomePageFragment extends BaseFragment implements HomePageFragmentCo
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firstPageRecyclerView.smoothScrollToPosition(0);
+                firstPageRecyclerView.scrollToPosition(0);
             }
         });
     }

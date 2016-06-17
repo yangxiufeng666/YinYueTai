@@ -15,7 +15,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.yinyuetai.R;
 import com.github.yinyuetai.adapter.MVViewPagerAdapter;
 import com.github.yinyuetai.domain.AreaBean;
-import com.github.yinyuetai.listener.ArrowUpListener;
 
 import java.util.ArrayList;
 
@@ -58,10 +57,7 @@ public class MVFragment extends Fragment implements MVFragmentContract.View{
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrowUpListener listener = fragments.get(tabLayout.getSelectedTabPosition());
-                if (listener != null){
-                    listener.smoothScrollToTop();
-                }
+
             }
         });
     }

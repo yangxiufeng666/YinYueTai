@@ -69,7 +69,7 @@ public class YueDanFragment extends BaseFragment implements YueDanFragmentContra
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.smoothScrollToPosition(0);
+                recyclerView.scrollToPosition(0);
             }
         });
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
