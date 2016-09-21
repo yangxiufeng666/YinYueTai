@@ -11,7 +11,7 @@
 #show
 ####[demo](https://beta.bugly.qq.com/fz5w)
 - 1<br>
-![](http://odulo0l00.bkt.clouddn.com/show.gif)
+<img width="300" src="http://odulo0l00.bkt.clouddn.com/Screenshot_2016-09-21-17-49-14-227_com.github.yin.png"></img>
 
 #TO DO LIST
 - 视频播放优化<br>
