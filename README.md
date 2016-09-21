@@ -9,9 +9,9 @@
 
 
 #show
-####[demo](http://beta.qq.com/m/50u1)
+####[demo](https://beta.bugly.qq.com/fz5w)
 - 1<br>
-![image](http://odulo0l00.bkt.clouddn.com/show.gif)
+![](http://odulo0l00.bkt.clouddn.com/show.gif)
 
 #TO DO LIST
 - 视频播放优化<br>
