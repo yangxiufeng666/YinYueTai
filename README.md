@@ -11,7 +11,7 @@
 #show
 ####[demo](http://beta.qq.com/m/50u1)
 - 1<br>
-![image](https://github.com/babylikebird/YinYueTai/blob/master/show.gif)
+![image](http://odulo0l00.bkt.clouddn.com/show.gif)
 
 #TO DO LIST
 - 视频播放优化<br>
