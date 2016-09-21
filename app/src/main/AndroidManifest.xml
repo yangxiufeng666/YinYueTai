@@ -11,13 +11,13 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
-        android:name=".YinYueApplication"
+        android:name=".app.YinYueApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLaunch">
-        <activity android:name=".splash.SplashActivity"
+        <activity android:name=".view.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/ActivityTheme.splash">
@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.MainActivity"
+        <activity android:name=".view.activity.MainActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
@@ -35,16 +35,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".mv.MVDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/ActivityTheme.windowIsTranslucent"
-            android:configChanges="orientation|keyboardHidden|screenSize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activity.WebActivity"
+        <activity android:name=".view.activity.MVDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme.windowIsTranslucent"
             android:configChanges="orientation|keyboardHidden|screenSize">
@@ -53,7 +44,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".yuedan.YueDanDetailActivity"
+        <activity android:name=".view.activity.WebActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme.windowIsTranslucent"
             android:configChanges="orientation|keyboardHidden|screenSize">
@@ -62,7 +53,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".setting.SettingActivity"
+        <activity android:name=".view.activity.YueDanDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme.windowIsTranslucent"
             android:configChanges="orientation|keyboardHidden|screenSize">
@@ -71,7 +62,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.AboutActivity"
+        <activity android:name=".view.activity.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActivityTheme.windowIsTranslucent"
+            android:configChanges="orientation|keyboardHidden|screenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.activity.AboutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityTheme.aboutActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
