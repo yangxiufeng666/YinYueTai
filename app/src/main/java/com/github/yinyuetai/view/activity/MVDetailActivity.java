@@ -99,7 +99,7 @@ public class MVDetailActivity extends SwipeBackAppCompatActivity {
             public void onResponse(String response) {
                 dismissLoading();
                 detailBean = new Gson().fromJson(response, MVDetailBean.class);
-                videoplayer.setUp(detailBean.getUrl(), detailBean.getTitle());
+                videoplayer.setUp(detailBean.getUrl(), JCVideoPlayerStandard.SCREEN_LAYOUT_LIST,detailBean.getTitle());
                 videoplayer.startButton.performClick();
                 describeFragment = MVDescribeFragment.newInstance(detailBean);
                 relativeMvFragment = MVRelativeFragment.newInstance(detailBean);
@@ -143,7 +143,7 @@ public class MVDetailActivity extends SwipeBackAppCompatActivity {
 
     @Override
     protected void onPause() {
-        super.onPause();
         JCVideoPlayer.releaseAllVideos();
+        super.onPause();
     }
 }

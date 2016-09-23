@@ -9,7 +9,7 @@
 
 
 #show
-####[demo](https://beta.bugly.qq.com/fz5w)
+####[demo](https://beta.bugly.qq.com/le4q)
 <br>
 ![](https://github.com/babylikebird/YinYueTai/blob/master/show.gif)
 
@@ -19,6 +19,10 @@
 - 代码封装重构
 
 #Version
+
+#### v1.1.2
+ * 升级播放器
+
 #### v1.0.2 20160616
  * 增加swipeback侧滑关闭activity
  * 优化部分代码

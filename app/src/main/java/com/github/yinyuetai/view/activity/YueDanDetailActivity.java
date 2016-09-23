@@ -75,7 +75,7 @@ public class YueDanDetailActivity extends SwipeBackAppCompatActivity {
                 dismissLoading();
                 try {
                     yueDanDetailBean = new Gson().fromJson(response,YueDanDetailBean.class);
-                    videoplayer.setUp(yueDanDetailBean.getVideos().get(0).getHdUrl(), yueDanDetailBean.getVideos().get(0).getTitle());
+                    videoplayer.setUp(yueDanDetailBean.getVideos().get(0).getHdUrl(), JCVideoPlayerStandard.SCREEN_LAYOUT_LIST,yueDanDetailBean.getVideos().get(0).getTitle());
                     videoplayer.startButton.performClick();
                     describeFragment = YueDanDescribeFragment.newInstance(yueDanDetailBean);
                     yueDanListFragment = YueDanListFragment.newInstance(yueDanDetailBean);
@@ -125,8 +125,8 @@ public class YueDanDetailActivity extends SwipeBackAppCompatActivity {
 
     @Override
     protected void onPause() {
-        super.onPause();
         JCVideoPlayer.releaseAllVideos();
+        super.onPause();
     }
     private View.OnClickListener imageClickListener = new View.OnClickListener() {
         @Override
@@ -155,7 +155,7 @@ public class YueDanDetailActivity extends SwipeBackAppCompatActivity {
     private PlayVideoListener playVideoListener = new PlayVideoListener() {
         @Override
         public void playVideo(String url,String title) {
-            videoplayer.setUp(url, title);
+            videoplayer.setUp(url,JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, title);
             videoplayer.startButton.performClick();
         }
     };
