@@ -8,17 +8,17 @@
 想要学习MVP+Retrofit2.0+rxjava/rxandroid的请移步到(https://github.com/babylikebird/owspace)
 
 
-#show
-####[demo](https://beta.bugly.qq.com/le4q)
+# show
+#### [demo](https://beta.bugly.qq.com/le4q)
 <br>
 ![](https://github.com/babylikebird/YinYueTai/blob/master/show.gif)
 
-#TO DO LIST
+# TO DO LIST
 - 视频播放优化<br>
 - 缓存
 - 代码封装重构
 
-#Version
+# Version
 
 #### v1.1.2
  * 升级播放器
@@ -34,7 +34,7 @@ init
  
 
 
-#thanks
+# thanks
 [butterknife](https://github.com/JakeWharton/butterknife)<br/>
 [gson](https://github.com/google/gson)<br/>
 [okhttp](https://github.com/square/okhttp)<br/>
